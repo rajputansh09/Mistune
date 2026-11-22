@@ -2,40 +2,40 @@ test,outcome,encodes_bug,kills,nonconformant_inputs,reviewer1 (VALID/TAUTOLOGICA
 llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_01_parse_link_text_no_closing_bracket_returns_none_none,PASSED,,1,,,,,
 llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_02_parse_link_text_zero_iterations_then_closing_bracket_immediately,PASSED,,10,,,,,
 llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_03_parse_link_text_one_iteration_closing_bracket_found,PASSED,,11,,,,,
-llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_04_parse_link_text_two_iterations_nested_then_close,FAILED,,0,,,,,
-llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_05_parse_link_text_nested_depth_three_returns_inner_text,FAILED,,0,,,,,
-llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_06_parse_link_text_unclosed_nested_returns_none_none,PASSED,,2,,,,,
+llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_04_parse_link_text_two_iterations_nested_then_close,FAILED,,0,,INVALID,INVALID,INVALID,Wrong precondition: pos must point just AFTER the opening '[' / '(' (parse_link_text starts with level=1; href/label regexes start at the content).
+llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_05_parse_link_text_nested_depth_three_returns_inner_text,FAILED,,0,,INVALID,INVALID,INVALID,Wrong precondition: pos must point just AFTER the opening '[' / '(' (parse_link_text starts with level=1; href/label regexes start at the content).
+llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_06_parse_link_text_unclosed_nested_returns_none_none,PASSED,,2,,VALID,VALID,VALID,Expected value follows from CommonMark and the function contract.
 llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_07_parse_link_text_start_after_initial_text_closing_found,PASSED,,10,,,,,
-llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_08_parse_link_text_multiple_opens_then_close_text_slice_exact,FAILED,,0,,,,,
-llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_09_parse_link_label_valid_label_returns_label_and_position,FAILED,,0,,,,,
+llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_08_parse_link_text_multiple_opens_then_close_text_slice_exact,FAILED,,0,,INVALID,INVALID,INVALID,Wrong precondition: pos must point just AFTER the opening '[' / '(' (parse_link_text starts with level=1; href/label regexes start at the content).
+llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_09_parse_link_label_valid_label_returns_label_and_position,FAILED,,0,,INVALID,INVALID,INVALID,Wrong precondition: pos must point just AFTER the opening '[' / '(' (parse_link_text starts with level=1; href/label regexes start at the content).
 llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_10_parse_link_label_invalid_without_closing_bracket_returns_none,PASSED,,0,,,,,
-llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_11_parse_link_label_empty_label_allowed,FAILED,,0,,,,,
-llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_12_parse_link_label_start_offset_inside_text,FAILED,,0,,,,,
-llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_13_parse_link_href_inline_bracketed_valid,FAILED,,0,,,,,
+llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_11_parse_link_label_empty_label_allowed,FAILED,,0,,INVALID,INVALID,INVALID,Wrong precondition: pos must point just AFTER the opening '[' / '(' (parse_link_text starts with level=1; href/label regexes start at the content).
+llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_12_parse_link_label_start_offset_inside_text,FAILED,,0,,INVALID,INVALID,INVALID,Wrong precondition: pos must point just AFTER the opening '[' / '(' (parse_link_text starts with level=1; href/label regexes start at the content).
+llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_13_parse_link_href_inline_bracketed_valid,FAILED,,0,,INVALID,INVALID,INVALID,Wrong precondition: pos must point just AFTER the opening '[' / '(' (parse_link_text starts with level=1; href/label regexes start at the content).
 llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_14_parse_link_href_inline_bracketed_invalid_returns_none,PASSED,,1,,,,,
 llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_15_parse_link_href_inline_unbracketed_simple,PASSED,,5,,,,,
-llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_16_parse_link_href_block_unbracketed_simple,FAILED,,0,,,,,
-llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_17_parse_link_href_block_terminator_matching_last_char,FAILED,,0,,,,,
-llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_18_parse_link_href_no_match_returns_none_none,PASSED,,1,,,,,
-llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_19_parse_link_title_single_quoted_title_unescaped,FAILED,,0,,,,,
-llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_20_parse_link_title_double_quoted_title_unescaped,FAILED,,0,,,,,
-llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_21_parse_link_title_parenthesized_title_unescaped,FAILED,,0,,,,,
+llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_16_parse_link_href_block_unbracketed_simple,FAILED,,0,,INVALID,INVALID,INVALID,Off-by-one / wrong end position; contradicts the code shown (end_pos-1 unless terminator equals last char) or the input length.
+llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_17_parse_link_href_block_terminator_matching_last_char,FAILED,,0,,INVALID,INVALID,INVALID,Block-mode href (link reference definition) takes all non-space characters incl. ')' / '>'; Mistune is spec-consistent.
+llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_18_parse_link_href_no_match_returns_none_none,PASSED,,1,,VALID,VALID,VALID,Expected value follows from CommonMark and the function contract.
+llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_19_parse_link_title_single_quoted_title_unescaped,FAILED,,0,,INVALID,INVALID,INVALID,Wrong precondition: LINK_TITLE_RE requires leading whitespace ([ \t\n]+); the regex was not in the prompt.
+llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_20_parse_link_title_double_quoted_title_unescaped,FAILED,,0,,INVALID,INVALID,INVALID,Wrong precondition: LINK_TITLE_RE requires leading whitespace ([ \t\n]+); the regex was not in the prompt.
+llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_21_parse_link_title_parenthesized_title_unescaped,FAILED,,0,,INVALID,INVALID,INVALID,"Wrong precondition (no leading whitespace), but the intent (parenthesised title accepted) matches spec; with whitespace it would expose D5."
 llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_22_parse_link_title_no_match_returns_none,PASSED,,1,,,,,
-llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_23_parse_link_full_inline_with_title,PASSED,,12,,,,,
-llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_24_parse_link_full_inline_without_title,PASSED,,7,,,,,
-llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_25_parse_link_no_href_returns_none,FAILED,,0,,,,,
+llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_23_parse_link_full_inline_with_title,PASSED,,12,,VALID,VALID,VALID,Expected value follows from CommonMark and the function contract.
+llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_24_parse_link_full_inline_without_title,PASSED,,7,,VALID,VALID,VALID,Expected value follows from CommonMark and the function contract.
+llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_25_parse_link_no_href_returns_none,FAILED,,0,,INVALID,INVALID,INVALID,Mistune's actual value matches CommonMark; the LLM expectation contradicts the spec.
 llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_26_parse_link_missing_closing_paren_returns_none,PASSED,,2,,,,,
-llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_27_parse_link_title_parsed_but_missing_parenthesis_returns_none,PASSED,,5,,,,,
-llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_28_parse_emphasis_single_emphasis_basic,FAILED,,0,,,,,
-llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_29_parse_emphasis_strong_basic,FAILED,,0,,,,,
-llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_30_parse_emphasis_nested_emphasis_and_strong,FAILED,,0,,,,,
-llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_31_parse_emphasis_marker_without_closing_becomes_text,FAILED,,0,,,,,
-llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_32_parse_emphasis_in_emphasis_suppresses_single_marker,FAILED,,0,,,,,
-llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_33_parse_emphasis_in_strong_suppresses_double_marker,FAILED,,0,,,,,
-llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_34_parse_codespan_basic_single_backticks,FAILED,,0,,,,,
-llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_35_parse_codespan_with_spaces_trimmed_per_spec,FAILED,,0,,,,,
-llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_36_parse_codespan_newline_treated_as_space,FAILED,,0,,,,,
-llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_37_parse_codespan_multiple_backticks_marker_length_two,FAILED,,0,,,,,
-llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_38_parse_codespan_unclosed_marker_becomes_text,FAILED,,0,,,,,
-llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_39_parse_codespan_empty_or_whitespace_only_becomes_text,FAILED,,0,,,,,
-llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_40_parse_codespan_with_extra_backtick_in_content_falls_back_to_text,FAILED,,0,,,,,
+llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_27_parse_link_title_parsed_but_missing_parenthesis_returns_none,PASSED,,5,,VALID,VALID,VALID,Expected value follows from CommonMark and the function contract.
+llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_28_parse_emphasis_single_emphasis_basic,FAILED,,0,,INVALID,INVALID,INVALID,tokens() returns inline tokens; there is no 'paragraph' wrapper at the inline level (inner tokens otherwise as Mistune produces).
+llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_29_parse_emphasis_strong_basic,FAILED,,0,,INVALID,INVALID,INVALID,tokens() returns inline tokens; there is no 'paragraph' wrapper at the inline level (inner tokens otherwise as Mistune produces).
+llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_30_parse_emphasis_nested_emphasis_and_strong,FAILED,,0,,INVALID,INVALID,INVALID,tokens() returns inline tokens; there is no 'paragraph' wrapper at the inline level (inner tokens otherwise as Mistune produces).
+llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_31_parse_emphasis_marker_without_closing_becomes_text,FAILED,,0,,INVALID,INVALID,INVALID,tokens() returns inline tokens; there is no 'paragraph' wrapper at the inline level (inner tokens otherwise as Mistune produces).
+llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_32_parse_emphasis_in_emphasis_suppresses_single_marker,FAILED,,0,,INVALID,INVALID,INVALID,tokens() returns inline tokens; there is no 'paragraph' wrapper at the inline level (inner tokens otherwise as Mistune produces).
+llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_33_parse_emphasis_in_strong_suppresses_double_marker,FAILED,,0,,INVALID,INVALID,INVALID,tokens() returns inline tokens; there is no 'paragraph' wrapper at the inline level (inner tokens otherwise as Mistune produces).
+llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_34_parse_codespan_basic_single_backticks,FAILED,,0,,INVALID,INVALID,INVALID,tokens() returns inline tokens; there is no 'paragraph' wrapper at the inline level (inner tokens otherwise as Mistune produces).
+llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_35_parse_codespan_with_spaces_trimmed_per_spec,FAILED,,0,,INVALID,INVALID,INVALID,tokens() returns inline tokens; there is no 'paragraph' wrapper at the inline level (inner tokens otherwise as Mistune produces).
+llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_36_parse_codespan_newline_treated_as_space,FAILED,,0,,INVALID,INVALID,INVALID,tokens() returns inline tokens; there is no 'paragraph' wrapper at the inline level (inner tokens otherwise as Mistune produces).
+llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_37_parse_codespan_multiple_backticks_marker_length_two,FAILED,,0,,INVALID,INVALID,INVALID,tokens() returns inline tokens; there is no 'paragraph' wrapper at the inline level (inner tokens otherwise as Mistune produces).
+llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_38_parse_codespan_unclosed_marker_becomes_text,FAILED,,0,,INVALID,INVALID,INVALID,tokens() returns inline tokens; there is no 'paragraph' wrapper at the inline level (inner tokens otherwise as Mistune produces).
+llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_39_parse_codespan_empty_or_whitespace_only_becomes_text,FAILED,,0,,INVALID,INVALID,INVALID,tokens() returns inline tokens; there is no 'paragraph' wrapper at the inline level (inner tokens otherwise as Mistune produces).
+llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_40_parse_codespan_with_extra_backtick_in_content_falls_back_to_text,FAILED,,0,,INVALID,INVALID,INVALID,tokens() returns inline tokens; there is no 'paragraph' wrapper at the inline level (inner tokens otherwise as Mistune produces).

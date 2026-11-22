@@ -1,0 +1,133 @@
+{
+ "basic_wb_run1": {
+  "reviewed": 15,
+  "failing": {
+   "VALID": 0,
+   "INVALID": 10,
+   "TAUTOLOGICAL": 0
+  },
+  "passing_sample": {
+   "VALID": 5,
+   "INVALID": 0,
+   "TAUTOLOGICAL": 0
+  },
+  "invalid_causes": {
+   "POS": 2,
+   "BLOCK": 2,
+   "WS": 2,
+   "D5INTENT": 1,
+   "SPEC": 1,
+   "PART": 2
+  }
+ },
+ "basic_wb_run2": {
+  "reviewed": 19,
+  "failing": {
+   "VALID": 1,
+   "INVALID": 13,
+   "TAUTOLOGICAL": 0
+  },
+  "passing_sample": {
+   "VALID": 4,
+   "INVALID": 1,
+   "TAUTOLOGICAL": 0
+  },
+  "invalid_causes": {
+   "POS": 9,
+   "COINC": 1,
+   "PART": 4
+  }
+ },
+ "basic_wb_run3": {
+  "reviewed": 23,
+  "failing": {
+   "VALID": 1,
+   "INVALID": 17,
+   "TAUTOLOGICAL": 0
+  },
+  "passing_sample": {
+   "VALID": 4,
+   "INVALID": 1,
+   "TAUTOLOGICAL": 0
+  },
+  "invalid_causes": {
+   "POS": 12,
+   "COINC": 1,
+   "SPEC": 1,
+   "PART": 4
+  }
+ },
+ "refined_wb_run1": {
+  "reviewed": 31,
+  "failing": {
+   "VALID": 0,
+   "INVALID": 26,
+   "TAUTOLOGICAL": 0
+  },
+  "passing_sample": {
+   "VALID": 5,
+   "INVALID": 0,
+   "TAUTOLOGICAL": 0
+  },
+  "invalid_causes": {
+   "POS": 7,
+   "ENDPOS": 1,
+   "BLOCK": 1,
+   "WS": 2,
+   "D5INTENT": 1,
+   "SPEC": 1,
+   "PARA": 13
+  }
+ },
+ "refined_wb_run2": {
+  "reviewed": 24,
+  "failing": {
+   "VALID": 0,
+   "INVALID": 19,
+   "TAUTOLOGICAL": 0
+  },
+  "passing_sample": {
+   "VALID": 4,
+   "INVALID": 1,
+   "TAUTOLOGICAL": 0
+  },
+  "invalid_causes": {
+   "POS": 11,
+   "WS": 2,
+   "D5INTENT": 1,
+   "COINC2": 1,
+   "PART": 4,
+   "SPEC": 1
+  }
+ },
+ "refined_wb_run3": {
+  "reviewed": 35,
+  "failing": {
+   "VALID": 0,
+   "INVALID": 30,
+   "TAUTOLOGICAL": 0
+  },
+  "passing_sample": {
+   "VALID": 5,
+   "INVALID": 0,
+   "TAUTOLOGICAL": 0
+  },
+  "invalid_causes": {
+   "POS": 18,
+   "ENDPOS": 2,
+   "TERM": 1,
+   "SPEC": 2,
+   "WS": 3,
+   "D5INTENT": 2,
+   "PART": 2
+  }
+ },
+ "_meta": {
+  "reviewer1": "Claude Opus 5.5 (claude-opus-5-5)",
+  "reviewer2": "GPT-6.2 Sol via opencode, blind to reviewer 1",
+  "reviewed": 147,
+  "raw_agreement": "145/147 (98.6%)",
+  "cohens_kappa": 0.957,
+  "disagreements_resolved": 2
+ }
+}

@@ -1,0 +1,149 @@
+
+> plan · gpt-6.2-sol
+REVIEW|basic_wb_run1|test_llm_wb_09_parse_link_label_simple|INVALID|Start after the opening bracket; the helper stops after the closing bracket, not the colon.
+REVIEW|basic_wb_run1|test_llm_wb_10_parse_link_label_with_spaces|INVALID|Spaces are allowed, but the offset must skip the opening bracket and the end must exclude the colon.
+REVIEW|basic_wb_run1|test_llm_wb_15_parse_link_href_block_raw_url|INVALID|Block mode does not strip a trailing parenthesis from a bare destination.
+REVIEW|basic_wb_run1|test_llm_wb_16_parse_link_href_block_matches_closing_delimiter|INVALID|Without an opening angle bracket, the trailing greater-than sign is part of the bare destination.
+REVIEW|basic_wb_run1|test_llm_wb_18_parse_link_href_empty_angle_brackets|VALID|An angle-bracket destination may be empty; the helper consumes both brackets.
+REVIEW|basic_wb_run1|test_llm_wb_19_parse_link_title_double_quoted|INVALID|The title helper requires leading separator whitespace.
+REVIEW|basic_wb_run1|test_llm_wb_20_parse_link_title_single_quoted_with_escape|INVALID|The escape is valid, but the title helper requires leading separator whitespace.
+REVIEW|basic_wb_run1|test_llm_wb_21_parse_link_title_parenthesized|INVALID|Parenthesized titles are valid CommonMark, but this invocation omits the required separator whitespace.
+REVIEW|basic_wb_run1|test_llm_wb_28_parse_link_invalid_bad_href|INVALID|Square brackets are allowed in bare destinations and are percent-encoded in the URL attribute.
+REVIEW|basic_wb_run1|test_llm_wb_31_codespan_trim_outer_spaces|VALID|A nonblank code span with spaces on both ends loses exactly one space from each end.
+REVIEW|basic_wb_run1|test_llm_wb_33_codespan_newlines_become_spaces|VALID|Code span line endings normalize to spaces.
+REVIEW|basic_wb_run1|test_llm_wb_35_codespan_marker_mismatch_falls_back_to_text|INVALID|Unequal backtick runs do not pair, but full rendering preserves the intervening text and trailing run.
+REVIEW|basic_wb_run1|test_llm_wb_36_codespan_double_backtick_matching|VALID|Equal double-backtick runs delimit a code span containing `code`.
+REVIEW|basic_wb_run1|test_llm_wb_37_emphasis_simple_emphasis|VALID|Matching single asterisks produce an emphasis token with a text child.
+REVIEW|basic_wb_run1|test_llm_wb_40_emphasis_in_emphasis_flag_prevents_recursive_parse|INVALID|The flag makes the opener literal; full inline rendering still preserves the remaining `a*`.
+REVIEW|basic_wb_run2|test_llm_wb_03_unescape_char_multiple_escapes|VALID|All three escaped characters are ASCII punctuation, so the helper removes their backslashes.
+REVIEW|basic_wb_run2|test_llm_wb_05_parse_link_text_nested_brackets|VALID|Starting inside the opener, the helper preserves the nested brackets and consumes the outer closer.
+REVIEW|basic_wb_run2|test_llm_wb_08_parse_link_label_simple|INVALID|The label helper starts after the opening bracket and does not consume the colon.
+REVIEW|basic_wb_run2|test_llm_wb_09_parse_link_label_with_spaces_inside|INVALID|The offset points at the opening bracket, and the expected end incorrectly includes the colon.
+REVIEW|basic_wb_run2|test_llm_wb_10_parse_link_label_invalid_missing_colon|INVALID|The test passes because the offset points at `[`, not because the helper requires a colon.
+REVIEW|basic_wb_run2|test_llm_wb_11_parse_link_href_inline_basic|INVALID|The destination starts after the opening parenthesis, not at it.
+REVIEW|basic_wb_run2|test_llm_wb_12_parse_link_href_inline_with_angle_brackets|INVALID|Start at the angle bracket after the opening parenthesis to select the bracketed-destination branch.
+REVIEW|basic_wb_run2|test_llm_wb_13_parse_link_href_block_basic|INVALID|Block mode treats the balanced parentheses as destination characters and leaves the newline unconsumed.
+REVIEW|basic_wb_run2|test_llm_wb_14_parse_link_href_block_trailing_paren_kept_in_href_when_matching|INVALID|The block helper captures the whole nonwhitespace destination; it does not strip an opening parenthesis.
+REVIEW|basic_wb_run2|test_llm_wb_16_parse_link_title_double_quotes|VALID|A whitespace-separated double-quoted title is returned without its delimiters.
+REVIEW|basic_wb_run2|test_llm_wb_17_parse_link_title_single_quotes|VALID|A whitespace-separated single-quoted title is returned without its delimiters.
+REVIEW|basic_wb_run2|test_llm_wb_18_parse_link_title_parentheses|VALID|CommonMark permits whitespace-separated parenthesized titles; the helper incorrectly rejects this form.
+REVIEW|basic_wb_run2|test_llm_wb_21_parse_link_simple_no_title|INVALID|The helper expects the offset after the opening parenthesis.
+REVIEW|basic_wb_run2|test_llm_wb_22_parse_link_simple_with_title|INVALID|The destination offset must skip the opening parenthesis, even when a title follows.
+REVIEW|basic_wb_run2|test_llm_wb_23_parse_link_with_escaped_url_chars|INVALID|The offset must skip the opening parenthesis; the expected end also exceeds the source length.
+REVIEW|basic_wb_run2|test_llm_wb_30_tokens_codespan_fallback_to_text_when_no_end|INVALID|Full inline rendering preserves `code` after the unmatched backtick.
+REVIEW|basic_wb_run2|test_llm_wb_37_tokens_unmatched_emphasis_marker_becomes_text|INVALID|The unmatched asterisk is literal, but the following `abc` must also be rendered.
+REVIEW|basic_wb_run2|test_llm_wb_38_tokens_unmatched_strong_marker_becomes_text|INVALID|The unmatched asterisks are literal, but the following `abc` must also be rendered.
+REVIEW|basic_wb_run2|test_llm_wb_40_tokens_emphasis_and_text_tail|INVALID|There is no inline boundary between the space and `b`; the contiguous tail is one text token.
+REVIEW|basic_wb_run3|test_llm_wb_04_parse_link_text_nested_brackets|INVALID|Starting at the outer opener counts it twice, leaving the initial bracket level unclosed.
+REVIEW|basic_wb_run3|test_llm_wb_06_parse_link_text_starts_after_position|INVALID|Offset 2 points at the opener; the helper must start at offset 3 to return `a`.
+REVIEW|basic_wb_run3|test_llm_wb_07_parse_link_label_basic_match|INVALID|Start inside the brackets; neither brackets nor the definition colon belong in the returned label.
+REVIEW|basic_wb_run3|test_llm_wb_08_parse_link_label_fails_without_colon|INVALID|Rejection comes from starting at `[`, not from the missing colon.
+REVIEW|basic_wb_run3|test_llm_wb_09_parse_link_label_matches_with_spaces_before_colon|INVALID|The helper starts inside the brackets, returns their contents, and stops before the colon.
+REVIEW|basic_wb_run3|test_llm_wb_10_parse_link_href_inline_basic|INVALID|The destination starts at offset 1; the returned end would point at the closing parenthesis.
+REVIEW|basic_wb_run3|test_llm_wb_11_parse_link_href_inline_escapes_parentheses|INVALID|The helper preserves escaped parentheses, but the offset incorrectly includes the outer opening parenthesis.
+REVIEW|basic_wb_run3|test_llm_wb_12_parse_link_href_block_requires_block_mode|INVALID|Block destination syntax does not treat parentheses as wrappers to discard.
+REVIEW|basic_wb_run3|test_llm_wb_13_parse_link_href_bracket_form|VALID|An angle-bracket destination returns its interior and the index after `>`.
+REVIEW|basic_wb_run3|test_llm_wb_17_parse_link_title_parenthesized|VALID|CommonMark permits this parenthesized title, and its required leading whitespace is present.
+REVIEW|basic_wb_run3|test_llm_wb_18_parse_link_title_fails_without_quotes|VALID|Bare unquoted text without any recognized title delimiters is not a link title.
+REVIEW|basic_wb_run3|test_llm_wb_19_parse_link_basic_with_title|INVALID|Start after the opening parenthesis to extract `/a` rather than `(/a`.
+REVIEW|basic_wb_run3|test_llm_wb_20_parse_link_basic_without_title|INVALID|The offset points at the outer opening parenthesis instead of the destination.
+REVIEW|basic_wb_run3|test_llm_wb_21_parse_link_unescapes_href_before_escaping_url|INVALID|The escape processing is correct, but the offset incorrectly includes the outer opening parenthesis.
+REVIEW|basic_wb_run3|test_llm_wb_23_parse_link_returns_none_when_href_missing|INVALID|The offset must skip `(`, and an empty inline destination is permitted anyway.
+REVIEW|basic_wb_run3|test_llm_wb_25_parse_link_href_block_preserves_escaped_delimiter|INVALID|Block mode preserves the escape and also captures both literal parentheses surrounding the nonwhitespace string.
+REVIEW|basic_wb_run3|test_llm_wb_31_parse_codespan_empty_content_becomes_text|INVALID|Two adjacent backticks form one unmatched run; both backticks must survive as text.
+REVIEW|basic_wb_run3|test_llm_wb_32_parse_codespan_no_closing_marker_yields_text|INVALID|The full render preserves both the unmatched backtick and the following `code`.
+REVIEW|basic_wb_run3|test_llm_wb_34_parse_codespan_preserves_single_internal_backtick_when_delimited_by_double|VALID|A single interior backtick cannot close a double-backtick span and remains literal content.
+REVIEW|basic_wb_run3|test_llm_wb_36_parse_emphasis_strong_double_asterisk|VALID|Matching double asterisks produce strong emphasis around `a`.
+REVIEW|basic_wb_run3|test_llm_wb_38_parse_emphasis_respects_in_emphasis_flag|INVALID|The flag suppresses emphasis but does not remove the final asterisk.
+REVIEW|basic_wb_run3|test_llm_wb_39_parse_emphasis_respects_in_strong_flag|INVALID|The flag suppresses strong emphasis but does not remove the final double asterisks.
+REVIEW|basic_wb_run3|test_llm_wb_40_parse_emphasis_no_closing_marker_returns_text|INVALID|Full inline rendering preserves the literal opener and following `a`.
+REVIEW|refined_wb_run1|test_llm_wb_04_parse_link_text_two_iterations_nested_then_close|INVALID|The nested closer only reduces depth to one; the outer closing bracket is missing.
+REVIEW|refined_wb_run1|test_llm_wb_05_parse_link_text_nested_depth_three_returns_inner_text|INVALID|The two closers balance only the nested openers, not the already-assumed outer opener.
+REVIEW|refined_wb_run1|test_llm_wb_06_parse_link_text_unclosed_nested_returns_none_none|VALID|Neither the nested bracket nor the assumed outer bracket closes, so no text match is returned.
+REVIEW|refined_wb_run1|test_llm_wb_08_parse_link_text_multiple_opens_then_close_text_slice_exact|INVALID|Starting at the outer opener leaves one unmatched level after both closers.
+REVIEW|refined_wb_run1|test_llm_wb_09_parse_link_label_valid_label_returns_label_and_position|INVALID|The offset must skip `[`, which is not part of the returned label.
+REVIEW|refined_wb_run1|test_llm_wb_11_parse_link_label_empty_label_allowed|INVALID|An empty label at helper level starts at `]` and returns an empty string, not `[`.
+REVIEW|refined_wb_run1|test_llm_wb_12_parse_link_label_start_offset_inside_text|INVALID|Offset 1 points at `[`. Offset 2 would return `ok` and end at 5.
+REVIEW|refined_wb_run1|test_llm_wb_13_parse_link_href_inline_bracketed_valid|INVALID|Start at `<`; the helper returns `url` and stops after `>`, before the outer parenthesis.
+REVIEW|refined_wb_run1|test_llm_wb_16_parse_link_href_block_unbracketed_simple|INVALID|The block helper leaves the separator newline unconsumed, returning offset 3.
+REVIEW|refined_wb_run1|test_llm_wb_17_parse_link_href_block_terminator_matching_last_char|INVALID|The final parenthesis belongs to the captured block destination; it is not a separate terminator.
+REVIEW|refined_wb_run1|test_llm_wb_18_parse_link_href_no_match_returns_none_none|VALID|A bare inline destination must be followed by a recognized whitespace separator or closing parenthesis.
+REVIEW|refined_wb_run1|test_llm_wb_19_parse_link_title_single_quoted_title_unescaped|INVALID|The title lacks separator whitespace, and the end bound excludes its closing quote.
+REVIEW|refined_wb_run1|test_llm_wb_20_parse_link_title_double_quoted_title_unescaped|INVALID|The punctuation escape is valid, but the required leading title separator is missing.
+REVIEW|refined_wb_run1|test_llm_wb_21_parse_link_title_parenthesized_title_unescaped|INVALID|Leading separator whitespace is missing, and CommonMark does not convert backslash-n into a newline.
+REVIEW|refined_wb_run1|test_llm_wb_23_parse_link_full_inline_with_title|VALID|The offset skips `(`, and the valid destination and title precede a consumed closing parenthesis.
+REVIEW|refined_wb_run1|test_llm_wb_24_parse_link_full_inline_without_title|VALID|The helper consumes the destination and closing parenthesis and omits the absent title.
+REVIEW|refined_wb_run1|test_llm_wb_25_parse_link_no_href_returns_none|INVALID|A whitespace-only inline destination is allowed and yields an empty URL.
+REVIEW|refined_wb_run1|test_llm_wb_27_parse_link_title_parsed_but_missing_parenthesis_returns_none|VALID|A valid destination and title cannot complete an inline link without the final parenthesis.
+REVIEW|refined_wb_run1|test_llm_wb_28_parse_emphasis_single_emphasis_basic|INVALID|The helper renders inline tokens directly, without a paragraph wrapper.
+REVIEW|refined_wb_run1|test_llm_wb_29_parse_emphasis_strong_basic|INVALID|The strong token is returned directly, not inside a block-level paragraph.
+REVIEW|refined_wb_run1|test_llm_wb_30_parse_emphasis_nested_emphasis_and_strong|INVALID|The emphasis and strong nesting is correct, but inline rendering adds no paragraph wrapper.
+REVIEW|refined_wb_run1|test_llm_wb_31_parse_emphasis_marker_without_closing_becomes_text|INVALID|The literal tokens are returned directly, without the asserted paragraph wrapper.
+REVIEW|refined_wb_run1|test_llm_wb_32_parse_emphasis_in_emphasis_suppresses_single_marker|INVALID|Inline rendering adds no paragraph wrapper and does not split the trailing `a*` into separate tokens.
+REVIEW|refined_wb_run1|test_llm_wb_33_parse_emphasis_in_strong_suppresses_double_marker|INVALID|Inline rendering adds no paragraph wrapper and does not split the trailing `a**` into separate tokens.
+REVIEW|refined_wb_run1|test_llm_wb_34_parse_codespan_basic_single_backticks|INVALID|The code span is an inline token returned without a paragraph wrapper.
+REVIEW|refined_wb_run1|test_llm_wb_35_parse_codespan_with_spaces_trimmed_per_spec|INVALID|The trimming expectation is correct, but the paragraph wrapper belongs to block parsing.
+REVIEW|refined_wb_run1|test_llm_wb_36_parse_codespan_newline_treated_as_space|INVALID|Newline normalization is correct, but the inline helper does not return a paragraph wrapper.
+REVIEW|refined_wb_run1|test_llm_wb_37_parse_codespan_multiple_backticks_marker_length_two|INVALID|The matching run produces a code span directly, without a paragraph wrapper.
+REVIEW|refined_wb_run1|test_llm_wb_38_parse_codespan_unclosed_marker_becomes_text|INVALID|The expected text tokens must be returned directly, not wrapped in a paragraph.
+REVIEW|refined_wb_run1|test_llm_wb_39_parse_codespan_empty_or_whitespace_only_becomes_text|INVALID|Four adjacent backticks are one unmatched literal run, not an empty code span.
+REVIEW|refined_wb_run1|test_llm_wb_40_parse_codespan_with_extra_backtick_in_content_falls_back_to_text|INVALID|The unequal runs remain literal, but the paragraph wrapper is not part of the inline API.
+REVIEW|refined_wb_run2|test_llm_wb_03_parse_link_text_single_level_simple_text|INVALID|Starting at `[` counts an extra opener; the helper assumes the outer opener was consumed.
+REVIEW|refined_wb_run2|test_llm_wb_04_parse_link_text_nested_two_levels|INVALID|The offset must skip the outer opener so the final bracket can bring depth to zero.
+REVIEW|refined_wb_run2|test_llm_wb_06_parse_link_text_start_at_middle_of_string|INVALID|Offset 2 points at `[`, while the helper must start at offset 3.
+REVIEW|refined_wb_run2|test_llm_wb_07_parse_link_label_valid_label|INVALID|The helper starts inside the label, returns its contents, and leaves the colon unconsumed.
+REVIEW|refined_wb_run2|test_llm_wb_09_parse_link_label_invalid_non_bracket_start|INVALID|The helper expects label contents at the offset, not an opening bracket.
+REVIEW|refined_wb_run2|test_llm_wb_10_parse_link_href_inline_parenthesized_simple|INVALID|The offset must skip the outer opening parenthesis to extract only the destination.
+REVIEW|refined_wb_run2|test_llm_wb_11_parse_link_href_inline_parenthesized_with_title_returns_href_only|INVALID|The helper stops before the title separator but does not strip an opening parenthesis at the supplied offset.
+REVIEW|refined_wb_run2|test_llm_wb_13_parse_link_href_block_form_keeps_closing_paren_when_same_as_last_char|INVALID|Both parentheses are part of the block destination, contrary to the expected `abc`.
+REVIEW|refined_wb_run2|test_llm_wb_14_parse_link_href_block_form_strips_closing_paren_when_different|INVALID|Block mode captures both parentheses; the end-position adjustment never strips characters from the captured destination.
+REVIEW|refined_wb_run2|test_llm_wb_16_parse_link_title_double_quoted|INVALID|The starting position must include whitespace separating the title from the destination.
+REVIEW|refined_wb_run2|test_llm_wb_17_parse_link_title_single_quoted_with_escape_unescaped|INVALID|The escaped quote is allowed, but the required leading separator whitespace is absent.
+REVIEW|refined_wb_run2|test_llm_wb_18_parse_link_title_parenthesized|INVALID|The parenthesized form is valid, but the required leading title separator is missing.
+REVIEW|refined_wb_run2|test_llm_wb_19_parse_link_title_invalid_returns_none|VALID|The input lacks both the required separator whitespace and title delimiters.
+REVIEW|refined_wb_run2|test_llm_wb_20_parse_link_simple_href_only|INVALID|The offset points at the opening parenthesis instead of just after it.
+REVIEW|refined_wb_run2|test_llm_wb_21_parse_link_with_title|INVALID|The offset must skip the outer opener; successfully parsing a title does not correct the destination start.
+REVIEW|refined_wb_run2|test_llm_wb_22_parse_link_invalid_missing_paren_end_returns_none|INVALID|The call starts on the opening parenthesis, not after it; the malformed input fails despite the incorrect offset.
+REVIEW|refined_wb_run2|test_llm_wb_26_codespan_collapses_newlines_to_spaces|VALID|A newline inside matching code span delimiters becomes one space.
+REVIEW|refined_wb_run2|test_llm_wb_29_codespan_no_closing_marker_becomes_text|INVALID|The unmatched opener becomes text, and the renderer must also preserve `code`.
+REVIEW|refined_wb_run2|test_llm_wb_33_emphasis_single_marker_inside_emphasis_is_text|INVALID|Suppression makes the opener literal but does not discard the trailing `a*`.
+REVIEW|refined_wb_run2|test_llm_wb_34_emphasis_double_marker_inside_strong_is_text|INVALID|Suppression makes the opener literal but does not discard the trailing `a**`.
+REVIEW|refined_wb_run2|test_llm_wb_35_emphasis_no_closing_marker_is_text|INVALID|The assertion drops the trailing `a`, which the full render must preserve.
+REVIEW|refined_wb_run2|test_llm_wb_36_emphasis_precedence_scan_blocks_parse|INVALID|Emphasis is allowed inside links, and no competing inline construct here triggers precedence.
+REVIEW|refined_wb_run2|test_llm_wb_37_emphasis_inside_link_can_parse_when_not_precedence_blocked|INVALID|Setting `in_link=False` tests ordinary emphasis outside a link, not the claimed inside-link behavior.
+REVIEW|refined_wb_run2|test_llm_wb_40_emphasis_and_codespan_combined_sequence|VALID|The emphasis and code span are separate inline constructs with a literal space between them.
+REVIEW|refined_wb_run3|test_llm_wb_01_parse_link_text_success_cases[[abc]-0-expected0]|INVALID|Offset 0 counts the opening bracket again; successful extraction requires offset 1.
+REVIEW|refined_wb_run3|test_llm_wb_01_parse_link_text_success_cases[x[y[z]w]q-1-expected1]|INVALID|Offset 1 points at the outer opener, leaving the assumed opening level unclosed.
+REVIEW|refined_wb_run3|test_llm_wb_01_parse_link_text_success_cases[x[y]z-1-expected2]|INVALID|Start at offset 2, after `[`, to return `y` with end offset 4.
+REVIEW|refined_wb_run3|test_llm_wb_03_parse_link_label_success|INVALID|The opening bracket must already be consumed and is not part of the returned label.
+REVIEW|refined_wb_run3|test_llm_wb_04_parse_link_label_failure|INVALID|`label]` is exactly the label-and-closer suffix this helper expects.
+REVIEW|refined_wb_run3|test_llm_wb_05_parse_link_href_success_cases[<https://example.com>-0-False-expected0]|INVALID|The closing angle bracket is consumed at offset 21, not 22.
+REVIEW|refined_wb_run3|test_llm_wb_05_parse_link_href_success_cases[<https://example.com>-0-True-expected1]|INVALID|Block mode uses the same angle-bracket branch, ending at offset 21.
+REVIEW|refined_wb_run3|test_llm_wb_05_parse_link_href_success_cases[http://example.com-0-False-expected2]|INVALID|A bare inline destination needs a trailing separator or closing parenthesis; end of input alone does not qualify.
+REVIEW|refined_wb_run3|test_llm_wb_06_parse_link_href_failure_cases[not a url-0-False]|INVALID|The helper extracts `not` as a relative destination and leaves the remainder for the caller.
+REVIEW|refined_wb_run3|test_llm_wb_06_parse_link_href_failure_cases[not a url-0-True]|INVALID|Block mode extracts the first nonwhitespace destination and does not validate the entire input as a URL.
+REVIEW|refined_wb_run3|test_llm_wb_07_parse_link_title_success_cases["title"-0-7-expected0]|INVALID|A quoted title passed to this helper must be preceded by separator whitespace.
+REVIEW|refined_wb_run3|test_llm_wb_07_parse_link_title_success_cases['ti\\'tle'-0-9-expected1]|INVALID|The escaped quote is valid, but the helper requires leading separator whitespace.
+REVIEW|refined_wb_run3|test_llm_wb_07_parse_link_title_success_cases[(a\\)b)-0-6-expected2]|INVALID|The parenthesized title omits the required leading separator whitespace.
+REVIEW|refined_wb_run3|test_llm_wb_09_parse_link_success_cases[[foo](url)-5-expected0]|INVALID|Offset 5 is the opening parenthesis; the helper must start at offset 6.
+REVIEW|refined_wb_run3|test_llm_wb_09_parse_link_success_cases[[foo](url 't')-5-expected1]|INVALID|Offset 5 includes the opening parenthesis in the URL; the destination begins at 6.
+REVIEW|refined_wb_run3|test_llm_wb_09_parse_link_success_cases[[foo](http://example.com)-5-expected2]|INVALID|The helper expects the destination at offset 6, not the opening delimiter at offset 5.
+REVIEW|refined_wb_run3|test_llm_wb_10_parse_link_failure_cases[[foo](<url)-5]|INVALID|Offset 5 points at `(`; offset 6 would reach the malformed angle-bracket destination and correctly reject it.
+REVIEW|refined_wb_run3|test_llm_wb_10_parse_link_failure_cases[[foo]url)-5]|INVALID|The helper parses a destination-and-closer suffix; verifying the preceding opening parenthesis is the caller's responsibility.
+REVIEW|refined_wb_run3|test_llm_wb_12_parse_emphasis_single_emphasis_inside_emphasis_flag|VALID|A lone asterisk remains literal with the flag set, though the assertion does not isolate the flag's effect.
+REVIEW|refined_wb_run3|test_llm_wb_16_parse_emphasis_no_end_marker|INVALID|The unclosed opener is literal, but the full render also includes `em`.
+REVIEW|refined_wb_run3|test_llm_wb_17_parse_codespan_basic_single_backtick|VALID|Equal single-backtick runs enclose `code` without requiring any normalization.
+REVIEW|refined_wb_run3|test_llm_wb_20_parse_codespan_no_closing_fence|INVALID|The opener is literal, but the full inline render still includes `code`.
+REVIEW|refined_wb_run3|test_llm_wb_23_parse_link_text_loop_zero_iterations_immediate_close|VALID|The immediate closer returns empty text and offset 1 after one loop iteration, not zero.
+REVIEW|refined_wb_run3|test_llm_wb_24_parse_link_text_loop_one_iteration_open_then_close|INVALID|The helper starts at depth one, so including `[` leaves depth one after the only closer.
+REVIEW|refined_wb_run3|test_llm_wb_25_parse_link_text_loop_one_iteration_nested_open_then_close|INVALID|The outer opener must be skipped; otherwise both closers leave the initial depth unclosed.
+REVIEW|refined_wb_run3|test_llm_wb_26_parse_link_text_loop_two_iterations_nested_structure|INVALID|The expected nested text requires starting after the outer opening bracket.
+REVIEW|refined_wb_run3|test_llm_wb_27_parse_link_text_loop_multiple_iterations_deeper_nesting|INVALID|Starting at the outer opener adds one extra level that no closing bracket balances.
+REVIEW|refined_wb_run3|test_llm_wb_28_parse_link_text_def_use_level_outer_close|INVALID|The closer reaches depth zero only when the offset skips the outer opening bracket.
+REVIEW|refined_wb_run3|test_llm_wb_29_parse_link_text_def_use_level_nested_increment|INVALID|Offset 0 counts both openers; offset 1 would test the intended single nested increment.
+REVIEW|refined_wb_run3|test_llm_wb_30_parse_link_text_def_use_found_true_path|INVALID|Offset 1 points at `[`, so the only closer cannot set `found` true.
+REVIEW|refined_wb_run3|test_llm_wb_32_parse_link_text_def_use_pos_update_and_return|INVALID|Offset 2 is needed for a successful match that returns the position after `]`.
+REVIEW|refined_wb_run3|test_llm_wb_34_parse_link_href_angle_bracket_block_mode|VALID|Angle-bracket destinations allow spaces and return their interior, with the end position after `>`.
+REVIEW|refined_wb_run3|test_llm_wb_36_parse_link_title_unescape_escapes|INVALID|Unescaping the quote is correct, but the input omits the required leading title separator.
+REVIEW|refined_wb_run3|test_llm_wb_37_parse_link_title_parenthesized_title|INVALID|The escaped parenthesis is allowed within that title form, but required separator whitespace is missing.
+REVIEW|refined_wb_run3|test_llm_wb_39_parse_codespan_text_inside_code_like_contexts|VALID|The code span handler does not suppress parsing in image context; the matching delimiters yield a code span.

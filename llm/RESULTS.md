@@ -40,8 +40,30 @@ labels and tested features outside the configuration (tables, strikethrough, tas
 
 ENCODES-BUG = 0 in every run. Failing WB tests are almost all assertion mismatches (not crashes): the prompt's `tokens()` helper works.
 A typical refined failure expects inline tokens wrapped in a `paragraph` token, which the inline parser never produces, so the expected
-value is wrong. **The failing WB tests still need the two-reviewer VALID / TAUTOLOGICAL / INVALID review** (`results/llm_*_wb_review.csv`)
-to separate LLM errors from real defects.
+value is wrong.
+
+### White-box validity review (two independent reviewers)
+**What was reviewed:** all **117 failing** LLM white-box tests, plus a random sample of **5 passing tests per run** (seed 322), so 147 tests.
+Each one was labelled VALID / TAUTOLOGICAL / INVALID against the code under test (including the regexes the LLM never saw) and CommonMark 0.31.2.
+**Reviewers:** reviewer 1 was Claude Opus 5.5. Reviewer 2 was GPT-6.2 Sol via opencode, given the same evidence but **blind** to reviewer 1's labels.
+*In the report, state that both reviewers were AI models, not team members.*
+**Agreement:** 145/147 (**98.6%**), Cohen's κ ≈ **0.96**. The two disagreements were resolved against the code: one passing test was
+re-labelled INVALID because it passes by coincidence, and one stays VALID because it's misnamed but correct.
+Per-test verdicts and reasons are in `results/llm_*_wb_review.csv`; the summary is in `results/llm_wb_review_summary.json`; reviewer 2's raw
+output is in `results/llm_wb_review_reviewer2_raw.txt`.
+
+| Group | Failing: INVALID / VALID | Passing sample: VALID / INVALID | Main causes of INVALID |
+|---|---|---|---|
+| P3 basic (3 runs) | 40 / **2** | 13 / 2 | wrong start position 23, incomplete token list 10, missing title whitespace 3, block-mode href 2 |
+| P4 refined (3 runs) | 75 / 0 | 14 / 1 | wrong start position 36, `paragraph` wrapper 13, missing title whitespace 11, incomplete token list 6, off-by-one end 3 |
+
+- **No TAUTOLOGICAL tests.** Even the basic prompt's passing expected values all follow from the spec or contract. The LLM didn't just copy Mistune.
+- **Only 2 of 117 failures are real Mistune defects**: basic run2 #18 and basic run3 #17, `parse_link_title(" (title)")` → `None`.
+  CommonMark §6.3 allows parenthesised titles, so this is the **known D5**. White-box LLM tests found **no new** defects.
+- **Refined prompts more often had the right *intent* but a wrong precondition.** Four refined tests aim at D5 but call without the leading
+  whitespace the regex needs. That regex was not in the prompt, which is a prompt-design lesson: give the model the preconditions too.
+- **The dominant error is an API misunderstanding, not spec knowledge.** Callers must pass `pos` just *after* `[` / `(`. Nothing in the
+  snippet's docstrings says so, and the LLM guessed wrong in 59 of 115 invalid failures.
 
 ## Mutation, union view (818 mutants, `results/mutation_analysis.md`)
 Manual groups alone (this run): 722 killed (88.3%). All groups including LLM: **731 (89.4%)**, so the LLM groups add **9 kills** the

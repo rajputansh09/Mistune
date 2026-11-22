@@ -17,7 +17,10 @@ $PY scripts/evaluate.py manual_all  tests/blackbox tests/whitebox tests/integrat
 for d in llm/generated/*/run*; do
   [ -n "$(ls "$d"/test_*.py 2>/dev/null)" ] || continue
   name="llm_$(basename "$(dirname "$d")")_$(basename "$d")"
-  $PY scripts/validate_llm.py "$d" > "results/${name}_validity.json"
+  case "$d" in
+    *_wb/*) $PY scripts/validate_wb.py "$d" "$name" > /dev/null ;;
+    *)      $PY scripts/validate_llm.py "$d" > "results/${name}_validity.json" ;;
+  esac
   $PY scripts/evaluate.py "$name" "$d" > /dev/null
 done
 $PY scripts/summary.py

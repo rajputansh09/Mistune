@@ -46,3 +46,15 @@ def test_ast_renderer_returns_tokens(record):
     tokens = mistune.create_markdown(renderer="ast")("# h")
     record(repr(tokens))
     assert tokens[0]["type"] == "heading" and tokens[0]["attrs"]["level"] == 1
+
+
+@pytest.mark.technique("EP")
+def test_percent_encoded_scheme_passes_filter_but_is_inert(record):
+    """BB-MS-10 'javascript%3A...' is NOT rewritten to #harmful-link (the
+    filter only matches a literal scheme).  It is not exploitable: '%' is not
+    allowed in a URL scheme (WHATWG URL parsing), so browsers resolve it as a
+    relative path.  This documents the limit of the filter rather than a
+    defect."""
+    out = record(render("[x](javascript%3Aalert)"))
+    assert out == '<p><a href="javascript%3Aalert">x</a></p>'
+    assert "javascript:" not in out

@@ -1,39 +1,49 @@
 Valid mutants S = 818   (stillborn: 0)
 
 ## Mutation score by group
-| blackbox | 612 | 74.8% | 26 timeouts |
-| whitebox | 649 | 79.3% | 14 timeouts |
-| integration | 408 | 49.9% | 13 timeouts |
-| union of groups | 723 | 88.4% | |
+| group | killed by a failing assertion | killed by hang (timeout) | total killed | score |
+|---|---|---|---|---|
+| blackbox | 586 | 26 | 612 | 74.8% |
+| whitebox | 633 | 14 | 647 | 79.1% |
+| integration | 395 | 13 | 408 | 49.9% |
+| union of groups | 700 | 22 | 722 | 88.3% |
+
+Score excluding hangs (union): 85.6%
 
 ## Score by mutation operator class (union of groups)
 | DECISION | 187/205 | 91.2% |
-| STATEMENT | 378/419 | 90.2% |
+| STATEMENT | 377/419 | 90.0% |
 | VALUE | 158/194 | 81.4% |
 
 ## Score by module, per group
 | module | mutants | blackbox | whitebox | integration | union |
 | block_parser.py | 246 | 67% | 80% | 44% | 85% |
 | helpers.py | 99 | 91% | 95% | 45% | 96% |
-| inline_parser.py | 234 | 79% | 79% | 49% | 91% |
+| inline_parser.py | 234 | 79% | 79% | 49% | 90% |
 | list_parser.py | 210 | 71% | 69% | 60% | 84% |
 | util.py | 29 | 79% | 100% | 52% | 100% |
 
 ## Unique kills (killed by this group only)
-| blackbox | 40 |
-| whitebox | 104 |
+| blackbox | 41 |
+| whitebox | 103 |
 | integration | 1 |
 
-## Capture-recapture: N1(BB)=612, N2(WB)=649, N12=539 -> estimated detectable faults N = N1*N2/N12 = 737; found by BB or WB = 722; mutants in program = 818
+## Illustration only: lecture-10 estimators (see limits below)
+Limits: (1) the mutant population is KNOWN (S), so capture-recapture estimates a quantity
+we already know; (2) black-box and white-box suites exercise the same code and are not
+independent samplers, which biases N downward; (3) Mills assumes seeded faults are as hard
+to find as real ones, but single-token mutants are simpler than real defects.
 
-## Mills fault seeding: S=818 seeded (mutants), s=723 detected, n=9 indigenous defects found
-   estimated indigenous faults N = n*S/s = 10.2; estimated remaining = 1.2
-   confidence that N <= 9: C = 0.29
-   confidence that N <= 10: C = 0.256
-   confidence that N <= 11: C = 0.226
-   confidence that N <= 10: C = 0.256
+## Capture-recapture: N1(BB)=612, N2(WB)=647, N12=538 -> estimated detectable faults N = N1*N2/N12 = 736; found by BB or WB = 721; mutants in program = 818
 
-## Surviving mutants (95): candidates for equivalent mutants or missing tests
+## Mills fault seeding: S=818 seeded (mutants), s=722 detected, n=11 indigenous defects found
+   estimated indigenous faults N = n*S/s = 12.5; estimated remaining = 1.5
+   confidence that N <= 11: C = 0.223
+   confidence that N <= 12: C = 0.197
+   confidence that N <= 13: C = 0.174
+   confidence that N <= 12: C = 0.197
+
+## Surviving mutants (96): candidates for equivalent mutants or missing tests
    M0010 helpers.py:115 parse_link_text  [DECISION] Lt -> LtE
    M0029 helpers.py:126 parse_link_text  [STATEMENT] break -> continue
    M0053 helpers.py:147 parse_link_href  [STATEMENT] delete statement
@@ -73,6 +83,7 @@ Valid mutants S = 818   (stillborn: 0)
    M0319 list_parser.py:247 _clean_list_item_text  [VALUE] 1 -> 0
    M0342 inline_parser.py:104 parse_escape  [VALUE] 0 -> 1
    M0365 inline_parser.py:121 parse_link  [STATEMENT] return x -> return None
+   M0371 inline_parser.py:146 parse_link  [STATEMENT] return x -> return None
    M0378 inline_parser.py:179 parse_link  [STATEMENT] delete statement
    M0386 inline_parser.py:140 parse_link  [DECISION] GtE -> Gt
    M0449 inline_parser.py:248 parse_emphasis  [STATEMENT] return x -> return None

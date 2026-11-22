@@ -341,6 +341,17 @@
   "defect": null
  },
  {
+  "nodeid": "tests/blackbox/test_bb_mistune_features.py::test_percent_encoded_scheme_passes_filter_but_is_inert",
+  "id": "test_percent_encoded_scheme_passes_filter_but_is_inert",
+  "technique": "EP",
+  "description": "BB-MS-10 'javascript%3A...' is NOT rewritten to #harmful-link (the",
+  "input": null,
+  "expected": null,
+  "actual": "<p><a href=\"javascript%3Aalert\">x</a></p>",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
   "nodeid": "tests/blackbox/test_bb_pairwise.py::test_pairwise[BB-PW-01]",
   "id": "BB-PW-01",
   "technique": "PAIRWISE",
@@ -746,6 +757,17 @@
   "actual": "<h2>Title</h2>",
   "verdict": "PASS",
   "defect": null
+ },
+ {
+  "nodeid": "tests/blackbox/test_bb_partition_boundary.py::test_partition_boundary[BB-EP-H13]",
+  "id": "BB-EP-H13",
+  "technique": "EP",
+  "description": "Invalid class: underline mixing '-' and '=' is not setext",
+  "input": "Title\n--=",
+  "expected": "<p>Title\n--=</p>",
+  "actual": "<h1>Title</h1>",
+  "verdict": "FAIL (known defect)",
+  "defect": "D12"
  },
  {
   "nodeid": "tests/blackbox/test_bb_partition_boundary.py::test_partition_boundary[BB-EP-P01]",
@@ -1323,10 +1345,10 @@
   "nodeid": "tests/blackbox/test_bb_random.py::test_fuzz_harmful_url_scheme_is_neutralised",
   "id": "test_fuzz_harmful_url_scheme_is_neutralised",
   "technique": "FUZZ",
-  "description": "BB-RF-03 Fuzz (security): javascript:/vbscript:/file: URLs in links and",
+  "description": "BB-RF-03 Fuzz (security): URLs with a *literal* javascript:/vbscript:/",
   "input": null,
   "expected": null,
-  "actual": "0 unsafe URLs emitted out of 100",
+  "actual": "0 of 100 literal-scheme harmful URLs emitted",
   "verdict": "PASS",
   "defect": null
  },
@@ -1370,7 +1392,7 @@
   "description": "BB-RF-07 Stress (DoS): 4000 unmatched '[' render in under 0.5 s",
   "input": null,
   "expected": null,
-  "actual": "3.31s",
+  "actual": "3.57s",
   "verdict": "FAIL (known defect)",
   "defect": "D11"
  },
@@ -1381,7 +1403,7 @@
   "description": "BB-RF-08 Stress (DoS): doubling the input at most ~doubles the time",
   "input": null,
   "expected": null,
-  "actual": "ratio 4.08",
+  "actual": "ratio 4.66",
   "verdict": "FAIL (known defect)",
   "defect": "D11"
  },
@@ -2579,6 +2601,17 @@
   "actual": null,
   "verdict": "PASS",
   "defect": null
+ },
+ {
+  "nodeid": "tests/test_oracle_validation.py::test_expected_matches_reference[BB-EP-H13]",
+  "id": "BB-EP-H13",
+  "technique": "EP",
+  "description": "Invalid class: underline mixing '-' and '=' is not setext",
+  "input": "Title\n--=",
+  "expected": "<p>Title\n--=</p>",
+  "actual": null,
+  "verdict": "PASS",
+  "defect": "D12"
  },
  {
   "nodeid": "tests/test_oracle_validation.py::test_expected_matches_reference[BB-EP-P01]",
@@ -4678,12 +4711,12 @@
   "nodeid": "tests/whitebox/test_wb_inline.py::test_wb_i19_link_text_precedence_autolink",
   "id": "test_wb_i19_link_text_precedence_autolink",
   "technique": "WB",
-  "description": "WB-I19 D6=T: an autolink spanning ']' takes precedence over the link.",
+  "description": "WB-I19 D6=T: precedence_scan finds an autolink inside the link text.",
   "input": null,
   "expected": null,
   "actual": "<p>[a <a href=\"http://x.y/%5D\">http://x.y/]</a>](/u)</p>",
-  "verdict": "PASS",
-  "defect": null
+  "verdict": "FAIL (known defect)",
+  "defect": "D13"
  },
  {
   "nodeid": "tests/whitebox/test_wb_inline.py::test_wb_i20_inline_html_anchor_toggles_in_link",

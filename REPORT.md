@@ -1,325 +1,321 @@
 # Evaluating Testing Strategies for an Open-Source Markdown Parser (Mistune 3.1.4)
 
-ECE 322 Software Testing and Maintenance · Fall 2026 · Final report
+ECE 322 Software Testing and Maintenance · Fall 2026 · Final report ·
+Ansh Rajput (arajput3), Vaibhav Baswala (baswala), Aditya Nair (anair5),
+Muhammad Abdur Rab Siddiqui (msiddiq6), Ayaan Hafeez (mhafeez1)
 
-Ansh Rajput (arajput3) · Vaibhav Baswala (baswala) · Aditya Nair (anair5) ·
-Muhammad Abdur Rab Siddiqui (msiddiq6) · Ayaan Hafeez (mhafeez1)
-
-> **Draft status.** Sections 1–5 and 8 contain measured results from the manual
-> test groups. Sections 6–7 describe the LLM protocol, and the cells marked
-> **[TBD-LLM]** must be filled after the team runs the ChatGPT sessions
-> (`llm/prompts/PROMPTS.md`). Section 9 lists the work but does not yet say who
-> did each part; the team must assign it.
-
----
+> **Draft.** Everything marked **[LLM]** is filled from the ChatGPT sessions
+> (protocol in §6). §9 must be completed by the team.
 
 ## 1. Software under test
 
 Mistune is a pure-Python Markdown-to-HTML converter, about 2,200 lines of core
-code. A `Markdown` object (`markdown.py`) runs a **block parser**
-(`block_parser.py`, `list_parser.py`) that splits the text into block tokens. It
-then runs an **inline parser** (`inline_parser.py`) on the text of each token,
-and passes the token tree to an **HTML renderer** (`renderers/html.py`). Both
-parsers rely on regular expressions and small scanners in `helpers.py` and
-`util.py`. We pinned `mistune==3.1.4` and used one configuration throughout,
-`create_markdown(escape=False)`: the CommonMark core with raw HTML allowed.
+code. `Markdown.parse` runs a **block parser** (`block_parser.py`,
+`list_parser.py`) that splits the text into block tokens. An **inline parser**
+(`inline_parser.py`) then processes the text of each token, and an **HTML
+renderer** (`renderers/html.py`) produces the output. Both parsers rely on
+regular expressions and small scanners in `helpers.py` and `util.py`. We pinned
+`mistune==3.1.4` and used a single configuration, `create_markdown(escape=False)`
+(the CommonMark core with raw HTML allowed). Markdown has no syntax errors: every
+string is valid input, so faults appear as *wrong structure*, and the rules
+interact, for example emphasis inside links inside list items inside quotes.
 
-Markdown is a good target for testing because it has no syntax errors. Every
-string is valid input, so faults appear as *wrong structure*, not crashes. The
-rules also interact: emphasis inside links inside list items inside quotes.
-
-**Oracle.** Expected outputs come from the CommonMark 0.31.2 specification. To
-show that our hand-written oracle is correct, every expected value is compared
-with **markdown-it-py 4.3.0**, an independent CommonMark-compliant
-implementation (`tests/test_oracle_validation.py`). A normaliser removes layout
-whitespace that has no meaning. Under it, markdown-it-py passes all 652 spec
-examples. The check caught one oracle mistake of ours before Mistune was run
-(BB-SY-F03: `<b c>` is a valid raw-HTML tag).
+**Oracle.** Expected outputs are derived from the CommonMark 0.31.2
+specification. Each hand-written expected value is checked against
+**markdown-it-py 4.3.0**, an independent CommonMark-compliant implementation,
+before Mistune is run. This check corrected one of our own expectations
+(BB-SY-F03). A normaliser removes layout whitespace that has no meaning. Under
+it, markdown-it-py matches all 652 spec examples and Mistune matches 594
+(91.1%). The normaliser also hides one systematic cosmetic difference: Mistune
+drops the final newline inside indented code. Without normalisation Mistune
+matches only 472 examples, almost all because of layout.
 
 ## 2. Testing strategy and its justification
 
-| Level | Technique (course source) | Why it fits a Markdown parser |
+| Level | Technique (lecture) | Justification for a Markdown parser |
 |---|---|---|
-| Black-box | Equivalence partitioning and boundary values (L4) | The spec defines numeric limits: heading level 1–6, indent ≤ 3, list number ≤ 9 digits, fence ≥ 3 |
-| | Decision tables (L6) | Emphasis is decided by 5–6 interacting conditions (flanking, run length, intraword, character) |
-| | Syntax-driven testing (L7) | Markdown is a grammar. Production coverage, plus delimiter and field-value errors, map directly to link and fence syntax |
-| | Pairwise testing (Lab 3, allpairspy) | Faults come from *pairs* of features (container × inline element) |
-| | Random, fuzz, operational profile, stress (L5) | Robustness and security on arbitrary text, realistic usage, denial of service |
-| White-box | Statement, branch and loop coverage, basis paths, def-use (L8, L9, Lab 3) | The parsing logic is dense in a few functions with loops and many branches |
-| Integration | Top-down with stubs, bottom-up with drivers, big-bang (L11, Lab 4) | Clear module tree (Markdown → block, inline, renderer → helpers) |
-| Fault injection | Mutation testing (value, decision, statement); Mills seeding; capture-recapture (L10) | Measures how good *each test group* is at finding faults, not just at covering code |
-| LLM-assisted | Basic vs refined prompts, repeated runs (Lab 5) | Required by the project. Compared on the same metrics |
+| Black-box | EP and BVA (L4) | The spec has numeric limits: heading level 1–6, indent ≤ 3, list number ≤ 9 digits, fence ≥ 3 |
+| | Decision tables (L6) | Emphasis depends on 5–6 interacting conditions (flanking, run length, intraword, character) |
+| | Syntax-driven (L7) | Markdown is a grammar; production coverage and delimiter/field errors map onto link and fence syntax |
+| | Pairwise, allpairspy (Lab 3) | Faults come from pairs of features (container × inline element) |
+| | Random, fuzz, operational profile, stress (L5) | Robustness and security on arbitrary text; realistic usage; denial of service |
+| White-box | Statement, branch, loop, basis-path, def-use (L8, L9, Lab 3) | The logic is concentrated in a few loop- and branch-heavy functions |
+| Integration | Top-down with stubs, bottom-up with drivers, big-bang (L11, Lab 4) | Clear module tree: Markdown → block, inline, renderer → helpers |
+| Fault injection | Mutation testing (L10) | Measures how well each group *detects* faults, not only what it covers |
+| LLM | Basic vs refined prompts, first reply scored, 3 repeats (Lab 5) | Required by the brief; evaluated on the same metrics |
 
-Mistune's own test suite was used only as a reference. It does not count toward
-any group.
+Mistune's own test suite was used only as a reference.
 
 ## 3. Testing activities
 
-**3.1 Black-box (151 executed cases).**
-`test_bb_partition_boundary.py` holds 62 EP and BVA cases across the four
-categories in the proposal. The variables, classes and boundaries are listed in
-`docs/test_design.md`, for example the ATX level {1, 2, 6, 7}, indent {3, 4},
-ordered start {0, 9 digits, 10 digits} and fence length {2, 3}.
-`test_bb_decision_table.py` has two decision tables: DT-1 for emphasis (15 rules)
-and DT-2 for "may a list item interrupt a paragraph" (7 rules).
-`test_bb_syntax.py` defines a BNF for inline links and fences and achieves
-production and terminal coverage (12 cases). It adds the L7 *delimiter-error*
-classes (missing, wrong, extra, escaped, paired or nested, 11 cases) and
-*field-value* errors (4 cases).
-`test_bb_pairwise.py` covers four factors (4 containers × 6 inline elements × 3
-positions × 2 block types). That is 144 combinations exhaustively; allpairspy
-reduces them to **24**, and a test checks that every pair is still covered.
-`test_bb_random.py` contains:
-- fuzzing over a Markdown-significant alphabet: 300 documents with no crash; in
-  escape mode, 0 of 200 leak `<script>`; 0 of 100 harmful URLs survive;
-- a Musa **operational profile** (headings 15%, paragraphs 40%, lists 20%,
-  quotes 10%, code 10%, ordered 5%): 200 realistic documents, each compared with
-  the reference;
-- **differential fuzzing**: 290 of 300 malformed documents (96.7%) agree with
-  the reference;
-- **stress** tests.
+**Black-box (156 cases; 3 slow stress tests are excluded from the coverage and mutation runs).**
+- **EP/BVA (63).** Variables, classes and boundaries for four categories,
+  e.g. ATX level {1, 2, 6, 7}, indent {3, 4}, ordered start {0, 9 digits,
+  10 digits}, fence length {2, 3}.
+- **Decision tables (22).** Two tables: DT-1 emphasis (15 rules) and DT-2
+  "may a list item interrupt a paragraph" (7 rules).
+- **Syntax-driven (27).** A BNF for inline links and fences, with production
+  and terminal coverage plus delimiter-error and field-value-error cases.
+- **Pairwise (25).** 4 containers × 6 inline elements × 3 positions × 2 block
+  types is 144 combinations; allpairspy needs 24, and one more test checks that
+  every pair is covered.
+- **Random (8).** Fuzzing: 300 documents, 0 crashes; 0 of 200 `<script>`
+  leaks in escape mode; 0 of 100 *literal-scheme* harmful URLs survive. A Musa
+  operational profile: 200 README-like documents, all equal to the reference.
+  Differential fuzzing: 290/300 agree with the reference. Three stress tests.
+- **Mistune-specific behaviour (10).** Kept apart from defects.
 
-Nine more cases check documented Mistune-specific behaviour (escaping, harmful
-URLs, `max_nested_level`, plugins) and keep it apart from defects.
+**White-box (100 cases).** A control-flow graph of `helpers.parse_link_text`
+has V(G) = 6. Its 6 basis paths, loop counts of 0, 1 and 2+, and all 10
+def-use pairs of `level`, `found` and `pos` are covered. The other selected
+units were tested decision by decision (`parse_emphasis`, `parse_codespan`,
+`parse_link`, `parse_fenced_code`, `parse_ref_link`, `extract_block_quote`,
+HTML-block rules 1–7, every `list_parser` function, `safe_url`). Internal flags
+such as `in_link` were set through `InlineState`. Four tests were added for
+branches the first coverage run missed.
 
-**3.2 White-box (100 cases).** We drew control-flow graphs for the selected
-units. The full analysis of `helpers.parse_link_text` is in
-`docs/whitebox_cfg.md`: V(G) = 6, six basis paths, the loop run 0, 1 and 2 or
-more times, and all ten def-use pairs of `level`, `found` and `pos` covered. The
-other units were tested decision by decision: `parse_emphasis`,
-`parse_codespan`, `parse_link`, `parse_fenced_code`, `parse_setex_heading`,
-`parse_ref_link`, `extract_block_quote`, all 7 CommonMark HTML-block rules of
-`parse_raw_html`, every function in `list_parser`, and `safe_url`. Internal
-state flags (`in_link`, `in_emphasis`, …) were set directly through
-`InlineState` to reach branches that black-box input cannot reach cheaply. After
-the first coverage run, four tests were added for lines it showed as missed
-(WB-B19–B21, WB-I24).
+**Integration (14 cases).**
+- **Top-down:** `Markdown.parse` with `unittest.mock` stubs for the parsers and
+  renderer. Checks: CRLF normalisation, one inline call per text token, the
+  shared `env` carrying link definitions, the renderer contract and hook order.
+  The stubs were then replaced one at a time.
+- **Bottom-up:** drivers for the inline parser on real helpers, the block and
+  list parsers, and the renderer.
+- **Big-bang:** a README document, safe mode, file reading and plugins.
 
-**3.3 Integration (14 cases).** Top-down: `Markdown.parse` first ran with
-`unittest.mock` stubs for the block parser, inline parser and renderer. We
-checked the interfaces: CRLF normalisation, one inline call per text token, the
-shared `env` carrying link definitions, the renderer contract, and hook order.
-The stubs were then replaced one at a time. Bottom-up: drivers for
-InlineParser over the real helpers, then for BlockParser + list_parser, then for
-the renderer with hand-made tokens. Big-bang: a README document, safe mode end
-to end, file reading, and plugins.
+**Fault injection.** Our own AST engine (`mutation/mutate.py`) generates 818
+single-fault mutants in the five parser modules:
+- value: ±1, True↔False;
+- decision: `<`↔`<=`, `==`↔`!=`, `in`↔`not in`, and↔or, negated conditions;
+- statement: deletion, break→continue, return→None.
 
-**3.4 Fault injection.** `mutation/mutate.py` is our own AST mutation engine. We
-did not use mutmut, so the operators match the lecture and every mutant can be
-reproduced. It produced **818 single-fault mutants** in the five parser modules:
-- value: integer ±1, True↔False;
-- decision: `<`↔`<=`, `==`↔`!=`, `in`↔`not in`, and↔or, negated `if`/`while`;
-- statement: delete, break→continue, return→None.
-
-Every mutant was run against every group. A hang (an infinite loop caused by the
-fault) counts as a kill.
+Every mutant is run against every group.
 
 ## 4. Test cases
 
-The full tables are in `docs/test_case_tables.md` (generated from the run: ID,
-technique, description, input, expected, actual, result; failed cases in bold).
-Representative rows:
+The table below is the complete test-case list in compact form. Each row is a
+family of cases. Every failed case is listed individually in §5.2. The
+one-row-per-case table (270 rows, with input, expected, actual and result) is
+in the repository (`docs/test_case_tables.md`); its inclusion as an appendix
+depends on the instructor's answer.
 
-| ID | Technique | Input | Expected (CommonMark) | Actual | Result |
-|---|---|---|---|---|---|
-| BB-EP-H04 | BVA level 7 | `####### Title` | `<p>####### Title</p>` | same | PASS |
-| BB-EP-L06 | BVA 10 digits | `1234567890. a` | `<p>1234567890. a</p>` | same | PASS |
-| BB-EP-E12 | EP invalid char | `a\x00b` | `<p>a�b</p>` | raw NUL | **FAIL D10** |
-| BB-DT-E09 | DT rule R9 | `a*"foo"*` | `<p>a*&quot;foo&quot;*</p>` | `<p>a<em>…</em></p>` | **FAIL D1** |
-| BB-DT-E13 | DT rule R13 | `*foo **bar***` | `<em>foo <strong>bar</strong></em>` | literal | **FAIL D2** |
-| BB-SY-P04 | Production P3 | `[a](b(c(d)))` | `href="b(c(d))"` | `href="b(c(d"` + `))` | **FAIL D4** |
-| BB-SY-D07 | Paired delimiter | `[a [b](/c)](/d)` | inner link only | outer link wins | **FAIL D6** |
-| BB-RF-07 | Stress | `"[" * 4000` | < 0.5 s | 3.2 s | **FAIL D11** |
-| WB-H02 | Loop ×2, du(level) | `parse_link_text("a[b]c]rest",0)` | `("a[b]c", 6)` | same | PASS |
-| TD-03 | Top-down interface | `[x]` + definition | env passed to the inline stub | same | PASS |
+| IDs | Technique | # | What varies (inputs / conditions) | Result |
+|---|---|---|---|---|
+| BB-EP-H01–H13 | EP/BVA | 13 | ATX level 1/2/6/7, missing space, empty, closing `#`, indent 3/4, setext length 1, `-`/`=`, mixed underline | 12 P, 1 F |
+| BB-EP-P01–P06, T01–T03 | EP/BVA | 9 | paragraph joins and splits; 1 or 2 trailing spaces, `\`, end of paragraph; break with k = 2/3, mixed characters | 9 P |
+| BB-EP-I01–I15 | EP | 15 | `*` `_` `**` `***`, unclosed, intraword; code span; inline, titled, reference, undefined, auto, e-mail links; image | 15 P |
+| BB-EP-L01–L10, Q01–Q04 | EP/BVA | 14 | bullet characters, `)` delimiter, start 0 / 9 / 10 digits, loose, nested, indent 1, interruption; quotes: simple, lazy, nested, with list | 14 P |
+| BB-EP-E01–E12 | EP/BVA | 12 | escapes, entities (named, hex, unknown), empty or whitespace document, fences (info, 2 backticks, unclosed), NUL | 11 P, 1 F |
+| BB-DT-E01–E15 | Decision table | 15 | DT-1 rules R1–R15 (character, left/right flanking, intraword, run lengths, nesting) | 10 P, 5 F |
+| BB-DT-L01–L07 | Decision table | 7 | DT-2 rules (paragraph open, ordered, start = 1, empty item) | 7 P |
+| BB-SY-P01–P12 | Production coverage | 12 | link productions P1–P7 (empty, angle, bare, nested parentheses, 3 title forms, whitespace, inline text); fences P8–P11 | 10 P, 2 F |
+| BB-SY-D01–D11 | Delimiter errors | 11 | missing, wrong, extra, escaped, nested or paired delimiters; unbalanced `(`; fence length and character mismatch | 8 P, 3 F |
+| BB-SY-F01–F04 | Field-value errors | 4 | space in destination, unterminated title, newline in `<…>`, backtick in info string | 4 P |
+| BB-PW-01–24 + check | Pairwise | 25 | container × inline element × position × block type | 25 P |
+| BB-RF-01–08 + 1 | Fuzz, profile, stress | 9 | random strings, XSS payloads, harmful schemes, operational profile, differential, deep nesting, 4000 `[`, scaling; normaliser sanity check | 7 P, 2 F |
+| BB-MS-01–10 | Mistune-specific | 10 | escape mode, harmful-URL filter, `data:` images, nesting limit 6/7, hard_wrap, plugin, AST, `%3A` scheme | 10 P |
+| WB-H01–H19, U01–U06 | Branch, path, loop, def-use | 25 | `parse_link_text` (6 basis paths), label (500/501 characters), href (B1–B5), title, `parse_link`, util functions | 25 P |
+| WB-I01–I24 | Branch | 24 | emphasis D1–D6, code span D1–D3, link D1–D11, inline HTML, auto e-mail, hard_wrap, escapes | 23 P, 1 F |
+| WB-B01–B21 (+R1–R7) | Branch | 30 | fences, ATX/setext, link definitions, block quotes, HTML rules 1–7, depth limit | 30 P |
+| WB-L01–L08 (+5), WB-R01–R03 (+7) | Branch | 21 | list bullets, continue width, clamp, loose/tight, depth; `safe_url` outcomes; renderer escaping | 21 P |
+| TD-01–06, BU-01–04, BB-01–04 | Integration | 14 | stubs replaced level by level; drivers bottom-up; big-bang documents | 14 P |
 
-## 5. Results (manual groups)
+## 5. Outcomes
 
-**5.1 Execution and coverage.** All non-defect tests pass. 13 test cases fail
-because of real defects; they are kept as strict `xfail`. Coverage of the five
-parser modules plus the renderer and core was measured with coverage.py, branch
-mode, excluding plugins and directives:
+**5.1 Execution and coverage** (coverage.py, branch mode; plugins and
+directives excluded). *Redundancy* means redundancy **for coverage only**: the
+share of cases outside a greedy minimal subset that has the same arc coverage.
+It does not mean the cases are useless; every defect sits on code that is also
+covered by passing tests (coincidental correctness).
 
-| Group | Cases | Fail | Statement % | Branch % | Branch % per case | Redundancy % | Oracle valid |
-|---|---|---|---|---|---|---|---|
-| Black-box (all) | 151 | 11 (+2 slow) | 93.2 | 84.2 | 0.56 | 84.0 | 135/135 |
-| – EP/BVA only (budget reference for the LLM) | 62 | 1 | 80.7 | 62.3 | 1.01 | 50.0 | 62/62 |
-| White-box | 100 | 0 | 91.8 | 83.4 | 0.83 | 32.0 | n/a |
-| Integration | 14 | 0 | 76.7 | 58.3 | 4.16 | 21.4 | n/a |
-| **All manual** | 265 | 13 | **97.9** | **94.5** | 0.36 | 81.1 | 135/135 |
+| Group | Cases | Fail | Statement % | Branch % | Branch % per case | Redundancy % (coverage) |
+|---|---|---|---|---|---|---|
+| Black-box, all (excl. slow) | 153 | 12 | 93.2 | 84.2 | 0.55 | 84.2 |
+| — EP/BVA only (budget pair for the LLM, §7) | 63 | 2 | 80.7 | 62.3 | 0.99 | 50.8 |
+| White-box, all | 100 | 1 | 91.8 | 83.4 | 0.83 | 32.0 |
+| — helpers + inline (budget pair for the LLM, §7) | 49 | 1 | 60.4 | 44.2 | 0.90 | 34.7 |
+| Integration | 14 | 0 | 76.7 | 58.3 | 4.16 | 21.4 |
+| **All manual** | 267 | 13 | **97.9** | **94.5** | 0.35 | 80.8 |
 
-*Redundancy* is 1 − |greedy minimal subset with the same arc coverage| / |cases|,
-computed from per-test coverage contexts. The black-box cases are highly
-redundant *for coverage*, yet they found every defect: the defects sit on
-lines that are *already covered* by passing tests. This is the lecture's point
-that coverage alone does not show the absence of faults (coincidental
-correctness). Of the remaining uncovered code, `inline_parser.py:379` is
-infeasible, and `list_parser.py:110` needs a plugin that is outside our
+The remaining uncovered code includes `inline_parser.py:379`, which is
+infeasible, and `list_parser.py:110`, which needs a plugin outside our
 configuration.
 
-**5.2 Defects.** 11 deviations from CommonMark were confirmed (`docs/defects.md`).
-Our designed tests found **9 of them**: D1–D7, D10 and D11. D8 (setext inside a
-lazy quote) and D9 (HTML comment edge cases) were found only by the 652-example
-spec run, which we use as an external reference. Mistune passes 594/652 spec
-examples (91.1%), and 45 of the 58 failures are emphasis. The most serious
-defect is **D11**: **quadratic run time** on unmatched `[` (8,000 characters
-take 12.6 s, against 0.10 s for the reference parser; doubling the input
-quadruples the time). Any service that renders untrusted Markdown with Mistune
-can therefore be slowed down on purpose (algorithmic DoS). **D10** (NUL not
-replaced) breaks a security requirement of the spec. Results by technique:
+**5.2 Defects** (details: `docs/defects.md`). There are 13 deviations from
+CommonMark; **11 were found by our designed tests**, and D8 and D9 only by the
+652-example spec run. All 15 failed cases are listed.
 
-| Technique | Defects found |
-|---|---|
-| Decision tables | D1, D2, D3 |
-| Syntax-driven | D4, D5, D6, D7 |
-| EP/BVA | D10 |
-| Stress/fuzz | D11 |
-| Pairwise, operational profile, white-box, integration | none |
-
-White-box tests were written *from* the code, so they confirm what the code does
-rather than what the spec requires. They found no spec defects. Their value
-shows in coverage and in mutation kills (5.3).
-
-**5.3 Mutation analysis.** 818 valid mutants (0 stillborn) were run against each group (`results/mutation_analysis.md`).
-
-| Group | Killed | Mutation score | Unique kills (only this group) |
+| ID | Defect | Failed test cases | Found by |
 |---|---|---|---|
-| Black-box | 612 | 74.8% | 40 |
-| White-box | 649 | **79.3%** | **104** |
-| Integration | 408 | 49.9% | 1 |
-| **Union** | 723 | **88.4%** | – |
+| D1 | `a*"foo"*` gets emphasis; punctuation rule for flanking ignored | BB-DT-E09 | decision table |
+| D2 | nested runs of the same character (`*foo **bar***`) stay literal | BB-DT-E13, E14 | decision table |
+| D3 | unequal run lengths (`**foo*`) stay literal | BB-DT-E10, E11 | decision table |
+| D4 | balanced parentheses in a destination: `[a](b(c(d)))` → `href="b(c(d"` | BB-SY-P04, D08 | syntax-driven |
+| D5 | `(title)` form not recognised | BB-SY-P07 | production coverage |
+| D6 | link nested inside link text is allowed | BB-SY-D07 | paired delimiter |
+| D7 | image alt text keeps Markdown of nested images | BB-SY-D11 | paired delimiter |
+| D10 | U+0000 not replaced by U+FFFD (spec §2.3, security) | BB-EP-E12 | EP (invalid character) |
+| D11 | **quadratic time** on unmatched `[`: 8,000 characters take 12.6 s vs 0.10 s for the reference; time ×4 when input ×2 | BB-RF-07, RF-08 | stress |
+| D12 | mixed setext underline `foo\n--=` becomes `<h1>` | BB-EP-H13 | EP (added after peer review) |
+| D13 | an autolink containing `]` inside link text cancels the outer link | WB-I19 | white-box validity check |
+| D8, D9 | setext inside a lazy quote; HTML comment edge cases | — | spec run only |
 
-By operator class: decision 91.2%, statement 90.2%, value 81.4%. Value
-mutants (±1 on constants such as `{0,3}` indentation limits) survive most
-often. By module: helpers 96%, util 100%, inline 91%, block 85%, list 84%.
-Black-box and white-box rank differently by coverage and by mutation score.
-White-box tests kill 104 mutants that no other group kills, so the groups
-**complement** each other.
+D11 was timed on an Apple M2 (8 GB RAM), macOS 26.6, CPython 3.13.17, idle. It
+means any service that renders untrusted Markdown with Mistune can be slowed
+down on purpose (algorithmic denial of service). The harmful-URL filter misses
+percent-encoded schemes (`javascript%3A…`), but these are inert because `%` is
+illegal in a URL scheme, so browsers treat them as relative links (BB-MS-10).
 
-Sampled survivors include both equivalent and non-equivalent mutants:
-- **M0010** (`pos < len` → `<=` in `parse_link_text`) is **equivalent**. At
-  `pos == len` the regex search fails and the loop breaks anyway.
-- **M0029** (`break` → `continue` after the matching `]`) is **not
-  equivalent**. `parse_link_text("a]b]", 0)` returns `('a]b', 4)` instead of
-  `('a', 2)`. It survives because black-box input reaches this function only
-  when the faster label regex has already failed, and our unit tests never put
-  a second `]` after the closing one. This is a concrete test gap, and one unit
-  test fixes it.
+D13 is instructive. Our first version of WB-I19 asserted Mistune's output. The
+white-box validity check of §6.2 flagged it as asserting behaviour the spec
+forbids, which is the risk the brief raises for code-derived oracles, and it
+applied to our own tests too.
 
-**Capture-recapture** (lecture 10), with the black-box and white-box groups as
-independent "testers": N1 = 612, N2 = 649, N12 = 539, so the estimated number of
-detectable faults is N = N1·N2/N12 ≈ 737. The two groups found 722 of them,
-which means they are close to the detection limit of this pair of techniques.
+**5.3 Mutation analysis** (818 valid mutants; a hang caused by the fault counts
+as a kill but is shown separately).
 
-**Mills fault seeding**, with the mutants as seeded faults: S = 818 seeded,
-s = 723 detected, n = 9 indigenous defects found by our designed tests. The
-estimated number of indigenous defects is N̂ = n·S/s = **10.2**. This is close
-to the **11** defects that actually exist, since the spec run found two more
-(D8, D9). The confidence that no defect remains beyond the 9 found is only
-C ≈ 0.29, consistent with the two defects that the spec run did find.
+| Group | Killed by failing assertion | Killed by hang | Total killed | Score | Unique kills |
+|---|---|---|---|---|---|
+| Black-box | 586 | 26 | 612 | 74.8% | 41 |
+| White-box | 633 | 14 | 647 | **79.1%** | **103** |
+| Integration | 395 | 13 | 408 | 49.9% | 1 |
+| **Union** | 700 | 22 | 722 | **88.3%** (85.6% without hangs) | – |
+
+By operator: decision 91.2%, statement 90.0%, value 81.4%. Value mutants such as
+±1 on the `{0,3}` indentation limits survive most often. By module: util 100%,
+helpers 96%, inline 90%, block 85%, list 84%.
+
+Black-box and white-box rank differently on coverage and on mutation score.
+White-box kills 103 mutants that no other group kills, so the groups
+complement each other. Not every survivor is a test gap:
+- **M0010** (`pos < len` → `<=` in `parse_link_text`) is equivalent.
+- **M0029** (`break` → `continue`) is not: `parse_link_text("a]b]", 0)`
+  returns `('a]b', 4)` instead of `('a', 2)`. No test places a second `]`
+  after the closing one. This is a concrete gap.
+
+*Lecture-10 estimators, as an illustration only.*
+Capture-recapture, treating the black-box and white-box groups as two testers:
+N1 = 612, N2 = 647, N12 = 538, so N̂ = N1·N2/N12 ≈ 736 detectable faults; 721 were
+found. Mills fault seeding, with the mutants as seeded faults and *the same
+suites* for seeded and real faults: S = 818, s = 722, n = 11 real defects found
+by the designed tests, so N̂ = n·S/s ≈ 12.5.
+Neither estimate is used as evidence. The mutant population is *known*, so
+capture-recapture estimates a number we already have. The two suites exercise
+the same code and are not independent. Mills assumes seeded faults are as hard
+to find as real ones, but single-token mutants are simpler than defects such
+as D11.
 
 ## 6. LLM-assisted test generation (ChatGPT)
 
-**Protocol** (`llm/prompts/PROMPTS.md`). We used four prompts in the Lab 5 style:
-- **P1** basic black-box ("write 60 black-box tests for Mistune 3.1.4");
-- **P2** refined black-box: role, spec link, the four categories, EP and BVA
-  required, the exact `Case(...)` output format, and three examples;
-- **P3** basic white-box (source pasted, "write 40 unit tests");
-- **P4** refined white-box: target functions, harness code, explicit criteria
-  (100% branch coverage, loop 0/1/2+, every decision outcome T and F, def-use
-  pairs of `level`/`found`/`pos`).
+**6.1 Prompts and how they were formed** (`llm/prompts/PROMPTS.md`). We used
+four prompts:
+- **P1** basic black-box;
+- **P2** refined black-box: role, spec link, four categories × 15 cases,
+  EP/BVA required, three examples;
+- **P3** basic white-box (source code pasted);
+- **P4** refined white-box: target functions, harness, explicit criteria
+  (branch coverage, loops run 0/1/2+, every decision T/F, def-use pairs), and
+  "derive expected values from the spec, not by running the code".
 
-The budgets match the manual counterparts: 60 vs 62 EP/BVA cases, and 40
-white-box tests. Each refined prompt was followed by refinement turns:
-- R1: output format;
-- R2: missing categories or coverage;
-- R3: we send back the expected values our validator rejected.
+Budgets are 60 black-box and 40 white-box tests. *All four prompts end with the
+same output-format block*, so the only variable is the testing guidance, and
+the basic replies can be scored as well.
 
-The model, version and date of every session are recorded in `llm/sessions/`.
-P2 and P4 were each run **3 times in fresh chats** to measure repeatability.
+The refined prompts were formed iteratively: **[LLM: describe drafts tried, what
+changed and why]**. The model and date of every session are logged in
+`llm/sessions/`.
 
-**Validity assessment, done before execution** (`scripts/validate_llm.py`):
-1. Does the file parse and import?
-2. Each expected value is compared with the CommonMark reference and classed as:
-   - *valid*;
-   - *hallucinated*: the LLM is wrong and Mistune is right;
-   - *both wrong*;
-   - *defect found*: the LLM agrees with CommonMark and Mistune does not.
+**6.2 How validity was assessed.**
+- **Scored reply.** Every group is scored on the **first reply**. Only
+  mechanical edits (stripping prose, fixing imports) are allowed, and each is
+  counted as effort. Expected values are never edited.
+- **Black-box validity** (`validate_llm.py`). Before execution, each expected
+  value is compared with the CommonMark reference and classed as valid,
+  *hallucinated* (the LLM is wrong and Mistune right), *both wrong*, or
+  *defect found* (the LLM agrees with the spec and Mistune does not).
+- **White-box validity** (`validate_wb.py`). A test that asserts whatever the
+  code returns always passes, so three checks are made:
+  - every Markdown string a test renders is compared with the reference, and a
+    passing test with non-conforming output is flagged **ENCODES-BUG**;
+  - each test runs against 150 sampled mutants, and a test that kills none is
+    flagged **WEAK**;
+  - two members independently review failing and sampled passing tests as
+    VALID, TAUTOLOGICAL or INVALID, and the agreement rate is reported.
+- **Check on our own tests.** We first ran the white-box check on our 49
+  manual helper and inline tests. It flagged 2 as ENCODES-BUG: one became
+  defect D13, the other is documented Mistune behaviour (M5). It flagged 7 as
+  zero-kill, all of which test `util.py` or a constructor that the mutant
+  sample does not touch.
 
-Manual edits needed to make a file run are counted in the session log as effort.
-The tool was first checked on our own black-box suite: it classified all 11
-defect cases as *defect found* and flagged only the 2 deliberate Mistune-specific
-cases.
+**6.3 Results [LLM].** First replies; mean ± spread over 3 runs.
 
-**Results.** **[TBD-LLM]**: paste the output of `results/summary.md`,
-`validate_llm.py` and `consistency.py`.
-
-| Measure | P1 basic BB | P2 refined BB (mean of 3 runs) | P3 basic WB | P4 refined WB (mean of 3) |
+| Measure | P1 basic BB | P2 refined BB | P3 basic WB | P4 refined WB |
 |---|---|---|---|---|
 | Cases delivered / requested | /60 | /60 | /40 | /40 |
-| Runnable without edits (edits needed) | | | | |
-| Oracle validity % (hallucinated / both wrong) | | | n/a | n/a |
+| Runnable without edits (number of edits) | | | | |
+| Black-box: valid / hallucinated / both wrong / defect found | | | — | — |
+| White-box: pass / ENCODES-BUG / WEAK / reviewed INVALID | — | — | | |
 | Statement % / branch % | | | | |
-| Mutation score % | | | | |
+| Mutation score % (hangs) | | | | |
 | Defects found (IDs) | | | | |
-| Redundancy % | | | | |
-| Time spent (prompting + fixing, min) | | | | |
-| Jaccard overlap between runs | – | | – | |
+| Coverage redundancy % | | | | |
+| Effort (minutes, prompting + edits) | | | | |
+| Jaccard overlap of inputs across runs | | | | |
 
-**What to look for** (use this to write the discussion):
-- Does prompt specificity raise validity and coverage?
-- Does the refined prompt produce real BVA pairs (6/7, 3/4, 9/10 digits), or
-  only "typical" cases?
-- Do LLM expected values copy what Mistune does instead of what CommonMark says?
-  Emphasis is the most likely place.
-- Do consecutive replies (R3) fix rejected values, or introduce new errors?
-- How stable are the three runs (inputs in common, variance of the scores)?
-- Do LLM tests *complement* ours, i.e. kill mutants our groups missed? Compare
-  the unique kills in `results/mutation_analysis.md`.
+**6.4 Discussion [LLM].** Answer each question with evidence from the table:
+- **Relevance of prompts:** did adding the technique, spec and examples raise
+  validity, coverage and mutation score? Were the BVA pairs real (6/7, 3/4,
+  9/10 digits)?
+- **Quality:** where were the hallucinations? Emphasis and nested links are
+  likely. Did expected values copy Mistune instead of the spec?
+- **Consecutive replies**, reported separately from the score: how many
+  rejected values did F2 fix, and how many new errors did it introduce?
+- **Repeatability:** Jaccard overlap and the spread of the scores across the
+  3 runs.
+- **Complementarity:** unique mutant kills versus the manual groups.
 
-## 7. Comparative evaluation
+## 7. Comparative evaluation (equal budgets)
 
-| Criterion | Manual (black-box, EP/BVA, 62) | Manual (white-box, 100) | LLM basic | LLM refined |
-|---|---|---|---|---|
-| Design effort (person-hours) | **[team]** | **[team]** | [TBD-LLM] | [TBD-LLM] |
-| Statement / branch coverage % | 80.7 / 62.3 | 91.8 / 83.4 | | |
-| Branch % per case | 1.01 | 0.83 | | |
-| Mutation score % | 74.8 (all BB) | 79.3 | | |
-| Test validity | 62/62 (100%) | 100% | | |
-| Defects found | D10 (all BB: 9 IDs) | none | | |
+The manual suite has 267 cases in total, far more than the 90–120 planned in
+the proposal. The proposal's comparable-budget comparison is therefore made
+only between matched pairs: **63 manual EP/BVA cases vs 60 LLM black-box cases**,
+and **49 manual helper and inline unit tests vs 40 LLM white-box tests**. The
+rest of the manual suite is reported in §5 but is not part of this comparison.
+
+| Criterion | Manual BB (63) | LLM BB basic | LLM BB refined | Manual WB (49) | LLM WB basic | LLM WB refined |
+|---|---|---|---|---|---|---|
+| Statement / branch % | 80.7 / 62.3 | | | 60.4 / 44.2 | | |
+| Branch % per case | 0.99 | | | 0.90 | | |
+| Mutation score %, all 818 mutants (hangs) | 58.6 (14) | | | 39.4 (5) | | |
+| Oracle validity | 63/63 | | | 2 ENCODES-BUG (fixed) | | |
+| Defects found | D10, D12 | | | D13 | | |
+| Design effort (hours) | [team] | | | [team] | | |
 
 ## 8. Conclusions
 
 1. **Specification-based black-box techniques found the defects.** Decision
-   tables and syntax-driven testing together found 7 of the 9 defects found by
-   designed tests, and the defects cluster where the spec is most complex
-   (emphasis, nested links). Pairwise and operational-profile testing found
-   none. Combined with 91% spec conformance, this suggests that Mistune works
-   well on everyday documents and fails on edge-case syntax.
+   tables and syntax-driven testing found 7 of the 11 defects found by designed
+   tests. Pairwise and operational-profile testing found none, which fits
+   Mistune's 91% conformance on ordinary documents.
 2. **Coverage is necessary, not sufficient.** Black-box tests reached 93%
-   statement coverage while 81–84% of them were redundant *for coverage*, and
-   every defect was on covered code. White-box tests had the best coverage per
-   case but found no spec defects.
-3. **Mutation scores show complementarity.** White-box tests found no spec
-   defects but have the highest mutation score (79.3%) and 104 unique kills.
-   Black-box tests find spec defects. Only the union reaches 88.4%. Mills
-   seeding estimated 10.2 defects against the 11 that exist.
-4. **Robustness testing found the highest-severity issue** (D11, quadratic DoS).
-   Functional techniques could not have found it.
-5. **An independent oracle matters.** The differential check against
-   markdown-it-py removed a wrong expectation before execution. The same tool
-   is what lets us judge LLM output objectively.
-6. LLM conclusions: **[TBD-LLM]**.
+   statement coverage with high coverage-redundancy, and every defect lies on
+   covered code.
+3. **Code-derived oracles are risky.** Our own white-box test encoded defect
+   D13 until the reference-backed check caught it. White-box tests are still
+   the strongest fault detectors by mutation score.
+4. **Robustness testing found the most severe issue,** D11, a quadratic-time
+   denial of service. Functional techniques could not have found it.
+5. **[LLM conclusions.]**
 
-**Limitations.** The validity of mutation analysis rests on the
-competent-programmer and coupling hypotheses. Equivalent mutants (estimated in
-5.3) lower the scores. Timings come from one machine. One configuration only.
+**Limitations.** Mutation results rest on the competent-programmer and coupling
+hypotheses, and equivalent mutants deflate the scores. Timings come from one
+machine. Only one configuration was tested.
 
 ## 9. Responsibilities and contributions
 
-**[Team to assign; one row per member, as the project description requires.]**
+**[Team: one row per member with concrete tasks; required by the brief.]**
 
-| Member | Responsibilities |
+| Member | Contributions |
 |---|---|
 | Ansh Rajput | |
 | Vaibhav Baswala | |
@@ -327,23 +323,27 @@ competent-programmer and coupling hypotheses. Equivalent mutants (estimated in
 | Muhammad Abdur Rab Siddiqui | |
 | Ayaan Hafeez | |
 
-Work packages to assign:
-- EP/BVA suite;
-- decision tables and syntax-driven suite;
-- pairwise, fuzz and stress;
-- white-box CFG and unit tests;
-- integration tests;
-- mutation and fault seeding;
-- LLM sessions and validation;
-- report and presentation.
-
 ## References
 
-1. CommonMark Spec 0.31.2, https://spec.commonmark.org/0.31.2/
-2. Mistune 3.1.4, https://github.com/lepture/mistune
-3. markdown-it-py, https://github.com/executablebooks/markdown-it-py
-4. ECE 322 lecture notes 4–11 and Labs 1–5, Fall 2026.
-5. J. D. Musa, "Operational profiles in software-reliability engineering," *IEEE Software*, 1993.
-6. Y. Jia and M. Harman, "An analysis and survey of the development of mutation testing," *IEEE TSE*, 2011.
-7. H. D. Mills, "On the statistical validation of computer programs," IBM FSD, 1972.
-8. J. Wang et al., "Software testing with large language models: survey, landscape, and vision," *IEEE TSE*, 2024.
+1. CommonMark Spec 0.31.2, https://spec.commonmark.org/0.31.2/ · Mistune 3.1.4,
+   https://github.com/lepture/mistune · markdown-it-py,
+   https://github.com/executablebooks/markdown-it-py
+2. ECE 322 Fall 2026 lecture notes:
+   - L4 *Black Box Testing I*: taxonomy, equivalence classes, boundary values;
+   - L5 *Black Box Testing II*: random and fuzz testing, operational profiles;
+   - L6 *Black Box Testing III*: decision tables;
+   - L7 *Black Box Testing IV*: syntax-driven and state-based testing;
+   - L8 *White Box Testing I*: control flow, coverage, basis paths;
+   - L9 *White Box Testing II*: data-flow testing;
+   - L10 *Fault Injection*: fault seeding, capture-recapture, mutation testing;
+   - L11 *Integration Testing*.
+3. ECE 322 labs: Lab 2 *Black-box testing (EPC, weak n×1)*; Lab 3 *Unit and
+   pairwise testing*; Lab 4 *Integration testing*; Lab 5 *LLMs for software
+   testing*.
+4. J. D. Musa, "Operational profiles in software-reliability engineering,"
+   *IEEE Software*, 1993.
+5. Y. Jia and M. Harman, "An analysis and survey of the development of mutation
+   testing," *IEEE TSE*, 2011.
+6. J. Wang et al., "Software testing with large language models: survey,
+   landscape, and vision," *IEEE TSE*, 2024.
+7. WHATWG URL Standard, https://url.spec.whatwg.org/ (scheme parsing).

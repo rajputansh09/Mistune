@@ -4,12 +4,12 @@
 
 | Technique (lecture) | A Headings/paras/breaks | B Inline/links | C Lists/quotes | D Escapes/boundary | Cross-cutting | Total |
 |---|---|---|---|---|---|---|
-| EP + BVA (L4) | 21 | 15 | 14 | 12 | – | 62 |
+| EP + BVA (L4) | 22 | 15 | 14 | 12 | – | 63 |
 | Decision table (L6) | – | 15 (emphasis DT-1) | 7 (list-interrupt DT-2) | – | – | 22 |
 | Syntax-driven: production, delimiter, field-value (L7) | – | 9 + 9 + 3 (links/images) | – | 3 + 2 + 1 (fences) | – | 27 |
 | Pairwise (Lab 3 T3, allpairspy) | | | | | 24 (of 144 exhaustive) + 1 coverage check | 25 |
-| Random, fuzz, operational profile, stress (L5) | | | | | 8 | 8 |
-| Mistune-specific features | | | | | 9 | 9 |
+| Random, fuzz, operational profile, stress (L5) | | | | | 8 + 1 normaliser check | 9 |
+| Mistune-specific features | | | | | 10 | 10 |
 | White-box: statement, branch, loop, def-use (L8, L9, Lab 3) | | | | | 100 | 100 |
 | Integration: top-down, bottom-up, big-bang (L11, Lab 4) | | | | | 14 | 14 |
 
@@ -19,7 +19,7 @@
 |---|---|---|---|---|
 | ATX `#` count n | 1 ≤ n ≤ 6 | n = 0, n ≥ 7, no space after `#` | 1, 2, 6, 7 | H01–H05 |
 | Heading indentation i | 0 ≤ i ≤ 3 | i ≥ 4 (code block) | 3, 4 | H09, H10 |
-| Setext underline length L | L ≥ 1 | – | 1 | H11, H12 |
+| Setext underline length L / character | L ≥ 1, all `=` or all `-` | mixed `-`/`=` | 1 | H11–H13 |
 | Trailing spaces t before newline | t ≥ 2 (hard break), `\` | t ≤ 1 (soft) | 1, 2; end of paragraph | P03–P06 |
 | Thematic break marker count k | k ≥ 3 | k ≤ 2, mixed characters | 2, 3 | T01–T03 |
 | Emphasis delimiter | `*`, `_`, `**`, `__`, `***` | unclosed, intraword `_` | – | I01–I07 |

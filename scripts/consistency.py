@@ -13,7 +13,7 @@ sys.path.insert(0, os.path.join(ROOT, "tests"))
 from oracle import reference  # noqa: E402
 
 runs = {}
-for d in sorted(glob.glob(os.path.join(sys.argv[1], "run*"))):
+for d in sorted(glob.glob(os.path.join(sys.argv[1], "run[0-9]"))):
     inputs, valid, total, techniques = set(), 0, 0, {}
     for f in glob.glob(os.path.join(d, "test_*.py")):
         spec = importlib.util.spec_from_file_location("m", f)

@@ -57,8 +57,10 @@ def test_fuzz_escape_mode_never_emits_raw_script(record):
 
 @pytest.mark.technique("FUZZ")
 def test_fuzz_harmful_url_scheme_is_neutralised(record):
-    """BB-RF-03 Fuzz (security): javascript:/vbscript:/file: URLs in links and
-    images are replaced by '#harmful-link' (Mistune-specific safeguard)."""
+    """BB-RF-03 Fuzz (security): URLs with a *literal* javascript:/vbscript:/
+    file: scheme (any case) in links, images and reference definitions are
+    replaced by '#harmful-link'.  Encoded schemes are out of scope here; see
+    BB-MS-10."""
     rnd = random.Random(11)
     bad = []
     for _ in range(100):
@@ -67,7 +69,7 @@ def test_fuzz_harmful_url_scheme_is_neutralised(record):
         out = md(tmpl.format(u=scheme)).lower()
         if 'href="javascript' in out or 'src="javascript' in out or "vbscript:" in out or 'href="file:' in out:
             bad.append(tmpl.format(u=scheme))
-    record(f"{len(bad)} unsafe URLs emitted out of 100")
+    record(f"{len(bad)} of 100 literal-scheme harmful URLs emitted")
     assert bad == []
 
 

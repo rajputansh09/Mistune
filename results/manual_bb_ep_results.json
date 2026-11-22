@@ -132,6 +132,17 @@
   "defect": null
  },
  {
+  "nodeid": "tests/blackbox/test_bb_partition_boundary.py::test_partition_boundary[BB-EP-H13]",
+  "id": "BB-EP-H13",
+  "technique": "EP",
+  "description": "Invalid class: underline mixing '-' and '=' is not setext",
+  "input": "Title\n--=",
+  "expected": "<p>Title\n--=</p>",
+  "actual": "<h1>Title</h1>",
+  "verdict": "FAIL (known defect)",
+  "defect": "D12"
+ },
+ {
   "nodeid": "tests/blackbox/test_bb_partition_boundary.py::test_partition_boundary[BB-EP-P01]",
   "id": "BB-EP-P01",
   "technique": "EP",

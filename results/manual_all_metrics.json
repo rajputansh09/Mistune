@@ -1,23 +1,25 @@
 {
  "group": "manual_all",
- "test_cases": 265,
+ "test_cases": 267,
  "verdicts": {
   "PASS": 254,
-  "FAIL (known defect)": 11
+  "FAIL (known defect)": 13
  },
  "combined_pct": 97.0,
  "statement_pct": 97.9,
  "branch_pct": 94.5,
- "tests_with_coverage": 264,
- "minimal_subset_size": 50,
- "branch_pct_per_test": 0.357,
- "redundancy_pct": 81.1,
- "oracle_checked": 135,
- "oracle_valid": 135,
+ "tests_with_coverage": 266,
+ "minimal_subset_size": 51,
+ "branch_pct_per_test": 0.354,
+ "redundancy_pct": 80.8,
+ "oracle_checked": 136,
+ "oracle_valid": 136,
  "oracle_invalid_ids": [],
  "defects_or_failures": [
   "D1",
   "D10",
+  "D12",
+  "D13",
   "D2",
   "D3",
   "D4",

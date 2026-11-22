@@ -161,19 +161,21 @@ def _mutate(node, op, fn):
                     return
 
 
-def run_group(workdir, test_path, timeout):
+def run_group(workdir, test_path, timeout, per_test=False):
+    """Run one test group against the mutant in `workdir`.
+    Returns (status, failed_test_ids).  With per_test=False the run stops at
+    the first failure (-x) and failed_test_ids is empty."""
     env = dict(os.environ, PYTHONPATH=workdir, PYTHONDONTWRITEBYTECODE="1")
-    t0 = time.time()
+    args = [sys.executable, "-m", "pytest", "-q", "-m", "not slow", "--no-header", "-p", "no:cacheprovider"]
+    args += ["-rfE"] if per_test else ["-x"]
     try:
-        r = subprocess.run(
-            [sys.executable, "-m", "pytest", "-x", "-q", "-m", "not slow", "--no-header", "-p", "no:cacheprovider",
-             test_path],
-            cwd=ROOT, env=env, capture_output=True, text=True, timeout=timeout,
-        )
+        r = subprocess.run(args + test_path.split(","), cwd=ROOT, env=env, capture_output=True, text=True,
+                           timeout=timeout)
         status = "survived" if r.returncode == 0 else ("killed" if r.returncode == 1 else f"error{r.returncode}")
+        failed = [ln.split(" ", 2)[1] for ln in r.stdout.splitlines() if ln.startswith(("FAILED ", "ERROR "))]
     except subprocess.TimeoutExpired:
-        status = "killed(timeout)"
-    return status, round(time.time() - t0, 2)
+        status, failed = "killed(timeout)", []
+    return status, failed
 
 
 def main():
@@ -184,6 +186,8 @@ def main():
     ap.add_argument("--sample", type=int, default=0, help="random sample size (0 = all mutants)")
     ap.add_argument("--seed", type=int, default=322)
     ap.add_argument("--out", default=os.path.join(ROOT, "results", "mutation.json"))
+    ap.add_argument("--only-files", default="", help="comma-separated module names to mutate")
+    ap.add_argument("--per-test", action="store_true", help="record which tests kill each mutant (no -x)")
     a = ap.parse_args()
     groups = dict(g.split("=", 1) for g in a.groups)
 
@@ -193,6 +197,9 @@ def main():
         for k, (func, ln, kind, desc, _) in enumerate(sites):
             mutants.append({"id": f"M{len(mutants) + 1:04d}", "file": file, "func": func, "line": ln,
                             "kind": kind, "desc": desc, "k": k})
+    if a.only_files:
+        keep = set(a.only_files.split(","))
+        mutants = [m for m in mutants if m["file"] in keep]
     if a.sample:
         mutants = sorted(random.Random(a.seed).sample(mutants, a.sample), key=lambda m: m["id"])
     print(f"{len(mutants)} mutants, groups: {list(groups)}", flush=True)
@@ -218,9 +225,9 @@ def main():
                 return m
             with open(path, "w") as f:
                 f.write(mutated)
-            m["result"] = {}
+            m["result"], m["failed"] = {}, {}
             for g, p in groups.items():
-                m["result"][g], _ = run_group(d, p, a.timeout)
+                m["result"][g], m["failed"][g] = run_group(d, p, a.timeout, a.per_test)
             return m
         finally:
             with open(os.path.join(d, "mistune", m["file"]), "w") as f:

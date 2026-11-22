@@ -15,8 +15,9 @@ tests/
   whitebox/   statement/branch/loop/def-use unit tests (helpers, inline, block, list, renderer)
   integration/ top-down (stubs), bottom-up (drivers), big-bang
 mutation/mutate.py      fault injection: value/decision/statement mutants
-scripts/                evaluate.py, validate_llm.py, consistency.py, analyze_mutation.py,
-                        make_tables.py, summary.py
+scripts/                evaluate.py, validate_llm.py (BB validity), validate_wb.py (WB validity),
+                        consistency.py, analyze_mutation.py, make_tables.py, summary.py,
+                        build_report.py (REPORT.md -> REPORT.pdf + page count)
 llm/prompts/PROMPTS.md  ChatGPT prompts (basic and refined, BB and WB) + refinement protocol
 llm/sessions/           one log per ChatGPT session (template provided)
 llm/generated/          put ChatGPT test files here: <group>/run1/test_*.py
@@ -44,13 +45,20 @@ The `--with-mutation` form also runs mutation testing (about 30 minutes on 8 cor
 
 ## Adding the ChatGPT groups
 
-1. Follow `llm/prompts/PROMPTS.md`. Save each reply as
-   `llm/generated/refined_bb/run1/test_llm_bb.py`, and so on.
+1. Follow `llm/prompts/PROMPTS.md`. Save the **first** reply as
+   `llm/generated/<group>/run1/test_*.py`; follow-ups go in `run1_followup/`.
+   The groups are `basic_bb`, `refined_bb`, `basic_wb` and `refined_wb`.
 2. Fill in one `llm/sessions/*.md` log per session.
 3. Check validity before running anything:
 
    ```bash
    .venv/bin/python scripts/validate_llm.py llm/generated/refined_bb/run1
+   ```
+
+   For white-box files use `scripts/validate_wb.py` instead:
+
+   ```bash
+   .venv/bin/python scripts/validate_wb.py llm/generated/refined_wb/run1
    ```
 
 4. Run `./run_all.sh --with-mutation`. The LLM groups are picked up automatically,

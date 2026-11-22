@@ -1,0 +1,9 @@
+{
+ "tests": 49,
+ "pass": 49,
+ "fail": 0,
+ "encodes_bug": 2,
+ "weak_zero_kills": 7,
+ "median_kills": 7,
+ "review_sheet": "results/manual_wb_units_wb_review.csv"
+}

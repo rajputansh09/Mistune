@@ -130,15 +130,24 @@ def test_wb_i18_inline_link_parse_fails_falls_to_ref(record):
     assert record(render("[a](b c)")) == "<p>[a](b c)</p>"
 
 
+@pytest.mark.xfail(reason="D13", strict=True)
 def test_wb_i19_link_text_precedence_autolink(record):
-    """WB-I19 D6=T: an autolink spanning ']' takes precedence over the link."""
-    assert record(render("[a <http://x.y/]>](/u)")) == '<p>[a <a href="http://x.y/%5D">http://x.y/]</a>](/u)</p>'
+    """WB-I19 D6=T: precedence_scan finds an autolink inside the link text.
+    CommonMark: autolinks bind tighter than link brackets, so the ']' inside
+    the autolink does not close the text and the whole thing is a link that
+    contains the autolink.  Mistune abandons the outer link (defect D13).
+    (First version of this test asserted Mistune's output; validate_wb.py
+    flagged it as ENCODES-BUG.)"""
+    out = record(render("[a <http://x.y/]>](/u)"))
+    assert out == '<p><a href="/u">a <a href="http://x.y/%5D">http://x.y/]</a></a></p>'
 
 
 # ------------------------------------------------------------ html / auto links
 def test_wb_i20_inline_html_anchor_toggles_in_link(record):
     """WB-I20 parse_inline_html sets in_link on <a ...> so an autolink inside
-    is not converted, and clears it on </a> so one after is converted."""
+    is not converted, and clears it on </a> so one after is converted.
+    Mistune-specific (M5): CommonMark does not track raw <a> tags and would
+    linkify the inner autolink; Mistune avoids nested anchors by design."""
     out = record(render('<a href="/x"><http://in.x></a> <http://out.x>'))
     assert '<a href="/x">&lt;http://in.x&gt;</a>' in out
     assert '<a href="http://out.x">http://out.x</a>' in out

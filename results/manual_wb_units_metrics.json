@@ -2,7 +2,8 @@
  "group": "manual_wb_units",
  "test_cases": 49,
  "verdicts": {
-  "PASS": 49
+  "PASS": 48,
+  "FAIL (known defect)": 1
  },
  "combined_pct": 56.2,
  "statement_pct": 60.4,
@@ -14,5 +15,7 @@
  "oracle_checked": 0,
  "oracle_valid": 0,
  "oracle_invalid_ids": [],
- "defects_or_failures": []
+ "defects_or_failures": [
+  "D13"
+ ]
 }

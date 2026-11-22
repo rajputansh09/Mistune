@@ -7,3 +7,5 @@ results/.coverage*
 # artifacts of an early mis-split run (directories with spaces in their names)
 results/* tests/
 .DS_Store
+results/REPORT.html
+results/.*_probe.json

@@ -29,6 +29,10 @@ CASES = [
     # Setext underline length L: valid L>=1
     Case("BB-EP-H11", "BVA", "Setext '=' underline of length 1 (lower bound)", "Title\n=", "<h1>Title</h1>"),
     Case("BB-EP-H12", "EP", "Setext '-' underline -> h2", "Title\n-----", "<h2>Title</h2>"),
+    Case(
+        "BB-EP-H13", "EP", "Invalid class: underline mixing '-' and '=' is not setext",
+        "Title\n--=", "<p>Title\n--=</p>", defect="D12",
+    ),
     # Paragraphs / line breaks: trailing spaces t before newline. t<=1 soft, t>=2 hard
     Case("BB-EP-P01", "EP", "Two lines without blank line form one paragraph", "line one\nline two", "<p>line one\nline two</p>"),
     Case("BB-EP-P02", "EP", "Blank line separates paragraphs", "para one\n\npara two", "<p>para one</p><p>para two</p>"),

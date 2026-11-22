@@ -9,7 +9,7 @@ from collections import defaultdict
 from math import comb
 
 data = json.load(open(sys.argv[1]))
-n_indigenous = int(sys.argv[2]) if len(sys.argv) > 2 else 9
+n_indigenous = int(sys.argv[2]) if len(sys.argv) > 2 else 11  # real defects found by the SAME suites (union)
 valid = [m for m in data if "stillborn" not in m["result"].values()]
 groups = list(valid[0]["result"])
 killed = lambda m, g: m["result"][g].startswith("killed")  # noqa: E731
@@ -18,12 +18,16 @@ any_k = lambda m: any(killed(m, g) for g in groups)  # noqa: E731
 S = len(valid)
 print(f"Valid mutants S = {S}   (stillborn: {len(data) - S})\n")
 print("## Mutation score by group")
+print("| group | killed by a failing assertion | killed by hang (timeout) | total killed | score |")
+print("|---|---|---|---|---|")
 for g in groups:
     k = sum(killed(m, g) for m in valid)
     to = sum(m["result"][g] == "killed(timeout)" for m in valid)
-    print(f"| {g} | {k} | {k / S:.1%} | {to} timeouts |")
+    print(f"| {g} | {k - to} | {to} | {k} | {k / S:.1%} |")
 allk = sum(any_k(m) for m in valid)
-print(f"| union of groups | {allk} | {allk / S:.1%} | |")
+hang_only = sum(any_k(m) and all(m["result"][g] in ("killed(timeout)", "survived") for g in groups) for m in valid)
+print(f"| union of groups | {allk - hang_only} | {hang_only} | {allk} | {allk / S:.1%} |")
+print(f"\nScore excluding hangs (union): {(allk - hang_only) / S:.1%}")
 
 print("\n## Score by mutation operator class (union of groups)")
 by = defaultdict(lambda: [0, 0])
@@ -46,6 +50,11 @@ for g in groups:
     u = sum(killed(m, g) and not any(killed(m, h) for h in groups if h != g) for m in valid)
     print(f"| {g} | {u} |")
 
+print("\n## Illustration only: lecture-10 estimators (see limits below)")
+print("Limits: (1) the mutant population is KNOWN (S), so capture-recapture estimates a quantity")
+print("we already know; (2) black-box and white-box suites exercise the same code and are not")
+print("independent samplers, which biases N downward; (3) Mills assumes seeded faults are as hard")
+print("to find as real ones, but single-token mutants are simpler than real defects.")
 # ---------------- Capture-recapture (independent test groups, lecture 10)
 if "blackbox" in groups and "whitebox" in groups:
     N1 = sum(killed(m, "blackbox") for m in valid)

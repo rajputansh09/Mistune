@@ -686,12 +686,12 @@
   "nodeid": "tests/whitebox/test_wb_inline.py::test_wb_i19_link_text_precedence_autolink",
   "id": "test_wb_i19_link_text_precedence_autolink",
   "technique": "WB",
-  "description": "WB-I19 D6=T: an autolink spanning ']' takes precedence over the link.",
+  "description": "WB-I19 D6=T: precedence_scan finds an autolink inside the link text.",
   "input": null,
   "expected": null,
   "actual": "<p>[a <a href=\"http://x.y/%5D\">http://x.y/]</a>](/u)</p>",
-  "verdict": "PASS",
-  "defect": null
+  "verdict": "FAIL (known defect)",
+  "defect": "D13"
  },
  {
   "nodeid": "tests/whitebox/test_wb_inline.py::test_wb_i20_inline_html_anchor_toggles_in_link",

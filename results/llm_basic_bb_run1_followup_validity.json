@@ -1,0 +1,51 @@
+{
+ "files": [
+  {
+   "file": "llm/generated/basic_bb/run1_followup/test_llm_bb.py",
+   "syntax": "ok",
+   "import": "ok"
+  }
+ ],
+ "cases": 66,
+ "valid": 62,
+ "hallucinated": [
+  {
+   "id": "LLM-BB-63",
+   "md": "<div>\n\n<p>inside</p>\n\n</div>",
+   "llm_expected": "<div>\n\n<p>inside</p>\n\n</div>",
+   "reference": "<div><p>inside</p></div>",
+   "mistune": "<div><p>inside</p></div>"
+  },
+  {
+   "id": "LLM-BB-64",
+   "md": "<!-- note -->\n<div>block</div>",
+   "llm_expected": "<!-- note -->\n<div>block</div>",
+   "reference": "<!-- note --><div>block</div>",
+   "mistune": "<!-- note --><div>block</div>"
+  },
+  {
+   "id": "LLM-BB-65",
+   "md": "<section>\n<h1>Title</h1>\n<p>Body</p>\n</section>\n\nNext.",
+   "llm_expected": "<section>\n<h1>Title</h1>\n<p>Body</p>\n</section><p>Next.</p>",
+   "reference": "<section><h1>Title</h1><p>Body</p></section><p>Next.</p>",
+   "mistune": "<section><h1>Title</h1><p>Body</p></section><p>Next.</p>"
+  },
+  {
+   "id": "LLM-BB-66",
+   "md": "<div>\ncontent\n\nstill html",
+   "llm_expected": "<div>\ncontent\n\nstill html",
+   "reference": "<div>content<p>still html</p>",
+   "mistune": "<div>content<p>still html</p>"
+  }
+ ],
+ "both_wrong": [],
+ "defect_found": [
+  {
+   "id": "LLM-BB-40",
+   "md": "[site](https://example.com/a_(b))",
+   "expected": "<p><a href=\"https://example.com/a_(b)\">site</a></p>",
+   "mistune": "<p><a href=\"https://example.com/a_(b\">site</a>)</p>"
+  }
+ ],
+ "validity_pct": 93.9
+}

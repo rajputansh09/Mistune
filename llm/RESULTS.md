@@ -2,8 +2,9 @@
 
 **Setup.** Model `gpt-5.4-mini-2026-03-17` (dated snapshot), OpenAI Chat Completions API, default sampling, one independent
 request per run (single user message, no system prompt, no history = fresh chat). Prompts P1–P4 assembled verbatim from
-`llm/prompts/PROMPTS.md` by `scripts/run_llm_api.py`. 4 prompts × 3 runs = 12 first replies, all scored. **No follow-up turns
-were run.** Raw replies, API metadata and session logs are in `llm/sessions/`. Total cost: 10,947 input + 29,211 output tokens ≈ **$0.14**.
+`llm/prompts/PROMPTS.md` by `scripts/run_llm_api.py`. 4 prompts × 3 runs = 12 first replies, all scored. Follow-up turns F1 + F2
+were then run on run1 of each group and scored separately (section *Consecutive replies* below). Raw replies, API metadata and session logs
+are in `llm/sessions/`. Cost: first replies 10,947 in + 29,211 out ≈ $0.14; follow-ups 41,769 in + 22,371 out ≈ $0.13 (at list price).
 All 12 replies followed the file format: **0 mechanical edits** were needed and all were runnable as-is. Refined-WB run 3 delivered
 39 test functions, not 40 (one missing slot); its parametrised tests expand to 57 executed cases.
 
@@ -69,6 +70,38 @@ output is in `results/llm_wb_review_reviewer2_raw.txt`.
 Manual groups alone (this run): 722 killed (88.3%). All groups including LLM: **731 (89.4%)**, so the LLM groups add **9 kills** the
 manual suites missed: M0092, M0225, M0231, M0246, M0317 (list_parser), M0449, M0464, M0550 (inline_parser), M0756 (block_parser). Unique kills by LLM groups: basic-BB run1 1, basic-WB run1 1, run2 2. Refined groups: 0.
 
+## Consecutive replies (follow-ups F1 + F2 on run1; scored separately, never replaces first-reply scores)
+`scripts/run_llm_followup.py` replays [prompt → first reply (verbatim) → F1 → reply → F2 → reply] in one conversation, with the same
+wording for basic and refined. The file after F2 is in `llm/generated/<group>/run1_followup/`; details are in
+`results/llm_followup_analysis.json` and `llm/sessions/P*_run1_followup.md`.
+- **F1 (gaps):** BB was told which parser functions its inputs never executed; WB was told which source lines in scope were never executed.
+- **F2 (correctness):** BB got each rejected case with the CommonMark reference output. WB got each INVALID test with the reviewers' reason;
+  Mistune's actual value was deliberately withheld.
+
+| Group | First reply → after F1+F2 | Valid (BB) / pass (WB) | Stmt % / Branch % | Mutation score |
+|---|---|---|---|---|
+| P1 basic BB | 60 → 66 cases | 53/60 → 62/66 | 80.3/60.6 → 81.7/62.1 | 52.0% → **58.4%** |
+| P2 refined BB | 60 → 68 cases | 54/60 → 65/68 | 74.4/54.8 → 81.9/63.6 | 46.9% → **57.6%** |
+| P3 basic WB | 40 → 50 tests | 30/40 → 40/50 | 39.6/18.6 → 40.5/19.6 | 19.7% → 21.6% |
+| P4 refined WB | 40 → 44 tests | 14/40 → 26/44 | 39.9/19.1 → 40.4/19.8 | 8.8% → **19.7%** |
+
+- **F1 closed most gaps.** Refined BB executed 4 of the 5 functions it was pointed to (fenced code, reference links, HTML blocks,
+  inline HTML); basic BB executed 1 of 2. In-scope WB lines never executed: basic 12 → 2, refined 8 → 3 (of 110). For refined BB this
+  closed the coverage gap to basic and to the manual suite (≈82% stmt).
+- **F2 on black-box "fixed" every rejected case** (basic 7/7, refined 6/6). The reference was shown, though, so this mostly measures
+  willingness to copy a given answer, not spec understanding. F2 also **introduced new invalid cases**: basic 4 (3 format-only, 1 wrong
+  HTML), refined 3 (all format-only, in the new F1 cases). So the model didn't generalise the normalised-format rule from the feedback.
+- **F2 on white-box only half-worked without the answer:**
+  - Basic: 7 of 10 flagged tests now pass, but 7 new failures appeared.
+  - Refined: only 10 of 26 flagged tests now pass. 16 are still wrong despite being told the exact reason (e.g. "pos must point just
+    after '['"), and 2 new failures appeared.
+  - I checked every new failure (single reviewer). All of them repeat known error types: pos 0 on `[`, a valid block destination expected
+    to fail, text tokens expected merged, an empty label expected to be rejected (but Mistune must return `''` for collapsed references
+    like `[foo][]`). **No new defects.**
+- **One consecutive reply broke the file:** the refined-WB F2 reply had a SyntaxError (a stray `}`), so it wasn't runnable as-is. One
+  mechanical fix was logged in `llm/sessions/P4_run1_followup.md`. The F1 reply had parsed fine.
+- Defects: the follow-ups kept the earlier finds (D4 in basic, `&notanentity;` in refined) and **found nothing new**.
+
 ## Headline findings for the report
 1. **The LLM found a defect the manual suites missed** (refined, all 3 runs): `&notanentity;` → Mistune `<p>¬anentity;</p>`, while
    CommonMark requires `<p>&amp;notanentity;</p>`. Mistune decodes HTML5 legacy entities without the `;` (also `&copyright;` → `©right;`,
@@ -81,8 +114,11 @@ manual suites missed: M0092, M0225, M0231, M0246, M0317 (list_parser), M0449, M0
    spec, NOT by running the code" (P4) produced *more* failing tests (fewer usable tests → lower mutation score), but the passing ones
    are stronger (fewer WEAK).
 5. No group matched the manual equal-budget suites on mutation score. The LLM groups' value is complementary (+9 kills, 1 new defect).
+6. **Consecutive replies help coverage more than correctness.** Gap feedback (F1) lifted BB mutation scores to ≈58%, level with the
+   manual EP/BVA suite (58.6%). Correctness feedback (F2) only "worked" when the right answer was shown. Without it (WB), 16 of 26
+   flagged refined tests stayed wrong, every round introduced new errors, and one reply wasn't even runnable.
 
-## Harness fixes made to run this (local, not yet pushed)
+## Harness fixes made to run this
 - `llm/generated/conftest.py` (new): `tests/conftest.py` does not apply under `llm/generated/`, so every LLM case errored with
   "fixture 'record' not found" and no results JSON was written.
 - `mutation/mutate.py`: added a **baseline run**. Tests that fail on unmutated Mistune are deselected. Before this, any group containing
@@ -91,3 +127,4 @@ manual suites missed: M0092, M0225, M0231, M0246, M0317 (list_parser), M0449, M0
 - `run_all.sh`: the variable `GROUPS` is a read-only bash builtin (the user's group IDs), so the mutation group list was silently
   replaced by a number. Renamed to `MUT_GROUPS`.
 - `scripts/run_llm_api.py` (new): the API runner.
+- `scripts/run_llm_followup.py` (new): the follow-up (F1 + F2) runner.

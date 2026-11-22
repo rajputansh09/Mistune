@@ -1,0 +1,44 @@
+{
+ "files": [
+  {
+   "file": "llm/generated/refined_bb/run1_followup/test_llm_bb.py",
+   "syntax": "ok",
+   "import": "ok"
+  }
+ ],
+ "cases": 68,
+ "valid": 65,
+ "hallucinated": [
+  {
+   "id": "LLM-BB-61",
+   "md": "```python\nprint('x')\n```",
+   "llm_expected": "<pre><code class=\"language-python\">print('x')\n</code></pre>",
+   "reference": "<pre><code class=\"language-python\">print('x')</code></pre>",
+   "mistune": "<pre><code class=\"language-python\">print('x')</code></pre>"
+  },
+  {
+   "id": "LLM-BB-62",
+   "md": "```\na\n````",
+   "llm_expected": "<pre><code>a\n</code></pre>",
+   "reference": "<pre><code>a</code></pre>",
+   "mistune": "<pre><code>a</code></pre>"
+  },
+  {
+   "id": "LLM-BB-65",
+   "md": "<div>\n<p>x</p>\n</div>",
+   "llm_expected": "<div>\n<p>x</p>\n</div>",
+   "reference": "<div><p>x</p></div>",
+   "mistune": "<div><p>x</p></div>"
+  }
+ ],
+ "both_wrong": [],
+ "defect_found": [
+  {
+   "id": "LLM-BB-29",
+   "md": "&notanentity;",
+   "expected": "<p>&amp;notanentity;</p>",
+   "mistune": "<p>¬anentity;</p>"
+  }
+ ],
+ "validity_pct": 95.6
+}

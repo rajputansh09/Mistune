@@ -1,0 +1,85 @@
+{
+ "basic_bb": {
+  "rejected": 7,
+  "fixed": 7,
+  "still_wrong": 0,
+  "dropped": 0,
+  "new_errors": 4,
+  "new_errors_format_only": 3,
+  "cases": [
+   60,
+   66
+  ],
+  "valid": [
+   53,
+   62
+  ],
+  "defect_found": [
+   [
+    "[site](https://example.com/a_(b))"
+   ],
+   [
+    "[site](https://example.com/a_(b))"
+   ]
+  ],
+  "f1_gaps": 2,
+  "f1_closed": 1,
+  "f1_closed_items": [
+   "block_parser._parse_html_to_end"
+  ]
+ },
+ "refined_bb": {
+  "rejected": 6,
+  "fixed": 6,
+  "still_wrong": 0,
+  "dropped": 0,
+  "new_errors": 3,
+  "new_errors_format_only": 3,
+  "cases": [
+   60,
+   68
+  ],
+  "valid": [
+   54,
+   65
+  ],
+  "defect_found": [
+   [
+    "&notanentity;"
+   ],
+   [
+    "&notanentity;"
+   ]
+  ],
+  "f1_gaps": 5,
+  "f1_closed": 4,
+  "f1_closed_items": [
+   "block_parser.BlockParser.parse_fenced_code",
+   "block_parser.BlockParser.parse_ref_link",
+   "block_parser._parse_html_to_end",
+   "inline_parser.InlineParser.parse_inline_html"
+  ]
+ },
+ "basic_wb": {
+  "scope_statements": 110,
+  "unexecuted_before": 12,
+  "unexecuted_after": 2,
+  "flagged_invalid": 10,
+  "kept_in_file": 10,
+  "dropped": 0,
+  "still_failing": 3,
+  "now_passing": 7,
+  "new_failures": 7
+ },
+ "refined_wb": {
+  "scope_statements": 110,
+  "unexecuted_before": 8,
+  "unexecuted_after": 3,
+  "flagged_invalid": 26,
+  "kept_in_file": 26,
+  "dropped": 0,
+  "still_failing": 16,
+  "now_passing": 10,
+  "new_failures": 2
+ }
+}

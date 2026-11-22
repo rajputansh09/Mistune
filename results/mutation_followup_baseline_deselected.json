@@ -1,0 +1,47 @@
+{
+ "llm_basic_bb_run1_followup": [
+  "llm/generated/basic_bb/run1_followup/test_llm_bb.py::test_llm_bb[LLM-BB-40]",
+  "llm/generated/basic_bb/run1_followup/test_llm_bb.py::test_llm_bb[LLM-BB-63]",
+  "llm/generated/basic_bb/run1_followup/test_llm_bb.py::test_llm_bb[LLM-BB-64]",
+  "llm/generated/basic_bb/run1_followup/test_llm_bb.py::test_llm_bb[LLM-BB-65]",
+  "llm/generated/basic_bb/run1_followup/test_llm_bb.py::test_llm_bb[LLM-BB-66]"
+ ],
+ "llm_basic_wb_run1_followup": [
+  "llm/generated/basic_wb/run1_followup/test_llm_wb.py::test_llm_wb_12_parse_link_label_invalid_empty_label",
+  "llm/generated/basic_wb/run1_followup/test_llm_wb.py::test_llm_wb_21_parse_link_title_parenthesized",
+  "llm/generated/basic_wb/run1_followup/test_llm_wb.py::test_llm_wb_35_codespan_marker_mismatch_falls_back_to_text",
+  "llm/generated/basic_wb/run1_followup/test_llm_wb.py::test_llm_wb_40_emphasis_in_emphasis_flag_prevents_recursive_parse",
+  "llm/generated/basic_wb/run1_followup/test_llm_wb.py::test_llm_wb_41_parse_link_label_with_start_offset",
+  "llm/generated/basic_wb/run1_followup/test_llm_wb.py::test_llm_wb_42_parse_link_href_returns_none_on_non_matching_block",
+  "llm/generated/basic_wb/run1_followup/test_llm_wb.py::test_llm_wb_44_emphasis_single_marker_inside_emphasis_becomes_text",
+  "llm/generated/basic_wb/run1_followup/test_llm_wb.py::test_llm_wb_45_emphasis_double_marker_inside_strong_becomes_text",
+  "llm/generated/basic_wb/run1_followup/test_llm_wb.py::test_llm_wb_46_emphasis_no_closing_marker_becomes_text",
+  "llm/generated/basic_wb/run1_followup/test_llm_wb.py::test_llm_wb_47_emphasis_no_closing_double_marker_becomes_text"
+ ],
+ "llm_refined_bb_run1_followup": [
+  "llm/generated/refined_bb/run1_followup/test_llm_bb.py::test_llm_bb[LLM-BB-29]",
+  "llm/generated/refined_bb/run1_followup/test_llm_bb.py::test_llm_bb[LLM-BB-61]",
+  "llm/generated/refined_bb/run1_followup/test_llm_bb.py::test_llm_bb[LLM-BB-62]",
+  "llm/generated/refined_bb/run1_followup/test_llm_bb.py::test_llm_bb[LLM-BB-65]"
+ ],
+ "llm_refined_wb_run1_followup": [
+  "llm/generated/refined_wb/run1_followup/test_llm_wb.py::test_llm_wb_04_parse_link_text_two_iterations_nested_then_close",
+  "llm/generated/refined_wb/run1_followup/test_llm_wb.py::test_llm_wb_05_parse_link_text_nested_depth_three_returns_inner_text",
+  "llm/generated/refined_wb/run1_followup/test_llm_wb.py::test_llm_wb_08_parse_link_text_multiple_opens_then_close_text_slice_exact",
+  "llm/generated/refined_wb/run1_followup/test_llm_wb.py::test_llm_wb_09_parse_link_label_valid_label_returns_label_and_position",
+  "llm/generated/refined_wb/run1_followup/test_llm_wb.py::test_llm_wb_11_parse_link_label_empty_label_allowed",
+  "llm/generated/refined_wb/run1_followup/test_llm_wb.py::test_llm_wb_12_parse_link_label_start_offset_inside_text",
+  "llm/generated/refined_wb/run1_followup/test_llm_wb.py::test_llm_wb_13_parse_link_href_inline_bracketed_valid",
+  "llm/generated/refined_wb/run1_followup/test_llm_wb.py::test_llm_wb_16_parse_link_href_block_unbracketed_simple",
+  "llm/generated/refined_wb/run1_followup/test_llm_wb.py::test_llm_wb_17_parse_link_href_block_terminator_matching_last_char",
+  "llm/generated/refined_wb/run1_followup/test_llm_wb.py::test_llm_wb_19_parse_link_title_single_quoted_title_unescaped",
+  "llm/generated/refined_wb/run1_followup/test_llm_wb.py::test_llm_wb_20_parse_link_title_double_quoted_title_unescaped",
+  "llm/generated/refined_wb/run1_followup/test_llm_wb.py::test_llm_wb_21_parse_link_title_parenthesized_title_unescaped",
+  "llm/generated/refined_wb/run1_followup/test_llm_wb.py::test_llm_wb_25_parse_link_no_href_returns_none",
+  "llm/generated/refined_wb/run1_followup/test_llm_wb.py::test_llm_wb_32_parse_emphasis_in_emphasis_suppresses_single_marker",
+  "llm/generated/refined_wb/run1_followup/test_llm_wb.py::test_llm_wb_33_parse_emphasis_in_strong_suppresses_double_marker",
+  "llm/generated/refined_wb/run1_followup/test_llm_wb.py::test_llm_wb_39_parse_codespan_empty_or_whitespace_only_becomes_text",
+  "llm/generated/refined_wb/run1_followup/test_llm_wb.py::test_llm_wb_41_parse_link_label_space_before_closing_bracket_matches_and_returns",
+  "llm/generated/refined_wb/run1_followup/test_llm_wb.py::test_llm_wb_44_parse_link_href_block_no_match_returns_none"
+ ]
+}

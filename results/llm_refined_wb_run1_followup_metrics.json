@@ -1,0 +1,38 @@
+{
+ "group": "llm_refined_wb_run1_followup",
+ "test_cases": 44,
+ "verdicts": {
+  "PASS": 26,
+  "FAIL": 18
+ },
+ "combined_pct": 35.1,
+ "statement_pct": 40.4,
+ "branch_pct": 19.8,
+ "tests_with_coverage": 44,
+ "minimal_subset_size": 20,
+ "branch_pct_per_test": 0.45,
+ "redundancy_pct": 54.5,
+ "oracle_checked": 0,
+ "oracle_valid": 0,
+ "oracle_invalid_ids": [],
+ "defects_or_failures": [
+  "test_llm_wb_04_parse_link_text_two_iterations_nested_then_close",
+  "test_llm_wb_05_parse_link_text_nested_depth_three_returns_inner_text",
+  "test_llm_wb_08_parse_link_text_multiple_opens_then_close_text_slice_exact",
+  "test_llm_wb_09_parse_link_label_valid_label_returns_label_and_position",
+  "test_llm_wb_11_parse_link_label_empty_label_allowed",
+  "test_llm_wb_12_parse_link_label_start_offset_inside_text",
+  "test_llm_wb_13_parse_link_href_inline_bracketed_valid",
+  "test_llm_wb_16_parse_link_href_block_unbracketed_simple",
+  "test_llm_wb_17_parse_link_href_block_terminator_matching_last_char",
+  "test_llm_wb_19_parse_link_title_single_quoted_title_unescaped",
+  "test_llm_wb_20_parse_link_title_double_quoted_title_unescaped",
+  "test_llm_wb_21_parse_link_title_parenthesized_title_unescaped",
+  "test_llm_wb_25_parse_link_no_href_returns_none",
+  "test_llm_wb_32_parse_emphasis_in_emphasis_suppresses_single_marker",
+  "test_llm_wb_33_parse_emphasis_in_strong_suppresses_double_marker",
+  "test_llm_wb_39_parse_codespan_empty_or_whitespace_only_becomes_text",
+  "test_llm_wb_41_parse_link_label_space_before_closing_bracket_matches_and_returns",
+  "test_llm_wb_44_parse_link_href_block_no_match_returns_none"
+ ]
+}

@@ -1,0 +1,28 @@
+{
+ "group": "llm_refined_bb_run1_followup",
+ "test_cases": 68,
+ "verdicts": {
+  "PASS": 64,
+  "FAIL": 4
+ },
+ "combined_pct": 77.2,
+ "statement_pct": 81.9,
+ "branch_pct": 63.6,
+ "tests_with_coverage": 68,
+ "minimal_subset_size": 33,
+ "branch_pct_per_test": 0.935,
+ "redundancy_pct": 51.5,
+ "oracle_checked": 68,
+ "oracle_valid": 65,
+ "oracle_invalid_ids": [
+  "LLM-BB-61",
+  "LLM-BB-62",
+  "LLM-BB-65"
+ ],
+ "defects_or_failures": [
+  "LLM-BB-29",
+  "LLM-BB-61",
+  "LLM-BB-62",
+  "LLM-BB-65"
+ ]
+}

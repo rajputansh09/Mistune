@@ -24,6 +24,7 @@ import copy
 import json
 import os
 import random
+import re
 import shutil
 import subprocess
 import sys
@@ -161,18 +162,24 @@ def _mutate(node, op, fn):
                     return
 
 
-def run_group(workdir, test_path, timeout, per_test=False):
+_FAIL_LINE = re.compile(r"^(?:FAILED|ERROR) (.+?)(?: - .*)?$")
+
+
+def run_group(workdir, test_path, timeout, per_test=False, deselect=()):
     """Run one test group against the mutant in `workdir`.
     Returns (status, failed_test_ids).  With per_test=False the run stops at
-    the first failure (-x) and failed_test_ids is empty."""
+    the first failure (-x) and failed_test_ids is empty.
+    `deselect`: node ids that already fail on UNMUTATED Mistune (baseline); they are excluded,
+    otherwise a group containing any failing test would "kill" every mutant."""
     env = dict(os.environ, PYTHONPATH=workdir, PYTHONDONTWRITEBYTECODE="1")
     args = [sys.executable, "-m", "pytest", "-q", "-m", "not slow", "--no-header", "-p", "no:cacheprovider"]
     args += ["-rfE"] if per_test else ["-x"]
+    args += [f"--deselect={n}" for n in deselect]
     try:
         r = subprocess.run(args + test_path.split(","), cwd=ROOT, env=env, capture_output=True, text=True,
                            timeout=timeout)
-        status = "survived" if r.returncode == 0 else ("killed" if r.returncode == 1 else f"error{r.returncode}")
-        failed = [ln.split(" ", 2)[1] for ln in r.stdout.splitlines() if ln.startswith(("FAILED ", "ERROR "))]
+        status = "survived" if r.returncode in (0, 5) else ("killed" if r.returncode == 1 else f"error{r.returncode}")
+        failed = [m.group(1) for m in map(_FAIL_LINE.match, r.stdout.splitlines()) if m]
     except subprocess.TimeoutExpired:
         status, failed = "killed(timeout)", []
     return status, failed
@@ -212,6 +219,16 @@ def main():
         pool_dirs.append(d)
     free = list(pool_dirs)
 
+    # Baseline: tests that fail on the UNMUTATED copy are deselected for every mutant run.
+    baseline = {}
+    for g, p in groups.items():
+        st, failed = run_group(pool_dirs[0], p, max(a.timeout, 120), per_test=True)
+        baseline[g] = failed
+        if failed:
+            print(f"baseline: {g}: {len(failed)} test(s) already fail on unmutated Mistune -> deselected", flush=True)
+        if st.startswith("error"):
+            sys.exit(f"baseline run of group {g} failed to execute ({st})")
+
     def work(m):
         d = free.pop()
         try:
@@ -227,7 +244,7 @@ def main():
                 f.write(mutated)
             m["result"], m["failed"] = {}, {}
             for g, p in groups.items():
-                m["result"][g], m["failed"][g] = run_group(d, p, a.timeout, a.per_test)
+                m["result"][g], m["failed"][g] = run_group(d, p, a.timeout, a.per_test, baseline[g])
             return m
         finally:
             with open(os.path.join(d, "mistune", m["file"]), "w") as f:
@@ -247,6 +264,7 @@ def main():
     done.sort(key=lambda m: m["id"])
     os.makedirs(os.path.dirname(a.out), exist_ok=True)
     json.dump(done, open(a.out, "w"), indent=1)
+    json.dump(baseline, open(os.path.splitext(a.out)[0] + "_baseline_deselected.json", "w"), indent=1)
     summarize(done, groups)
 
 

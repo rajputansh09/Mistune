@@ -6,27 +6,51 @@ Valid mutants S = 818   (stillborn: 0)
 | blackbox | 586 | 26 | 612 | 74.8% |
 | whitebox | 633 | 14 | 647 | 79.1% |
 | integration | 395 | 13 | 408 | 49.9% |
-| union of groups | 700 | 22 | 722 | 88.3% |
+| llm_basic_bb_run1 | 412 | 13 | 425 | 52.0% |
+| llm_basic_bb_run2 | 444 | 11 | 455 | 55.6% |
+| llm_basic_bb_run3 | 268 | 2 | 270 | 33.0% |
+| llm_basic_wb_run1 | 158 | 3 | 161 | 19.7% |
+| llm_basic_wb_run2 | 138 | 3 | 141 | 17.2% |
+| llm_basic_wb_run3 | 138 | 3 | 141 | 17.2% |
+| llm_refined_bb_run1 | 373 | 11 | 384 | 46.9% |
+| llm_refined_bb_run2 | 379 | 14 | 393 | 48.0% |
+| llm_refined_bb_run3 | 380 | 13 | 393 | 48.0% |
+| llm_refined_wb_run1 | 71 | 1 | 72 | 8.8% |
+| llm_refined_wb_run2 | 107 | 4 | 111 | 13.6% |
+| llm_refined_wb_run3 | 138 | 4 | 142 | 17.4% |
+| union of groups | 709 | 22 | 731 | 89.4% |
 
-Score excluding hangs (union): 85.6%
+Score excluding hangs (union): 86.7%
 
 ## Score by mutation operator class (union of groups)
-| DECISION | 187/205 | 91.2% |
-| STATEMENT | 377/419 | 90.0% |
-| VALUE | 158/194 | 81.4% |
+| DECISION | 188/205 | 91.7% |
+| STATEMENT | 383/419 | 91.4% |
+| VALUE | 160/194 | 82.5% |
 
 ## Score by module, per group
-| module | mutants | blackbox | whitebox | integration | union |
-| block_parser.py | 246 | 67% | 80% | 44% | 85% |
-| helpers.py | 99 | 91% | 95% | 45% | 96% |
-| inline_parser.py | 234 | 79% | 79% | 49% | 90% |
-| list_parser.py | 210 | 71% | 69% | 60% | 84% |
-| util.py | 29 | 79% | 100% | 52% | 100% |
+| module | mutants | blackbox | whitebox | integration | llm_basic_bb_run1 | llm_basic_bb_run2 | llm_basic_bb_run3 | llm_basic_wb_run1 | llm_basic_wb_run2 | llm_basic_wb_run3 | llm_refined_bb_run1 | llm_refined_bb_run2 | llm_refined_bb_run3 | llm_refined_wb_run1 | llm_refined_wb_run2 | llm_refined_wb_run3 | union |
+| block_parser.py | 246 | 67% | 80% | 44% | 38% | 50% | 30% | 0% | 0% | 0% | 26% | 26% | 28% | 0% | 0% | 0% | 86% |
+| helpers.py | 99 | 91% | 95% | 45% | 46% | 46% | 46% | 80% | 55% | 68% | 47% | 47% | 43% | 70% | 35% | 69% | 97% |
+| inline_parser.py | 234 | 79% | 79% | 49% | 67% | 64% | 59% | 34% | 37% | 32% | 56% | 60% | 59% | 0% | 32% | 32% | 91% |
+| list_parser.py | 210 | 71% | 69% | 60% | 56% | 59% | 0% | 0% | 0% | 0% | 60% | 61% | 61% | 0% | 0% | 0% | 86% |
+| util.py | 29 | 79% | 100% | 52% | 38% | 52% | 41% | 10% | 0% | 0% | 48% | 48% | 45% | 10% | 0% | 0% | 100% |
 
 ## Unique kills (killed by this group only)
-| blackbox | 41 |
-| whitebox | 103 |
+| blackbox | 19 |
+| whitebox | 84 |
 | integration | 1 |
+| llm_basic_bb_run1 | 1 |
+| llm_basic_bb_run2 | 0 |
+| llm_basic_bb_run3 | 0 |
+| llm_basic_wb_run1 | 1 |
+| llm_basic_wb_run2 | 2 |
+| llm_basic_wb_run3 | 0 |
+| llm_refined_bb_run1 | 0 |
+| llm_refined_bb_run2 | 0 |
+| llm_refined_bb_run3 | 0 |
+| llm_refined_wb_run1 | 0 |
+| llm_refined_wb_run2 | 0 |
+| llm_refined_wb_run3 | 0 |
 
 ## Illustration only: lecture-10 estimators (see limits below)
 Limits: (1) the mutant population is KNOWN (S), so capture-recapture estimates a quantity
@@ -36,18 +60,17 @@ to find as real ones, but single-token mutants are simpler than real defects.
 
 ## Capture-recapture: N1(BB)=612, N2(WB)=647, N12=538 -> estimated detectable faults N = N1*N2/N12 = 736; found by BB or WB = 721; mutants in program = 818
 
-## Mills fault seeding: S=818 seeded (mutants), s=722 detected, n=11 indigenous defects found
-   estimated indigenous faults N = n*S/s = 12.5; estimated remaining = 1.5
-   confidence that N <= 11: C = 0.223
-   confidence that N <= 12: C = 0.197
-   confidence that N <= 13: C = 0.174
-   confidence that N <= 12: C = 0.197
+## Mills fault seeding: S=818 seeded (mutants), s=731 detected, n=11 indigenous defects found
+   estimated indigenous faults N = n*S/s = 12.3; estimated remaining = 1.3
+   confidence that N <= 11: C = 0.258
+   confidence that N <= 12: C = 0.231
+   confidence that N <= 13: C = 0.206
+   confidence that N <= 12: C = 0.231
 
-## Surviving mutants (96): candidates for equivalent mutants or missing tests
+## Surviving mutants (87): candidates for equivalent mutants or missing tests
    M0010 helpers.py:115 parse_link_text  [DECISION] Lt -> LtE
    M0029 helpers.py:126 parse_link_text  [STATEMENT] break -> continue
    M0053 helpers.py:147 parse_link_href  [STATEMENT] delete statement
-   M0092 helpers.py:189 parse_link  [STATEMENT] delete statement
    M0173 list_parser.py:37 parse_list  [VALUE] 1 -> 0
    M0191 list_parser.py:113 _parse_list_item  [DECISION] If cond -> not cond
    M0208 list_parser.py:110 _parse_list_item  [STATEMENT] delete statement
@@ -55,16 +78,13 @@ to find as real ones, but single-token mutants are simpler than real defects.
    M0211 list_parser.py:115 _parse_list_item  [STATEMENT] delete statement
    M0217 list_parser.py:136 _parse_list_item  [STATEMENT] delete statement
    M0222 list_parser.py:172 _parse_list_item  [STATEMENT] delete statement
-   M0225 list_parser.py:181 _parse_list_item  [STATEMENT] delete statement
    M0227 list_parser.py:113 _parse_list_item  [VALUE] 3 -> 4
    M0228 list_parser.py:113 _parse_list_item  [VALUE] 3 -> 2
    M0229 list_parser.py:117 _parse_list_item  [VALUE] 1 -> 2
    M0230 list_parser.py:117 _parse_list_item  [VALUE] 1 -> 0
-   M0231 list_parser.py:131 _parse_list_item  [STATEMENT] delete statement
    M0236 list_parser.py:144 _parse_list_item  [STATEMENT] delete statement
    M0240 list_parser.py:158 _parse_list_item  [DECISION] If cond -> not cond
    M0244 list_parser.py:168 _parse_list_item  [DECISION] And -> Or
-   M0246 list_parser.py:181 _parse_list_item  [VALUE] False -> True
    M0247 list_parser.py:110 _parse_list_item  [VALUE] 1 -> 2
    M0248 list_parser.py:110 _parse_list_item  [VALUE] 1 -> 0
    M0258 list_parser.py:158 _parse_list_item  [DECISION] Eq -> NotEq
@@ -79,16 +99,13 @@ to find as real ones, but single-token mutants are simpler than real defects.
    M0313 list_parser.py:246 _clean_list_item_text  [DECISION] If cond -> not cond
    M0314 list_parser.py:247 _clean_list_item_text  [STATEMENT] delete statement
    M0315 list_parser.py:250 _clean_list_item_text  [STATEMENT] delete statement
-   M0317 list_parser.py:253 _clean_list_item_text  [STATEMENT] delete statement
    M0319 list_parser.py:247 _clean_list_item_text  [VALUE] 1 -> 0
    M0342 inline_parser.py:104 parse_escape  [VALUE] 0 -> 1
    M0365 inline_parser.py:121 parse_link  [STATEMENT] return x -> return None
    M0371 inline_parser.py:146 parse_link  [STATEMENT] return x -> return None
    M0378 inline_parser.py:179 parse_link  [STATEMENT] delete statement
    M0386 inline_parser.py:140 parse_link  [DECISION] GtE -> Gt
-   M0449 inline_parser.py:248 parse_emphasis  [STATEMENT] return x -> return None
    M0455 inline_parser.py:269 parse_emphasis  [STATEMENT] delete statement
-   M0464 inline_parser.py:251 parse_emphasis  [STATEMENT] return x -> return None
    M0467 inline_parser.py:269 parse_emphasis  [VALUE] True -> False
    M0469 inline_parser.py:273 parse_emphasis  [STATEMENT] delete statement
    M0472 inline_parser.py:277 parse_emphasis  [STATEMENT] delete statement
@@ -100,7 +117,6 @@ to find as real ones, but single-token mutants are simpler than real defects.
    M0523 inline_parser.py:359 parse  [STATEMENT] return x -> return None
    M0526 inline_parser.py:335 parse  [DECISION] Lt -> LtE
    M0545 inline_parser.py:354 parse  [VALUE] 0 -> -1
-   M0550 inline_parser.py:368 precedence_scan  [DECISION] If cond -> not cond
    M0558 inline_parser.py:381 precedence_scan  [STATEMENT] delete statement
    M0569 inline_parser.py:369 precedence_scan  [STATEMENT] delete statement
    M0572 inline_parser.py:390 precedence_scan  [DECISION] Lt -> LtE
@@ -131,7 +147,6 @@ to find as real ones, but single-token mutants are simpler than real defects.
    M0752 block_parser.py:335 extract_block_quote  [STATEMENT] delete statement
    M0754 block_parser.py:353 extract_block_quote  [VALUE] 3 -> 4
    M0755 block_parser.py:353 extract_block_quote  [VALUE] 3 -> 2
-   M0756 block_parser.py:326 extract_block_quote  [VALUE] 0 -> 1
    M0758 block_parser.py:328 extract_block_quote  [VALUE] 3 -> 4
    M0759 block_parser.py:328 extract_block_quote  [VALUE] 3 -> 2
    M0782 block_parser.py:413 parse_raw_html  [STATEMENT] delete statement

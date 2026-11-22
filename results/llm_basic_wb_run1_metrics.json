@@ -1,0 +1,30 @@
+{
+ "group": "llm_basic_wb_run1",
+ "test_cases": 40,
+ "verdicts": {
+  "PASS": 30,
+  "FAIL": 10
+ },
+ "combined_pct": 34.2,
+ "statement_pct": 39.6,
+ "branch_pct": 18.6,
+ "tests_with_coverage": 40,
+ "minimal_subset_size": 14,
+ "branch_pct_per_test": 0.465,
+ "redundancy_pct": 65.0,
+ "oracle_checked": 0,
+ "oracle_valid": 0,
+ "oracle_invalid_ids": [],
+ "defects_or_failures": [
+  "test_llm_wb_09_parse_link_label_simple",
+  "test_llm_wb_10_parse_link_label_with_spaces",
+  "test_llm_wb_15_parse_link_href_block_raw_url",
+  "test_llm_wb_16_parse_link_href_block_matches_closing_delimiter",
+  "test_llm_wb_19_parse_link_title_double_quoted",
+  "test_llm_wb_20_parse_link_title_single_quoted_with_escape",
+  "test_llm_wb_21_parse_link_title_parenthesized",
+  "test_llm_wb_28_parse_link_invalid_bad_href",
+  "test_llm_wb_35_codespan_marker_mismatch_falls_back_to_text",
+  "test_llm_wb_40_emphasis_in_emphasis_flag_prevents_recursive_parse"
+ ]
+}

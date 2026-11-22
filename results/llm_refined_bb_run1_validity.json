@@ -1,0 +1,65 @@
+{
+ "files": [
+  {
+   "file": "llm/generated/refined_bb/run1/test_llm_bb.py",
+   "syntax": "ok",
+   "import": "ok"
+  }
+ ],
+ "cases": 60,
+ "valid": 54,
+ "hallucinated": [
+  {
+   "id": "LLM-BB-20",
+   "md": "- a\n - b",
+   "llm_expected": "<ul><li>a\n<ul><li>b</li></ul></li></ul>",
+   "reference": "<ul><li>a</li><li>b</li></ul>",
+   "mistune": "<ul><li>a</li><li>b</li></ul>"
+  },
+  {
+   "id": "LLM-BB-32",
+   "md": "    # a",
+   "llm_expected": "<pre><code># a\n</code></pre>",
+   "reference": "<pre><code># a</code></pre>",
+   "mistune": "<pre><code># a</code></pre>"
+  },
+  {
+   "id": "LLM-BB-37",
+   "md": "` a `",
+   "llm_expected": "<p><code> a </code></p>",
+   "reference": "<p><code>a</code></p>",
+   "mistune": "<p><code>a</code></p>"
+  },
+  {
+   "id": "LLM-BB-42",
+   "md": "- a\n  b",
+   "llm_expected": "<ul><li><p>a\nb</p></li></ul>",
+   "reference": "<ul><li>a\nb</li></ul>",
+   "mistune": "<ul><li>a\nb</li></ul>"
+  },
+  {
+   "id": "LLM-BB-47",
+   "md": "* a *",
+   "llm_expected": "<p>* a *</p>",
+   "reference": "<ul><li>a *</li></ul>",
+   "mistune": "<ul><li>a *</li></ul>"
+  },
+  {
+   "id": "LLM-BB-51",
+   "md": "<not a link>",
+   "llm_expected": "<p>&lt;not a link&gt;</p>",
+   "reference": "<not a link>",
+   "mistune": "<not a link>"
+  }
+ ],
+ "both_wrong": [],
+ "defect_found": [
+  {
+   "id": "LLM-BB-29",
+   "md": "&notanentity;",
+   "expected": "<p>&amp;notanentity;</p>",
+   "mistune": "<p>¬anentity;</p>"
+  }
+ ],
+ "validity_pct": 90.0
+}

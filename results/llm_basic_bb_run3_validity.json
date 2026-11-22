@@ -1,0 +1,156 @@
+{
+ "files": [
+  {
+   "file": "llm/generated/basic_bb/run3/test_llm_bb.py",
+   "syntax": "ok",
+   "import": "ok"
+  }
+ ],
+ "cases": 60,
+ "valid": 40,
+ "hallucinated": [
+  {
+   "id": "LLM-BB-17",
+   "md": "- one\n- two",
+   "llm_expected": "<ul>\n<li>one</li>\n<li>two</li>\n</ul>",
+   "reference": "<ul><li>one</li><li>two</li></ul>",
+   "mistune": "<ul><li>one</li><li>two</li></ul>"
+  },
+  {
+   "id": "LLM-BB-18",
+   "md": "1. one\n2. two",
+   "llm_expected": "<ol>\n<li>one</li>\n<li>two</li>\n</ol>",
+   "reference": "<ol><li>one</li><li>two</li></ol>",
+   "mistune": "<ol><li>one</li><li>two</li></ol>"
+  },
+  {
+   "id": "LLM-BB-19",
+   "md": "- parent\n  - child",
+   "llm_expected": "<ul>\n<li>parent\n<ul>\n<li>child</li>\n</ul>\n</li>\n</ul>",
+   "reference": "<ul><li>parent<ul><li>child</li></ul></li></ul>",
+   "mistune": "<ul><li>parent<ul><li>child</li></ul></li></ul>"
+  },
+  {
+   "id": "LLM-BB-20",
+   "md": "- [x] done\n- [ ] todo",
+   "llm_expected": "<ul>\n<li>[x] done</li>\n<li>[ ] todo</li>\n</ul>",
+   "reference": "<ul><li>[x] done</li><li>[ ] todo</li></ul>",
+   "mistune": "<ul><li>[x] done</li><li>[ ] todo</li></ul>"
+  },
+  {
+   "id": "LLM-BB-21",
+   "md": "> quoted",
+   "llm_expected": "<blockquote>\n<p>quoted</p>\n</blockquote>",
+   "reference": "<blockquote><p>quoted</p></blockquote>",
+   "mistune": "<blockquote><p>quoted</p></blockquote>"
+  },
+  {
+   "id": "LLM-BB-22",
+   "md": "> quoted line 1\n> quoted line 2",
+   "llm_expected": "<blockquote>\n<p>quoted line 1\nquoted line 2</p>\n</blockquote>",
+   "reference": "<blockquote><p>quoted line 1\nquoted line 2</p></blockquote>",
+   "mistune": "<blockquote><p>quoted line 1\nquoted line 2</p></blockquote>"
+  },
+  {
+   "id": "LLM-BB-23",
+   "md": "> outer\n> > inner",
+   "llm_expected": "<blockquote>\n<p>outer</p>\n<blockquote>\n<p>inner</p>\n</blockquote>\n</blockquote>",
+   "reference": "<blockquote><p>outer</p><blockquote><p>inner</p></blockquote></blockquote>",
+   "mistune": "<blockquote><p>outer</p><blockquote><p>inner</p></blockquote></blockquote>"
+  },
+  {
+   "id": "LLM-BB-24",
+   "md": "    def hello():\n        return 1",
+   "llm_expected": "<pre><code>def hello():\n    return 1\n</code></pre>",
+   "reference": "<pre><code>def hello():\n    return 1</code></pre>",
+   "mistune": "<pre><code>def hello():\n    return 1</code></pre>"
+  },
+  {
+   "id": "LLM-BB-25",
+   "md": "```python\nprint('hi')\n```",
+   "llm_expected": "<pre><code class=\"language-python\">print('hi')\n</code></pre>",
+   "reference": "<pre><code class=\"language-python\">print('hi')</code></pre>",
+   "mistune": "<pre><code class=\"language-python\">print('hi')</code></pre>"
+  },
+  {
+   "id": "LLM-BB-26",
+   "md": "```  js\nconsole.log(1)\n```",
+   "llm_expected": "<pre><code class=\"language-js\">console.log(1)\n</code></pre>",
+   "reference": "<pre><code class=\"language-js\">console.log(1)</code></pre>",
+   "mistune": "<pre><code class=\"language-js\">console.log(1)</code></pre>"
+  },
+  {
+   "id": "LLM-BB-37",
+   "md": "<div>\ncontent\n</div>",
+   "llm_expected": "<div>\ncontent\n</div>",
+   "reference": "<div>content</div>",
+   "mistune": "<div>content</div>"
+  },
+  {
+   "id": "LLM-BB-40",
+   "md": "Visit https://example.com.",
+   "llm_expected": "<p>Visit <a href=\"https://example.com\">https://example.com</a>.</p>",
+   "reference": "<p>Visit https://example.com.</p>",
+   "mistune": "<p>Visit https://example.com.</p>"
+  },
+  {
+   "id": "LLM-BB-41",
+   "md": "Email test@example.com.",
+   "llm_expected": "<p>Email <a href=\"mailto:test@example.com\">test@example.com</a>.</p>",
+   "reference": "<p>Email test@example.com.</p>",
+   "mistune": "<p>Email test@example.com.</p>"
+  },
+  {
+   "id": "LLM-BB-50",
+   "md": "- item\n\nParagraph after list.",
+   "llm_expected": "<ul>\n<li>item</li>\n</ul><p>Paragraph after list.</p>",
+   "reference": "<ul><li>item</li></ul><p>Paragraph after list.</p>",
+   "mistune": "<ul><li>item</li></ul><p>Paragraph after list.</p>"
+  },
+  {
+   "id": "LLM-BB-51",
+   "md": "> quote\n\nAfter.",
+   "llm_expected": "<blockquote>\n<p>quote</p>\n</blockquote><p>After.</p>",
+   "reference": "<blockquote><p>quote</p></blockquote><p>After.</p>",
+   "mistune": "<blockquote><p>quote</p></blockquote><p>After.</p>"
+  },
+  {
+   "id": "LLM-BB-53",
+   "md": "```txt\nline\n```\n\nafter",
+   "llm_expected": "<pre><code class=\"language-txt\">line\n</code></pre><p>after</p>",
+   "reference": "<pre><code class=\"language-txt\">line</code></pre><p>after</p>",
+   "mistune": "<pre><code class=\"language-txt\">line</code></pre><p>after</p>"
+  },
+  {
+   "id": "LLM-BB-54",
+   "md": "- first\n\n  para\n- second",
+   "llm_expected": "<ul>\n<li>\n<p>first</p>\n<p>para</p>\n</li>\n<li>\n<p>second</p>\n</li>\n</ul>",
+   "reference": "<ul><li><p>first</p><p>para</p></li><li><p>second</p></li></ul>",
+   "mistune": "<ul><li><p>first</p><p>para</p></li><li><p>second</p></li></ul>"
+  },
+  {
+   "id": "LLM-BB-55",
+   "md": "3. three\n4. four",
+   "llm_expected": "<ol start=\"3\">\n<li>three</li>\n<li>four</li>\n</ol>",
+   "reference": "<ol start=\"3\"><li>three</li><li>four</li></ol>",
+   "mistune": "<ol start=\"3\"><li>three</li><li>four</li></ol>"
+  },
+  {
+   "id": "LLM-BB-56",
+   "md": "> - a\n> - b",
+   "llm_expected": "<blockquote>\n<ul>\n<li>a</li>\n<li>b</li>\n</ul>\n</blockquote>",
+   "reference": "<blockquote><ul><li>a</li><li>b</li></ul></blockquote>",
+   "mistune": "<blockquote><ul><li>a</li><li>b</li></ul></blockquote>"
+  },
+  {
+   "id": "LLM-BB-57",
+   "md": "<section>*not emphasis*</section>",
+   "llm_expected": "<p><section>*not emphasis*</section></p>",
+   "reference": "<section>*not emphasis*</section>",
+   "mistune": "<section>*not emphasis*</section>"
+  }
+ ],
+ "both_wrong": [],
+ "defect_found": [],
+ "validity_pct": 66.7
+}

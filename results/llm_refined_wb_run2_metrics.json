@@ -1,0 +1,39 @@
+{
+ "group": "llm_refined_wb_run2",
+ "test_cases": 40,
+ "verdicts": {
+  "PASS": 21,
+  "FAIL": 19
+ },
+ "combined_pct": 34.7,
+ "statement_pct": 40.0,
+ "branch_pct": 19.3,
+ "tests_with_coverage": 40,
+ "minimal_subset_size": 18,
+ "branch_pct_per_test": 0.483,
+ "redundancy_pct": 55.0,
+ "oracle_checked": 0,
+ "oracle_valid": 0,
+ "oracle_invalid_ids": [],
+ "defects_or_failures": [
+  "test_llm_wb_03_parse_link_text_single_level_simple_text",
+  "test_llm_wb_04_parse_link_text_nested_two_levels",
+  "test_llm_wb_06_parse_link_text_start_at_middle_of_string",
+  "test_llm_wb_07_parse_link_label_valid_label",
+  "test_llm_wb_09_parse_link_label_invalid_non_bracket_start",
+  "test_llm_wb_10_parse_link_href_inline_parenthesized_simple",
+  "test_llm_wb_11_parse_link_href_inline_parenthesized_with_title_returns_href_only",
+  "test_llm_wb_13_parse_link_href_block_form_keeps_closing_paren_when_same_as_last_char",
+  "test_llm_wb_14_parse_link_href_block_form_strips_closing_paren_when_different",
+  "test_llm_wb_16_parse_link_title_double_quoted",
+  "test_llm_wb_17_parse_link_title_single_quoted_with_escape_unescaped",
+  "test_llm_wb_18_parse_link_title_parenthesized",
+  "test_llm_wb_20_parse_link_simple_href_only",
+  "test_llm_wb_21_parse_link_with_title",
+  "test_llm_wb_29_codespan_no_closing_marker_becomes_text",
+  "test_llm_wb_33_emphasis_single_marker_inside_emphasis_is_text",
+  "test_llm_wb_34_emphasis_double_marker_inside_strong_is_text",
+  "test_llm_wb_35_emphasis_no_closing_marker_is_text",
+  "test_llm_wb_36_emphasis_precedence_scan_blocks_parse"
+ ]
+}

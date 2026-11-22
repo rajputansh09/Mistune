@@ -31,10 +31,10 @@ COVERAGE_FILE=results/.coverage.html $PY -m pytest tests/blackbox tests/whitebox
 
 if [ "${1:-}" = "--with-mutation" ]; then
   echo "== 4. Mutation testing (~15-30 min)"
-  GROUPS="blackbox=tests/blackbox whitebox=tests/whitebox integration=tests/integration"
+  MUT_GROUPS="blackbox=tests/blackbox whitebox=tests/whitebox integration=tests/integration"
   for d in llm/generated/*/run*; do
-    [ -n "$(ls "$d"/test_*.py 2>/dev/null)" ] && GROUPS="$GROUPS llm_$(basename "$(dirname "$d")")_$(basename "$d")=$d"
+    [ -n "$(ls "$d"/test_*.py 2>/dev/null)" ] && MUT_GROUPS="$MUT_GROUPS llm_$(basename "$(dirname "$d")")_$(basename "$d")=$d"
   done
-  $PY mutation/mutate.py --groups $GROUPS --timeout 15 --out results/mutation_all.json
+  $PY mutation/mutate.py --groups $MUT_GROUPS --timeout 15 --out results/mutation_all.json
   $PY scripts/analyze_mutation.py results/mutation_all.json > results/mutation_analysis.md
 fi

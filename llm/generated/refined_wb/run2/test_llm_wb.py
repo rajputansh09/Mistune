@@ -1,0 +1,198 @@
+import pytest
+from mistune import helpers
+from mistune.core import InlineState
+from mistune.inline_parser import InlineParser
+
+
+def tokens(src, **flags):
+    p = InlineParser()
+    st = InlineState({})
+    st.src = src
+    for k, v in flags.items():
+        setattr(st, k, v)
+    return p.render(st)
+
+
+def test_llm_wb_01_unescape_char_removes_backslash_from_special_chars():
+    assert helpers.unescape_char(r"\(") == "("
+
+
+def test_llm_wb_02_parse_link_text_no_brackets_returns_none():
+    """D1=F: no closing bracket search result; loop executes 0 times."""
+    assert helpers.parse_link_text("abc", 0) == (None, None)
+
+
+def test_llm_wb_03_parse_link_text_single_level_simple_text():
+    """D1=T, D2=F, D3=T: one bracket pair; loop executes 1 time."""
+    assert helpers.parse_link_text("[x]", 0) == ("[x", 3)
+
+
+def test_llm_wb_04_parse_link_text_nested_two_levels():
+    """D1=T, D2=T, D3=T: nested bracket pair; loop executes >=2 times."""
+    assert helpers.parse_link_text("[a[b]c]", 0) == ("[a[b]c", 7)
+
+
+def test_llm_wb_05_parse_link_text_unclosed_nested_returns_none():
+    """D1=T, D2=T, D3=F: closing bracket never balances to level 0."""
+    assert helpers.parse_link_text("[a[b]", 0) == (None, None)
+
+
+def test_llm_wb_06_parse_link_text_start_at_middle_of_string():
+    """D1=T, D2=F, D3=T: start_pos used as slice lower bound; verifies pos def-use."""
+    assert helpers.parse_link_text("zz[a]", 2) == ("[a", 5)
+
+
+def test_llm_wb_07_parse_link_label_valid_label():
+    assert helpers.parse_link_label("[label]:", 0) == ("[label]", 8)
+
+
+def test_llm_wb_08_parse_link_label_invalid_missing_colon():
+    assert helpers.parse_link_label("[label]", 0) == (None, None)
+
+
+def test_llm_wb_09_parse_link_label_invalid_non_bracket_start():
+    assert helpers.parse_link_label("label]:", 0) == (None, None)
+
+
+def test_llm_wb_10_parse_link_href_inline_parenthesized_simple():
+    assert helpers.parse_link_href("(http://a)", 0) == ("http://a", 9)
+
+
+def test_llm_wb_11_parse_link_href_inline_parenthesized_with_title_returns_href_only():
+    assert helpers.parse_link_href("(http://a \"t\")", 0) == ("http://a", 9)
+
+
+def test_llm_wb_12_parse_link_href_bracketed_form():
+    assert helpers.parse_link_href("<http://a>", 0) == ("http://a", 10)
+
+
+def test_llm_wb_13_parse_link_href_block_form_keeps_closing_paren_when_same_as_last_char():
+    assert helpers.parse_link_href("(abc)", 0, block=True) == ("abc", 5)
+
+
+def test_llm_wb_14_parse_link_href_block_form_strips_closing_paren_when_different():
+    assert helpers.parse_link_href("(ab)", 0, block=True) == ("ab", 4)
+
+
+def test_llm_wb_15_parse_link_href_invalid_returns_none():
+    assert helpers.parse_link_href("abc", 0) == (None, None)
+
+
+def test_llm_wb_16_parse_link_title_double_quoted():
+    assert helpers.parse_link_title('"A title"', 0, 9) == ("A title", 9)
+
+
+def test_llm_wb_17_parse_link_title_single_quoted_with_escape_unescaped():
+    assert helpers.parse_link_title("'A\\' title'", 0, 11) == ("A' title", 11)
+
+
+def test_llm_wb_18_parse_link_title_parenthesized():
+    assert helpers.parse_link_title("(A title)", 0, 9) == ("A title", 9)
+
+
+def test_llm_wb_19_parse_link_title_invalid_returns_none():
+    assert helpers.parse_link_title("A title", 0, 7) == (None, None)
+
+
+def test_llm_wb_20_parse_link_simple_href_only():
+    assert helpers.parse_link("(http://example.com)", 0) == (
+        {"url": "http://example.com"},
+        20,
+    )
+
+
+def test_llm_wb_21_parse_link_with_title():
+    assert helpers.parse_link('(http://example.com "Title")', 0) == (
+        {"url": "http://example.com", "title": "Title"},
+        28,
+    )
+
+
+def test_llm_wb_22_parse_link_invalid_missing_paren_end_returns_none():
+    assert helpers.parse_link("(http://example.com", 0) == (None, None)
+
+
+def test_llm_wb_23_parse_link_invalid_bad_href_returns_none():
+    assert helpers.parse_link("abc", 0) == (None, None)
+
+
+def test_llm_wb_24_codespan_basic_two_backticks():
+    assert tokens("``code``") == [{"type": "codespan", "raw": "code"}]
+
+
+def test_llm_wb_25_codespan_preserves_inner_backticks_longer_marker():
+    assert tokens("``a `b` c``") == [{"type": "codespan", "raw": "a `b` c"}]
+
+
+def test_llm_wb_26_codespan_collapses_newlines_to_spaces():
+    assert tokens("`a\nb`") == [{"type": "codespan", "raw": "a b"}]
+
+
+def test_llm_wb_27_codespan_trim_outer_spaces_when_both_sides_present():
+    assert tokens("`  code  `") == [{"type": "codespan", "raw": " code "}]
+
+
+def test_llm_wb_28_codespan_empty_after_strip_falls_back_to_raw_spaces():
+    assert tokens("`   `") == [{"type": "codespan", "raw": "   "}]
+
+
+def test_llm_wb_29_codespan_no_closing_marker_becomes_text():
+    assert tokens("`code") == [{"type": "text", "raw": "`"}]
+
+
+def test_llm_wb_30_emphasis_simple_emphasis():
+    assert tokens("*em*") == [{"type": "emphasis", "children": [{"type": "text", "raw": "em"}]}]
+
+
+def test_llm_wb_31_emphasis_simple_strong():
+    assert tokens("**strong**") == [{"type": "strong", "children": [{"type": "text", "raw": "strong"}]}]
+
+
+def test_llm_wb_32_emphasis_nested_strong_inside_emphasis():
+    assert tokens("***a***") == [
+        {
+            "type": "emphasis",
+            "children": [
+                {
+                    "type": "strong",
+                    "children": [{"type": "text", "raw": "a"}],
+                }
+            ],
+        }
+    ]
+
+
+def test_llm_wb_33_emphasis_single_marker_inside_emphasis_is_text():
+    assert tokens("*a*", in_emphasis=True) == [{"type": "text", "raw": "*"}]
+
+
+def test_llm_wb_34_emphasis_double_marker_inside_strong_is_text():
+    assert tokens("**a**", in_strong=True) == [{"type": "text", "raw": "**"}]
+
+
+def test_llm_wb_35_emphasis_no_closing_marker_is_text():
+    assert tokens("*a") == [{"type": "text", "raw": "*"}]
+
+
+def test_llm_wb_36_emphasis_precedence_scan_blocks_parse():
+    assert tokens("*a*", in_link=True) == [{"type": "text", "raw": "*"}]
+
+
+def test_llm_wb_37_emphasis_inside_link_can_parse_when_not_precedence_blocked():
+    assert tokens("*a*", in_link=False) == [{"type": "emphasis", "children": [{"type": "text", "raw": "a"}]}]
+
+
+def test_llm_wb_38_codespan_inside_link_is_tokenized():
+    assert tokens("`x`", in_link=True) == [{"type": "codespan", "raw": "x"}]
+
+
+def test_llm_wb_39_codespan_inside_image_is_tokenized():
+    assert tokens("`x`", in_image=True) == [{"type": "codespan", "raw": "x"}]
+
+
+def test_llm_wb_40_emphasis_and_codespan_combined_sequence():
+    assert tokens("*a* `b`") == [
+        {"type": "emphasis", "children": [{"type": "text", "raw": "a"}]},
+        {"type": "text", "raw": " "},
+        {"type": "codespan", "raw": "b"},
+    ]

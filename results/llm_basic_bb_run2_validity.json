@@ -1,0 +1,72 @@
+{
+ "files": [
+  {
+   "file": "llm/generated/basic_bb/run2/test_llm_bb.py",
+   "syntax": "ok",
+   "import": "ok"
+  }
+ ],
+ "cases": 60,
+ "valid": 52,
+ "hallucinated": [
+  {
+   "id": "LLM-BB-09",
+   "md": "This is ***very important***.",
+   "llm_expected": "<p>This is <strong><em>very important</em></strong>.</p>",
+   "reference": "<p>This is <em><strong>very important</strong></em>.</p>",
+   "mistune": "<p>This is <em><strong>very important</strong></em>.</p>"
+  },
+  {
+   "id": "LLM-BB-10",
+   "md": "This is ~~deleted~~ text.",
+   "llm_expected": "<p>This is <del>deleted</del> text.</p>",
+   "reference": "<p>This is ~~deleted~~ text.</p>",
+   "mistune": "<p>This is ~~deleted~~ text.</p>"
+  },
+  {
+   "id": "LLM-BB-27",
+   "md": "- [ ] todo\n- [x] done",
+   "llm_expected": "<ul><li><input class=\"task-list-item-checkbox\" type=\"checkbox\" disabled=\"\" /> todo</li><li><input class=\"task-list-item-checkbox\" type=\"checkbox\" disabled=\"\" checked=\"\" /> done</li></ul>",
+   "reference": "<ul><li>[ ] todo</li><li>[x] done</li></ul>",
+   "mistune": "<ul><li>[ ] todo</li><li>[x] done</li></ul>"
+  },
+  {
+   "id": "LLM-BB-37",
+   "md": "<div>\ninner\n</div>",
+   "llm_expected": "<div>\ninner\n</div>",
+   "reference": "<div>inner</div>",
+   "mistune": "<div>inner</div>"
+  },
+  {
+   "id": "LLM-BB-38",
+   "md": "| A | B |\n|---|---|\n| 1 | 2 |",
+   "llm_expected": "<table>\n<thead>\n<tr>\n  <th>A</th>\n  <th>B</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n  <td>1</td>\n  <td>2</td>\n</tr>\n</tbody>\n</table>",
+   "reference": "<p>| A | B |\n|---|---|\n| 1 | 2 |</p>",
+   "mistune": "<p>| A | B |\n|---|---|\n| 1 | 2 |</p>"
+  },
+  {
+   "id": "LLM-BB-39",
+   "md": "| Left | Center | Right |\n|:-----|:------:|------:|\n| a | b | c |",
+   "llm_expected": "<table>\n<thead>\n<tr>\n  <th align=\"left\">Left</th>\n  <th align=\"center\">Center</th>\n  <th align=\"right\">Right</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n  <td align=\"left\">a</td>\n  <td align=\"center\">b</td>\n  <td align=\"right\">c</td>\n</tr>\n</tbody>\n</table>",
+   "reference": "<p>| Left | Center | Right |\n|:-----|:------:|------:|\n| a | b | c |</p>",
+   "mistune": "<p>| Left | Center | Right |\n|:-----|:------:|------:|\n| a | b | c |</p>"
+  },
+  {
+   "id": "LLM-BB-40",
+   "md": "| A \\| B | C |\\n|---|---|\\n| x | y |",
+   "llm_expected": "<p>| A \\| B | C |\\n|---|---|\\n| x | y |</p>",
+   "reference": "<p>| A | B | C |\\n|---|---|\\n| x | y |</p>",
+   "mistune": "<p>| A | B | C |\\n|---|---|\\n| x | y |</p>"
+  },
+  {
+   "id": "LLM-BB-58",
+   "md": "![*alt*](https://example.com/i.png)",
+   "llm_expected": "<p><img src=\"https://example.com/i.png\" alt=\"*alt*\" /></p>",
+   "reference": "<p><img src=\"https://example.com/i.png\" alt=\"alt\" /></p>",
+   "mistune": "<p><img src=\"https://example.com/i.png\" alt=\"alt\" /></p>"
+  }
+ ],
+ "both_wrong": [],
+ "defect_found": [],
+ "validity_pct": 86.7
+}

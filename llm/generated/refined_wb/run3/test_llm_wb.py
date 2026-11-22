@@ -1,0 +1,277 @@
+import pytest
+from mistune import helpers
+from mistune.core import InlineState
+from mistune.inline_parser import InlineParser
+
+
+def tokens(src, **flags):
+    p = InlineParser()
+    st = InlineState({})
+    st.src = src
+    for k, v in flags.items():
+        setattr(st, k, v)
+    return p.render(st)
+
+
+@pytest.mark.parametrize(
+    "src,pos,expected",
+    [
+        ("[abc]", 0, ("abc", 5)),
+        ("x[y[z]w]q", 1, ("y[z]w", 8)),
+        ("x[y]z", 1, ("y", 4)),
+    ],
+)
+def test_llm_wb_01_parse_link_text_success_cases(src, pos, expected):
+    """D1=T and D2=T: bracket search finds markers; D3=T: closing bracket found; loop executes 1+ times."""
+    assert helpers.parse_link_text(src, pos) == expected
+
+
+@pytest.mark.parametrize(
+    "src,pos",
+    [
+        ("abc", 0),
+        ("[abc", 0),
+        ("x[y", 1),
+    ],
+)
+def test_llm_wb_02_parse_link_text_failure_cases(src, pos):
+    """D1=F: bracket search not found OR D2=F: no closing bracket before end; returns (None, None)."""
+    assert helpers.parse_link_text(src, pos) == (None, None)
+
+
+def test_llm_wb_03_parse_link_label_success():
+    """D1=T: label regex matches; returns label without closing bracket and end position."""
+    assert helpers.parse_link_label("[label]", 0) == ("[label", 7)
+
+
+def test_llm_wb_04_parse_link_label_failure():
+    """D1=F: label regex does not match at start_pos; returns (None, None)."""
+    assert helpers.parse_link_label("label]", 0) == (None, None)
+
+
+@pytest.mark.parametrize(
+    "src,start_pos,block,expected",
+    [
+        ("<https://example.com>", 0, False, ("https://example.com", 22)),
+        ("<https://example.com>", 0, True, ("https://example.com", 22)),
+        ("http://example.com", 0, False, ("http://example.com", 18)),
+        ("http://example.com", 0, True, ("http://example.com", 18)),
+    ],
+)
+def test_llm_wb_05_parse_link_href_success_cases(src, start_pos, block, expected):
+    """D1=T and D2=T: angle-bracket or plain URL regex matches; D3=T/F covered by block vs inline consumption."""
+    assert helpers.parse_link_href(src, start_pos, block=block) == expected
+
+
+@pytest.mark.parametrize(
+    "src,start_pos,block",
+    [
+        ("<https://example.com", 0, False),
+        ("not a url", 0, False),
+        ("not a url", 0, True),
+    ],
+)
+def test_llm_wb_06_parse_link_href_failure_cases(src, start_pos, block):
+    """D1=F: no opening angle-bracket match or no URL regex match; returns (None, None)."""
+    assert helpers.parse_link_href(src, start_pos, block=block) == (None, None)
+
+
+@pytest.mark.parametrize(
+    "src,start_pos,max_pos,expected",
+    [
+        ('"title"', 0, 7, ("title", 7)),
+        ("'ti\\'tle'", 0, 9, ("ti'tle", 9)),
+        ("(a\\)b)", 0, 6, ("a)b", 6)),
+    ],
+)
+def test_llm_wb_07_parse_link_title_success_cases(src, start_pos, max_pos, expected):
+    """D1=T: title regex matches; unescape_char applies and exact end position is returned."""
+    assert helpers.parse_link_title(src, start_pos, max_pos) == expected
+
+
+@pytest.mark.parametrize(
+    "src,start_pos,max_pos",
+    [
+        ("title", 0, 5),
+        ('"unterminated', 0, 13),
+        ("'bad", 0, 4),
+    ],
+)
+def test_llm_wb_08_parse_link_title_failure_cases(src, start_pos, max_pos):
+    """D1=F: title regex does not match within max_pos; returns (None, None)."""
+    assert helpers.parse_link_title(src, start_pos, max_pos) == (None, None)
+
+
+@pytest.mark.parametrize(
+    "src,pos,expected",
+    [
+        ("[foo](url)", 5, ({"url": "url"}, 10)),
+        ("[foo](url 't')", 5, ({"url": "url", "title": "t"}, 14)),
+        ("[foo](http://example.com)", 5, ({"url": "http://example.com"}, 25)),
+    ],
+)
+def test_llm_wb_09_parse_link_success_cases(src, pos, expected):
+    """D1=T and D2=T: href parsed, optional title parsed or skipped, final ')' found; returns attrs and end position."""
+    assert helpers.parse_link(src, pos) == expected
+
+
+@pytest.mark.parametrize(
+    "src,pos",
+    [
+        ("[foo](<url)", 5),
+        ("[foo]url)", 5),
+        ("[foo](url", 5),
+        ("[foo](url 't'", 5),
+    ],
+)
+def test_llm_wb_10_parse_link_failure_cases(src, pos):
+    """D1=F: href parse fails or D2=F: closing parenthesis not found; returns (None, None)."""
+    assert helpers.parse_link(src, pos) == (None, None)
+
+
+def test_llm_wb_11_parse_emphasis_single_emphasis():
+    """D1=T: one '*' found; D2=F because not already in_emphasis; D3=T end found; renders emphasis token."""
+    assert tokens("*em*", in_emphasis=False) == [{"type": "emphasis", "children": [{"type": "text", "raw": "em"}]}]
+
+
+def test_llm_wb_12_parse_emphasis_single_emphasis_inside_emphasis_flag():
+    """D1=T and D2=T: one '*' inside emphasis state is treated as literal text; returns raw marker."""
+    assert tokens("*", in_emphasis=True) == [{"type": "text", "raw": "*"}]
+
+
+def test_llm_wb_13_parse_emphasis_double_strong():
+    """D1=T: two '*' found; D2=F because not already in_strong; D3=T end found; renders strong token."""
+    assert tokens("**strong**", in_strong=False) == [{"type": "strong", "children": [{"type": "text", "raw": "strong"}]}]
+
+
+def test_llm_wb_14_parse_emphasis_double_strong_inside_strong_flag():
+    """D1=T and D2=T: two '*' inside strong state are treated as literal text; returns raw marker."""
+    assert tokens("**", in_strong=True) == [{"type": "text", "raw": "**"}]
+
+
+def test_llm_wb_15_parse_emphasis_triple_nested():
+    """D1=T: three '*' found; nested emphasis/strong rendering follows CommonMark's nested emphasis syntax."""
+    assert tokens("***em***") == [
+        {"type": "emphasis", "children": [{"type": "strong", "children": [{"type": "text", "raw": "em"}]}]}
+    ]
+
+
+def test_llm_wb_16_parse_emphasis_no_end_marker():
+    """D1=T, D3=F: opener found but matching closing delimiter not found; opener is emitted as text."""
+    assert tokens("*em", in_emphasis=False) == [{"type": "text", "raw": "*"}]
+
+
+def test_llm_wb_17_parse_codespan_basic_single_backtick():
+    """D1=T: matching backtick fence found; returns codespan with content preserved exactly."""
+    assert tokens("`code`") == [{"type": "codespan", "raw": "code"}]
+
+
+def test_llm_wb_18_parse_codespan_trim_and_space_normalization():
+    """D1=T: line endings become spaces; surrounding single spaces are trimmed when code is non-blank."""
+    assert tokens("`  a\nb  `") == [{"type": "codespan", "raw": " a b "}]
+    assert tokens("`a\nb`") == [{"type": "codespan", "raw": "a b"}]
+
+
+def test_llm_wb_19_parse_codespan_preserve_all_spaces_when_only_spaces():
+    """D1=T: code consisting only of spaces is preserved; strip() is empty so outer spaces are not trimmed."""
+    assert tokens("`   `") == [{"type": "codespan", "raw": "   "}]
+
+
+def test_llm_wb_20_parse_codespan_no_closing_fence():
+    """D1=F: closing backtick fence not found; opener is emitted as text."""
+    assert tokens("`code") == [{"type": "text", "raw": "`"}]
+
+
+def test_llm_wb_21_parse_codespan_double_backtick():
+    """D1=T: double-backtick fence matches a same-length closing fence; content is extracted between them."""
+    assert tokens("``code``") == [{"type": "codespan", "raw": "code"}]
+
+
+def test_llm_wb_22_parse_link_text_loop_zero_iterations_failure():
+    """parse_link_text loop=0, D1=F: first search from pos finds no bracket marker; returns (None, None)."""
+    assert helpers.parse_link_text("abc", 0) == (None, None)
+
+
+def test_llm_wb_23_parse_link_text_loop_zero_iterations_immediate_close():
+    """parse_link_text loop=0, D1=T/D3=T: input begins with closing bracket; single marker closes immediately."""
+    assert helpers.parse_link_text("]", 0) == ("", 1)
+
+
+def test_llm_wb_24_parse_link_text_loop_one_iteration_open_then_close():
+    """parse_link_text loop=1: one opening bracket increases level, then one closing bracket ends the link text."""
+    assert helpers.parse_link_text("[a]", 0) == ("a", 3)
+
+
+def test_llm_wb_25_parse_link_text_loop_one_iteration_nested_open_then_close():
+    """parse_link_text loop=1 with nested opener: first marker is '[' then immediate ']' closes the nested level."""
+    assert helpers.parse_link_text("[[]]", 0) == ("[]", 4)
+
+
+def test_llm_wb_26_parse_link_text_loop_two_iterations_nested_structure():
+    """parse_link_text loop>=2: nested brackets require multiple searches before final close."""
+    assert helpers.parse_link_text("[a[b]c]", 0) == ("a[b]c", 7)
+
+
+def test_llm_wb_27_parse_link_text_loop_multiple_iterations_deeper_nesting():
+    """parse_link_text loop>=2: deeper nesting exercises repeated updates of pos and level until found=True."""
+    assert helpers.parse_link_text("[a[b[c]d]e]", 0) == ("a[b[c]d]e", 11)
+
+
+def test_llm_wb_28_parse_link_text_def_use_level_outer_close():
+    """level def-use: starts at 1 and is decremented to 0 when the outer closing bracket is encountered."""
+    assert helpers.parse_link_text("[x]", 0) == ("x", 3)
+
+
+def test_llm_wb_29_parse_link_text_def_use_level_nested_increment():
+    """level def-use: nested opener increments level from 1 to 2, then close decrements to 1, then final close to 0."""
+    assert helpers.parse_link_text("[[x]]", 0) == ("[x]", 5)
+
+
+def test_llm_wb_30_parse_link_text_def_use_found_true_path():
+    """found def-use: found remains False until the closing bracket sets it True and the function returns the slice."""
+    assert helpers.parse_link_text("x[y]z", 1) == ("y", 4)
+
+
+def test_llm_wb_31_parse_link_text_def_use_found_false_path():
+    """found def-use: found never becomes True when no matching close exists; function returns (None, None)."""
+    assert helpers.parse_link_text("[x", 0) == (None, None)
+
+
+def test_llm_wb_32_parse_link_text_def_use_pos_update_and_return():
+    """pos def-use: pos is updated from regex end positions and returned as the index immediately after the close."""
+    assert helpers.parse_link_text("x[y]z", 1) == ("y", 4)
+
+
+def test_llm_wb_33_parse_link_text_def_use_pos_break_without_match():
+    """pos def-use: pos never advances when no bracket marker exists after the start position."""
+    assert helpers.parse_link_text("abc", 0) == (None, None)
+
+
+def test_llm_wb_34_parse_link_href_angle_bracket_block_mode():
+    """D1=T on angle-bracket branch and D2=T on closing bracket regex; block mode returns inside text exactly."""
+    assert helpers.parse_link_href("<a b>", 0, block=True) == ("a b", 5)
+
+
+def test_llm_wb_35_parse_link_href_inline_plain_url_with_trailing_punct():
+    """D1=F angle-bracket branch, D2=T inline URL branch; trailing delimiter is excluded from returned href."""
+    assert helpers.parse_link_href("https://example.com)", 0, block=False) == ("https://example.com", 19)
+
+
+def test_llm_wb_36_parse_link_title_unescape_escapes():
+    """D1=T: title is extracted and backslash escapes are removed per CommonMark link-title rules."""
+    assert helpers.parse_link_title('"a\\\"b"', 0, 6) == ('a"b', 6)
+
+
+def test_llm_wb_37_parse_link_title_parenthesized_title():
+    """D1=T: parenthesized title is accepted and unescaped."""
+    assert helpers.parse_link_title("(a\\)b)", 0, 6) == ("a)b", 6)
+
+
+def test_llm_wb_38_parse_emphasis_text_inside_link_flag():
+    """Flags exercise rendering context; emphasis inside a link still parses normally in the inline renderer."""
+    assert tokens("*em*", in_link=True) == [{"type": "emphasis", "children": [{"type": "text", "raw": "em"}]}]
+
+
+def test_llm_wb_39_parse_codespan_text_inside_code_like_contexts():
+    """codespan branch remains independent of link/image/emphasis flags; opener still yields codespan."""
+    assert tokens("`x`", in_image=True) == [{"type": "codespan", "raw": "x"}]

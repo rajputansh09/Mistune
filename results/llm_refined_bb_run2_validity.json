@@ -1,0 +1,86 @@
+{
+ "files": [
+  {
+   "file": "llm/generated/refined_bb/run2/test_llm_bb.py",
+   "syntax": "ok",
+   "import": "ok"
+  }
+ ],
+ "cases": 60,
+ "valid": 51,
+ "hallucinated": [
+  {
+   "id": "LLM-BB-05",
+   "md": "    # T",
+   "llm_expected": "<pre><code># T\n</code></pre>",
+   "reference": "<pre><code># T</code></pre>",
+   "mistune": "<pre><code># T</code></pre>"
+  },
+  {
+   "id": "LLM-BB-30",
+   "md": "- a\n    - b",
+   "llm_expected": "<ul><li>a<pre><code>- b\n</code></pre></li></ul>",
+   "reference": "<ul><li>a<ul><li>b</li></ul></li></ul>",
+   "mistune": "<ul><li>a<ul><li>b</li></ul></li></ul>"
+  },
+  {
+   "id": "LLM-BB-35",
+   "md": "&apos;",
+   "llm_expected": "<p>&apos;</p>",
+   "reference": "<p>'</p>",
+   "mistune": "<p>'</p>"
+  },
+  {
+   "id": "LLM-BB-38",
+   "md": "   ",
+   "llm_expected": "<p>   </p>",
+   "reference": "",
+   "mistune": ""
+  },
+  {
+   "id": "LLM-BB-42",
+   "md": "    a",
+   "llm_expected": "<pre><code>a\n</code></pre>",
+   "reference": "<pre><code>a</code></pre>",
+   "mistune": "<pre><code>a</code></pre>"
+  },
+  {
+   "id": "LLM-BB-51",
+   "md": "Heading\n-",
+   "llm_expected": "<p>Heading\n-</p>",
+   "reference": "<h2>Heading</h2>",
+   "mistune": "<h2>Heading</h2>"
+  },
+  {
+   "id": "LLM-BB-53",
+   "md": "[]( )",
+   "llm_expected": "<p>[]( )</p>",
+   "reference": "<p><a href=\"\"></a></p>",
+   "mistune": "<p><a href=\"\"></a></p>"
+  },
+  {
+   "id": "LLM-BB-54",
+   "md": "![]( )",
+   "llm_expected": "<p>![]( )</p>",
+   "reference": "<p><img src=\"\" alt=\"\" /></p>",
+   "mistune": "<p><img src=\"\" alt=\"\" /></p>"
+  },
+  {
+   "id": "LLM-BB-58",
+   "md": "001. a",
+   "llm_expected": "<ol start=\"1\"><li>a</li></ol>",
+   "reference": "<ol><li>a</li></ol>",
+   "mistune": "<ol><li>a</li></ol>"
+  }
+ ],
+ "both_wrong": [],
+ "defect_found": [
+  {
+   "id": "LLM-BB-36",
+   "md": "&notanentity;",
+   "expected": "<p>&amp;notanentity;</p>",
+   "mistune": "<p>¬anentity;</p>"
+  }
+ ],
+ "validity_pct": 85.0
+}

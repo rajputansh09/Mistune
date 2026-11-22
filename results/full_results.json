@@ -1381,7 +1381,7 @@
   "description": "BB-RF-06 Stress: 5000 nested '>' do not overflow the stack.",
   "input": null,
   "expected": null,
-  "actual": "0.004s",
+  "actual": "0.001s",
   "verdict": "PASS",
   "defect": null
  },
@@ -1392,7 +1392,7 @@
   "description": "BB-RF-07 Stress (DoS): 4000 unmatched '[' render in under 0.5 s",
   "input": null,
   "expected": null,
-  "actual": "3.57s",
+  "actual": "1.17s",
   "verdict": "FAIL (known defect)",
   "defect": "D11"
  },
@@ -1403,7 +1403,7 @@
   "description": "BB-RF-08 Stress (DoS): doubling the input at most ~doubles the time",
   "input": null,
   "expected": null,
-  "actual": "ratio 4.66",
+  "actual": "ratio 3.77",
   "verdict": "FAIL (known defect)",
   "defect": "D11"
  },

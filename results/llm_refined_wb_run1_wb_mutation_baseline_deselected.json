@@ -1,0 +1,30 @@
+{
+ "g": [
+  "llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_04_parse_link_text_two_iterations_nested_then_close",
+  "llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_05_parse_link_text_nested_depth_three_returns_inner_text",
+  "llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_08_parse_link_text_multiple_opens_then_close_text_slice_exact",
+  "llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_09_parse_link_label_valid_label_returns_label_and_position",
+  "llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_11_parse_link_label_empty_label_allowed",
+  "llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_12_parse_link_label_start_offset_inside_text",
+  "llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_13_parse_link_href_inline_bracketed_valid",
+  "llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_16_parse_link_href_block_unbracketed_simple",
+  "llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_17_parse_link_href_block_terminator_matching_last_char",
+  "llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_19_parse_link_title_single_quoted_title_unescaped",
+  "llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_20_parse_link_title_double_quoted_title_unescaped",
+  "llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_21_parse_link_title_parenthesized_title_unescaped",
+  "llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_25_parse_link_no_href_returns_none",
+  "llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_28_parse_emphasis_single_emphasis_basic",
+  "llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_29_parse_emphasis_strong_basic",
+  "llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_30_parse_emphasis_nested_emphasis_and_strong",
+  "llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_31_parse_emphasis_marker_without_closing_becomes_text",
+  "llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_32_parse_emphasis_in_emphasis_suppresses_single_marker",
+  "llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_33_parse_emphasis_in_strong_suppresses_double_marker",
+  "llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_34_parse_codespan_basic_single_backticks",
+  "llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_35_parse_codespan_with_spaces_trimmed_per_spec",
+  "llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_36_parse_codespan_newline_treated_as_space",
+  "llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_37_parse_codespan_multiple_backticks_marker_length_two",
+  "llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_38_parse_codespan_unclosed_marker_becomes_text",
+  "llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_39_parse_codespan_empty_or_whitespace_only_becomes_text",
+  "llm/generated/refined_wb/run1/test_llm_wb.py::test_llm_wb_40_parse_codespan_with_extra_backtick_in_content_falls_back_to_text"
+ ]
+}

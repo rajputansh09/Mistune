@@ -1,0 +1,9 @@
+{
+ "tests": 40,
+ "pass": 30,
+ "fail": 10,
+ "encodes_bug": 0,
+ "weak_zero_kills": 15,
+ "median_kills": 4,
+ "review_sheet": "results/llm_basic_wb_run1_wb_review.csv"
+}

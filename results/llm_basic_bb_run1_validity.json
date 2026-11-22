@@ -1,0 +1,72 @@
+{
+ "files": [
+  {
+   "file": "llm/generated/basic_bb/run1/test_llm_bb.py",
+   "syntax": "ok",
+   "import": "ok"
+  }
+ ],
+ "cases": 60,
+ "valid": 53,
+ "hallucinated": [
+  {
+   "id": "LLM-BB-08",
+   "md": "```python\nprint('hi')\n```",
+   "llm_expected": "<pre><code class=\"language-python\">print('hi')\n</code></pre>",
+   "reference": "<pre><code class=\"language-python\">print('hi')</code></pre>",
+   "mistune": "<pre><code class=\"language-python\">print('hi')</code></pre>"
+  },
+  {
+   "id": "LLM-BB-17",
+   "md": "line one  \nline two",
+   "llm_expected": "<p>line one<br />line two</p>",
+   "reference": "<p>line one<br />\nline two</p>",
+   "mistune": "<p>line one<br />\nline two</p>"
+  },
+  {
+   "id": "LLM-BB-19",
+   "md": "    indented code",
+   "llm_expected": "<pre><code>indented code\n</code></pre>",
+   "reference": "<pre><code>indented code</code></pre>",
+   "mistune": "<pre><code>indented code</code></pre>"
+  },
+  {
+   "id": "LLM-BB-22",
+   "md": "```\na = 1\n```",
+   "llm_expected": "<pre><code>a = 1\n</code></pre>",
+   "reference": "<pre><code>a = 1</code></pre>",
+   "mistune": "<pre><code>a = 1</code></pre>"
+  },
+  {
+   "id": "LLM-BB-28",
+   "md": "<div>\ncontent\n</div>",
+   "llm_expected": "<div>\ncontent\n</div>",
+   "reference": "<div>content</div>",
+   "mistune": "<div>content</div>"
+  },
+  {
+   "id": "LLM-BB-42",
+   "md": "- first paragraph\n\n  second paragraph\n- next item",
+   "llm_expected": "<ul><li><p>first paragraph</p><p>second paragraph</p></li><li>next item</li></ul>",
+   "reference": "<ul><li><p>first paragraph</p><p>second paragraph</p></li><li><p>next item</p></li></ul>",
+   "mistune": "<ul><li><p>first paragraph</p><p>second paragraph</p></li><li><p>next item</p></li></ul>"
+  },
+  {
+   "id": "LLM-BB-56",
+   "md": "```\nline 1\n\nline 2\n```",
+   "llm_expected": "<pre><code>line 1\n\nline 2\n</code></pre>",
+   "reference": "<pre><code>line 1\n\nline 2</code></pre>",
+   "mistune": "<pre><code>line 1\n\nline 2</code></pre>"
+  }
+ ],
+ "both_wrong": [],
+ "defect_found": [
+  {
+   "id": "LLM-BB-40",
+   "md": "[site](https://example.com/a_(b))",
+   "expected": "<p><a href=\"https://example.com/a_(b)\">site</a></p>",
+   "mistune": "<p><a href=\"https://example.com/a_(b\">site</a>)</p>"
+  }
+ ],
+ "validity_pct": 88.3
+}

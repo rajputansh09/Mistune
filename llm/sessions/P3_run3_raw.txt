@@ -1,0 +1,175 @@
+import pytest
+from mistune import helpers
+from mistune.core import InlineState
+from mistune.inline_parser import InlineParser
+
+
+def tokens(src, **flags):
+    p = InlineParser()
+    st = InlineState({})
+    st.src = src
+    for k, v in flags.items():
+        setattr(st, k, v)
+    return p.render(st)
+
+
+def test_llm_wb_01_unescape_char_removes_backslash_before_special_chars():
+    assert helpers.unescape_char(r"\* \_ \\ \[") == "* _ \\ ["
+
+
+def test_llm_wb_02_unescape_char_keeps_non_escape_sequences():
+    assert helpers.unescape_char(r"\x y\z") == r"\x y\z"
+
+
+def test_llm_wb_03_parse_link_text_simple_closing_bracket():
+    assert helpers.parse_link_text("abc]", 0) == ("abc", 4)
+
+
+def test_llm_wb_04_parse_link_text_nested_brackets():
+    assert helpers.parse_link_text("[a[b]c]", 0) == ("[a[b]c", 7)
+
+
+def test_llm_wb_05_parse_link_text_returns_none_when_no_closing_bracket():
+    assert helpers.parse_link_text("abc", 0) == (None, None)
+
+
+def test_llm_wb_06_parse_link_text_starts_after_position():
+    assert helpers.parse_link_text("xx[a]yy", 2) == ("[a", 5)
+
+
+def test_llm_wb_07_parse_link_label_basic_match():
+    assert helpers.parse_link_label("[label]:", 0) == ("[label]", 8)
+
+
+def test_llm_wb_08_parse_link_label_fails_without_colon():
+    assert helpers.parse_link_label("[label]", 0) == (None, None)
+
+
+def test_llm_wb_09_parse_link_label_matches_with_spaces_before_colon():
+    assert helpers.parse_link_label("[a b]:", 0) == ("[a b]", 6)
+
+
+def test_llm_wb_10_parse_link_href_inline_basic():
+    assert helpers.parse_link_href("(https://a.com)", 0) == ("https://a.com", 14)
+
+
+def test_llm_wb_11_parse_link_href_inline_escapes_parentheses():
+    assert helpers.parse_link_href(r"(\(a\))", 0) == (r"\(a\)", 6)
+
+
+def test_llm_wb_12_parse_link_href_block_requires_block_mode():
+    assert helpers.parse_link_href("(https://a.com)", 0, block=True) == ("https://a.com", 14)
+
+
+def test_llm_wb_13_parse_link_href_bracket_form():
+    assert helpers.parse_link_href("<https://a.com>", 0) == ("https://a.com", 15)
+
+
+def test_llm_wb_14_parse_link_href_returns_none_on_bad_bracket_form():
+    assert helpers.parse_link_href("<https://a.com", 0) == (None, None)
+
+
+def test_llm_wb_15_parse_link_title_double_quoted():
+    assert helpers.parse_link_title(' "title"', 0, 8) == ("title", 8)
+
+
+def test_llm_wb_16_parse_link_title_single_quoted_with_escape():
+    assert helpers.parse_link_title(r" 'ti\'tle'", 0, 10) == ("ti'tle", 10)
+
+
+def test_llm_wb_17_parse_link_title_parenthesized():
+    assert helpers.parse_link_title(" (title)", 0, 8) == ("title", 8)
+
+
+def test_llm_wb_18_parse_link_title_fails_without_quotes():
+    assert helpers.parse_link_title(" title", 0, 6) == (None, None)
+
+
+def test_llm_wb_19_parse_link_basic_with_title():
+    assert helpers.parse_link("(/a \"t\")", 0) == ({"url": "/a", "title": "t"}, 8)
+
+
+def test_llm_wb_20_parse_link_basic_without_title():
+    assert helpers.parse_link("(/a)", 0) == ({"url": "/a"}, 4)
+
+
+def test_llm_wb_21_parse_link_unescapes_href_before_escaping_url():
+    assert helpers.parse_link(r"(/\(a\))", 0)[0]["url"] == r"/(a)"
+
+
+def test_llm_wb_22_parse_link_returns_none_without_closing_paren():
+    assert helpers.parse_link("(/a", 0) == (None, None)
+
+
+def test_llm_wb_23_parse_link_returns_none_when_href_missing():
+    assert helpers.parse_link("()", 0) == (None, None)
+
+
+def test_llm_wb_24_parse_link_title_ignored_when_not_followed_by_paren_close():
+    assert helpers.parse_link('(/a "t"x)', 0) == (None, None)
+
+
+def test_llm_wb_25_parse_link_href_block_preserves_escaped_delimiter():
+    href, pos = helpers.parse_link_href("(a\\)b)", 0, block=True)
+    assert href == r"a\)b"
+    assert pos == 5
+
+
+def test_llm_wb_26_parse_link_href_inline_returns_none_on_unclosed_paren():
+    assert helpers.parse_link_href("(abc", 0) == (None, None)
+
+
+def test_llm_wb_27_parse_codespan_basic_single_backtick():
+    assert tokens("`code`") == [{"type": "codespan", "raw": "code"}]
+
+
+def test_llm_wb_28_parse_codespan_trims_outer_spaces_when_nonempty():
+    assert tokens("` code `") == [{"type": "codespan", "raw": "code"}]
+
+
+def test_llm_wb_29_parse_codespan_keeps_inner_spaces():
+    assert tokens("`a  b`") == [{"type": "codespan", "raw": "a  b"}]
+
+
+def test_llm_wb_30_parse_codespan_converts_newlines_to_spaces():
+    assert tokens("`a\nb`") == [{"type": "codespan", "raw": "a b"}]
+
+
+def test_llm_wb_31_parse_codespan_empty_content_becomes_text():
+    assert tokens("``") == [{"type": "text", "raw": "`"}]
+
+
+def test_llm_wb_32_parse_codespan_no_closing_marker_yields_text():
+    assert tokens("`code") == [{"type": "text", "raw": "`"}]
+
+
+def test_llm_wb_33_parse_codespan_double_backtick_delimiter():
+    assert tokens("``a``") == [{"type": "codespan", "raw": "a"}]
+
+
+def test_llm_wb_34_parse_codespan_preserves_single_internal_backtick_when_delimited_by_double():
+    assert tokens("``a`b``") == [{"type": "codespan", "raw": "a`b"}]
+
+
+def test_llm_wb_35_parse_emphasis_single_asterisk():
+    assert tokens("*a*") == [{"type": "emphasis", "children": [{"type": "text", "raw": "a"}]}]
+
+
+def test_llm_wb_36_parse_emphasis_strong_double_asterisk():
+    assert tokens("**a**") == [{"type": "strong", "children": [{"type": "text", "raw": "a"}]}]
+
+
+def test_llm_wb_37_parse_emphasis_triple_asterisk_nested():
+    assert tokens("***a***") == [{"type": "emphasis", "children": [{"type": "strong", "children": [{"type": "text", "raw": "a"}]}]}]
+
+
+def test_llm_wb_38_parse_emphasis_respects_in_emphasis_flag():
+    assert tokens("*a*", in_emphasis=True) == [{"type": "text", "raw": "*"}, {"type": "text", "raw": "a"}]
+
+
+def test_llm_wb_39_parse_emphasis_respects_in_strong_flag():
+    assert tokens("**a**", in_strong=True) == [{"type": "text", "raw": "**"}, {"type": "text", "raw": "a"}]
+
+
+def test_llm_wb_40_parse_emphasis_no_closing_marker_returns_text():
+    assert tokens("*a") == [{"type": "text", "raw": "*"}]

@@ -1,0 +1,73 @@
+import pytest
+from cases import Case, params
+from oracle import render
+
+CASES = [
+    Case("LLM-BB-01", "BVA", "ATX heading level 6 upper bound", "###### T", "<h6>T</h6>"),
+    Case("LLM-BB-02", "BVA", "ATX heading level 7 invalid", "####### T", "<p>####### T</p>"),
+    Case("LLM-BB-03", "BVA", "ATX heading with 0 leading spaces valid", "# T", "<h1>T</h1>"),
+    Case("LLM-BB-04", "BVA", "ATX heading with 3 leading spaces valid", "   # T", "<h1>T</h1>"),
+    Case("LLM-BB-05", "BVA", "ATX heading with 4 leading spaces invalid", "    # T", "<pre><code># T\n</code></pre>"),
+    Case("LLM-BB-06", "EP", "Setext heading level 1", "Heading\n=======", "<h1>Heading</h1>"),
+    Case("LLM-BB-07", "EP", "Setext heading level 2", "Heading\n-------", "<h2>Heading</h2>"),
+    Case("LLM-BB-08", "EP", "Paragraph with soft line break", "a\nb", "<p>a\nb</p>"),
+    Case("LLM-BB-09", "EP", "Hard line break with two trailing spaces", "a  \nb", "<p>a<br />\nb</p>"),
+    Case("LLM-BB-10", "EP", "Hard line break with backslash", "a\\\nb", "<p>a<br />\nb</p>"),
+
+    Case("LLM-BB-11", "EP", "Emphasis with single asterisks", "*a*", "<p><em>a</em></p>"),
+    Case("LLM-BB-12", "EP", "Strong emphasis with double asterisks", "**a**", "<p><strong>a</strong></p>"),
+    Case("LLM-BB-13", "BVA", "Code span with one backtick", "`a`", "<p><code>a</code></p>"),
+    Case("LLM-BB-14", "BVA", "Code span with two backticks around one backtick content", "`` ` ``", "<p><code>`</code></p>"),
+    Case("LLM-BB-15", "EP", "Inline link", "[a](b)", "<p><a href=\"b\">a</a></p>"),
+    Case("LLM-BB-16", "EP", "Link with title", "[a](b \"t\")", "<p><a href=\"b\" title=\"t\">a</a></p>"),
+    Case("LLM-BB-17", "EP", "Image", "![a](b)", "<p><img src=\"b\" alt=\"a\" /></p>"),
+    Case("LLM-BB-18", "EP", "Autolink URL", "<http://example.com>", "<p><a href=\"http://example.com\">http://example.com</a></p>"),
+    Case("LLM-BB-19", "EP", "Autolink email", "<a@example.com>", "<p><a href=\"mailto:a@example.com\">a@example.com</a></p>"),
+    Case("LLM-BB-20", "EP", "Nested emphasis and strong", "***a***", "<p><em><strong>a</strong></em></p>"),
+
+    Case("LLM-BB-21", "EP", "Tight unordered list", "- a\n- b", "<ul><li>a</li><li>b</li></ul>"),
+    Case("LLM-BB-22", "EP", "Loose unordered list", "- a\n\n- b", "<ul><li><p>a</p></li><li><p>b</p></li></ul>"),
+    Case("LLM-BB-23", "EP", "Ordered list starts at 1", "1. a\n2. b", "<ol><li>a</li><li>b</li></ol>"),
+    Case("LLM-BB-24", "BVA", "Ordered list starts at 9 digits valid", "123456789. a", "<ol start=\"123456789\"><li>a</li></ol>"),
+    Case("LLM-BB-25", "BVA", "Ordered list starts at 10 digits invalid", "1234567890. a", "<p>1234567890. a</p>"),
+    Case("LLM-BB-26", "EP", "Ordered list with nested unordered list", "1. a\n   - b", "<ol><li>a<ul><li>b</li></ul></li></ol>"),
+    Case("LLM-BB-27", "EP", "Block quote single line", "> a", "<blockquote><p>a</p></blockquote>"),
+    Case("LLM-BB-28", "EP", "Block quote with paragraph separation", "> a\n>\n> b", "<blockquote><p>a</p><p>b</p></blockquote>"),
+    Case("LLM-BB-29", "BVA", "List indentation 3 spaces valid", "- a\n   - b", "<ul><li>a<ul><li>b</li></ul></li></ul>"),
+    Case("LLM-BB-30", "BVA", "List indentation 4 spaces invalid as nested list", "- a\n    - b", "<ul><li>a<pre><code>- b\n</code></pre></li></ul>"),
+
+    Case("LLM-BB-31", "EP", "Backslash escapes literal star", "\\*", "<p>*</p>"),
+    Case("LLM-BB-32", "EP", "Backslash escapes literal backslash", "\\\\", "<p>\\</p>"),
+    Case("LLM-BB-33", "EP", "Entity amp", "&amp;", "<p>&amp;</p>"),
+    Case("LLM-BB-34", "EP", "Entity less-than", "&lt;", "<p>&lt;</p>"),
+    Case("LLM-BB-35", "EP", "Valid named entity apos", "&apos;", "<p>&apos;</p>"),
+    Case("LLM-BB-36", "EP", "Malformed entity remains literal", "&notanentity;", "<p>&amp;notanentity;</p>"),
+    Case("LLM-BB-37", "EP", "Empty input", "", ""),
+    Case("LLM-BB-38", "EP", "Only whitespace input", "   ", "<p>   </p>"),
+    Case("LLM-BB-39", "EP", "Unclosed emphasis remains literal", "*a", "<p>*a</p>"),
+    Case("LLM-BB-40", "EP", "Unclosed link remains literal", "[a", "<p>[a</p>"),
+    Case("LLM-BB-41", "BVA", "Blank line boundary two newlines", "a\n\nb", "<p>a</p><p>b</p>"),
+    Case("LLM-BB-42", "BVA", "Indented code block 4 spaces", "    a", "<pre><code>a\n</code></pre>"),
+    Case("LLM-BB-43", "BVA", "Indented code block 3 spaces invalid", "   a", "<p>a</p>"),
+    Case("LLM-BB-44", "BVA", "ATX heading closing hashes allowed", "## T ##", "<h2>T</h2>"),
+    Case("LLM-BB-45", "BVA", "ATX heading with no space after markers invalid", "##T", "<p>##T</p>"),
+    Case("LLM-BB-46", "EP", "Image with title", "![a](b \"t\")", "<p><img src=\"b\" alt=\"a\" title=\"t\" /></p>"),
+    Case("LLM-BB-47", "EP", "Autolink with angle brackets inside text invalid", "<http://example.com", "<p>&lt;http://example.com</p>"),
+    Case("LLM-BB-48", "EP", "Ordered list item with paragraph", "1. a\n\n   b", "<ol><li><p>a</p><p>b</p></li></ol>"),
+    Case("LLM-BB-49", "EP", "Block quote with nested list", "> - a\n> - b", "<blockquote><ul><li>a</li><li>b</li></ul></blockquote>"),
+    Case("LLM-BB-50", "EP", "Soft break inside emphasis", "*a\nb*", "<p><em>a\nb</em></p>"),
+    Case("LLM-BB-51", "BVA", "Setext underline one hyphen invalid as heading", "Heading\n-", "<p>Heading\n-</p>"),
+    Case("LLM-BB-52", "BVA", "Setext underline two hyphens valid", "Heading\n--", "<h2>Heading</h2>"),
+    Case("LLM-BB-53", "BVA", "Link destination empty invalid", "[]( )", "<p>[]( )</p>"),
+    Case("LLM-BB-54", "BVA", "Image destination empty invalid", "![]( )", "<p>![]( )</p>"),
+    Case("LLM-BB-55", "EP", "Code span preserves spaces trimmed to one", "` a `", "<p><code>a</code></p>"),
+    Case("LLM-BB-56", "EP", "Multiple paragraphs with blank lines", "a\n\nb\n\nc", "<p>a</p><p>b</p><p>c</p>"),
+    Case("LLM-BB-57", "EP", "Blockquote with blank line and nested paragraph", "> a\n>\n> b\n>\n> c", "<blockquote><p>a</p><p>b</p><p>c</p></blockquote>"),
+    Case("LLM-BB-58", "EP", "Ordered list with leading zeros", "001. a", "<ol start=\"1\"><li>a</li></ol>"),
+    Case("LLM-BB-59", "EP", "Unordered list plus paragraph after blank line", "- a\n\nb", "<ul><li>a</li></ul><p>b</p>"),
+    Case("LLM-BB-60", "EP", "Mixed escapes and entity in paragraph", "\\* &amp; \\_", "<p>* &amp; _</p>"),
+]
+
+@pytest.mark.parametrize("case", params(CASES))
+def test_llm_bb(case, record):
+    assert record(render(case.md)) == case.expected

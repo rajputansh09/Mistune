@@ -1,0 +1,51 @@
+{
+ "files": [
+  {
+   "file": "llm/generated/refined_bb/run3/test_llm_bb.py",
+   "syntax": "ok",
+   "import": "ok"
+  }
+ ],
+ "cases": 60,
+ "valid": 56,
+ "hallucinated": [
+  {
+   "id": "LLM-BB-34",
+   "md": "   ",
+   "llm_expected": "<p>   </p>",
+   "reference": "",
+   "mistune": ""
+  },
+  {
+   "id": "LLM-BB-40",
+   "md": "T\n\n=",
+   "llm_expected": "<p>T</p>\n<p>=</p>",
+   "reference": "<p>T</p><p>=</p>",
+   "mistune": "<p>T</p><p>=</p>"
+  },
+  {
+   "id": "LLM-BB-42",
+   "md": "___a___",
+   "llm_expected": "<p><strong><em>a</em></strong></p>",
+   "reference": "<p><em><strong>a</strong></em></p>",
+   "mistune": "<p><em><strong>a</strong></em></p>"
+  },
+  {
+   "id": "LLM-BB-56",
+   "md": "&#x110000;",
+   "llm_expected": "<p>&amp;#x110000;</p>",
+   "reference": "<p>�</p>",
+   "mistune": "<p>�</p>"
+  }
+ ],
+ "both_wrong": [],
+ "defect_found": [
+  {
+   "id": "LLM-BB-30",
+   "md": "&notanentity;",
+   "expected": "<p>&amp;notanentity;</p>",
+   "mistune": "<p>¬anentity;</p>"
+  }
+ ],
+ "validity_pct": 93.3
+}

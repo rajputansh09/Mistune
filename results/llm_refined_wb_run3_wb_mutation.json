@@ -1,0 +1,2483 @@
+[
+ {
+  "id": "M0007",
+  "file": "helpers.py",
+  "func": "parse_link_text",
+  "line": 111,
+  "kind": "VALUE",
+  "desc": "1 -> 2",
+  "k": 6,
+  "result": {
+   "g": "killed"
+  },
+  "failed": {
+   "g": [
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_23_parse_link_text_loop_zero_iterations_immediate_close"
+   ]
+  }
+ },
+ {
+  "id": "M0008",
+  "file": "helpers.py",
+  "func": "parse_link_text",
+  "line": 111,
+  "kind": "VALUE",
+  "desc": "1 -> 0",
+  "k": 7,
+  "result": {
+   "g": "killed"
+  },
+  "failed": {
+   "g": [
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_23_parse_link_text_loop_zero_iterations_immediate_close"
+   ]
+  }
+ },
+ {
+  "id": "M0009",
+  "file": "helpers.py",
+  "func": "parse_link_text",
+  "line": 112,
+  "kind": "VALUE",
+  "desc": "False -> True",
+  "k": 8,
+  "result": {
+   "g": "killed"
+  },
+  "failed": {
+   "g": [
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_02_parse_link_text_failure_cases[abc-0]",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_02_parse_link_text_failure_cases[[abc-0]",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_02_parse_link_text_failure_cases[x[y-1]",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_22_parse_link_text_loop_zero_iterations_failure",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_31_parse_link_text_def_use_found_false_path",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_33_parse_link_text_def_use_pos_break_without_match"
+   ]
+  }
+ },
+ {
+  "id": "M0013",
+  "file": "helpers.py",
+  "func": "parse_link_text",
+  "line": 120,
+  "kind": "STATEMENT",
+  "desc": "delete statement",
+  "k": 12,
+  "result": {
+   "g": "killed(timeout)"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0014",
+  "file": "helpers.py",
+  "func": "parse_link_text",
+  "line": 121,
+  "kind": "STATEMENT",
+  "desc": "delete statement",
+  "k": 13,
+  "result": {
+   "g": "killed"
+  },
+  "failed": {
+   "g": [
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_02_parse_link_text_failure_cases[[abc-0]",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_02_parse_link_text_failure_cases[x[y-1]",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_23_parse_link_text_loop_zero_iterations_immediate_close",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_31_parse_link_text_def_use_found_false_path"
+   ]
+  }
+ },
+ {
+  "id": "M0018",
+  "file": "helpers.py",
+  "func": "parse_link_text",
+  "line": 118,
+  "kind": "STATEMENT",
+  "desc": "break -> continue",
+  "k": 17,
+  "result": {
+   "g": "killed(timeout)"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0021",
+  "file": "helpers.py",
+  "func": "parse_link_text",
+  "line": 124,
+  "kind": "DECISION",
+  "desc": "If cond -> not cond",
+  "k": 20,
+  "result": {
+   "g": "killed"
+  },
+  "failed": {
+   "g": [
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_23_parse_link_text_loop_zero_iterations_immediate_close"
+   ]
+  }
+ },
+ {
+  "id": "M0022",
+  "file": "helpers.py",
+  "func": "parse_link_text",
+  "line": 128,
+  "kind": "STATEMENT",
+  "desc": "delete statement",
+  "k": 21,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0025",
+  "file": "helpers.py",
+  "func": "parse_link_text",
+  "line": 123,
+  "kind": "VALUE",
+  "desc": "1 -> 2",
+  "k": 24,
+  "result": {
+   "g": "killed"
+  },
+  "failed": {
+   "g": [
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_23_parse_link_text_loop_zero_iterations_immediate_close"
+   ]
+  }
+ },
+ {
+  "id": "M0026",
+  "file": "helpers.py",
+  "func": "parse_link_text",
+  "line": 123,
+  "kind": "VALUE",
+  "desc": "1 -> 0",
+  "k": 25,
+  "result": {
+   "g": "killed"
+  },
+  "failed": {
+   "g": [
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_23_parse_link_text_loop_zero_iterations_immediate_close"
+   ]
+  }
+ },
+ {
+  "id": "M0027",
+  "file": "helpers.py",
+  "func": "parse_link_text",
+  "line": 124,
+  "kind": "DECISION",
+  "desc": "Eq -> NotEq",
+  "k": 26,
+  "result": {
+   "g": "killed"
+  },
+  "failed": {
+   "g": [
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_23_parse_link_text_loop_zero_iterations_immediate_close"
+   ]
+  }
+ },
+ {
+  "id": "M0029",
+  "file": "helpers.py",
+  "func": "parse_link_text",
+  "line": 126,
+  "kind": "STATEMENT",
+  "desc": "break -> continue",
+  "k": 28,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0031",
+  "file": "helpers.py",
+  "func": "parse_link_text",
+  "line": 128,
+  "kind": "VALUE",
+  "desc": "1 -> 0",
+  "k": 30,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0032",
+  "file": "helpers.py",
+  "func": "parse_link_text",
+  "line": 124,
+  "kind": "VALUE",
+  "desc": "0 -> 1",
+  "k": 31,
+  "result": {
+   "g": "killed"
+  },
+  "failed": {
+   "g": [
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_23_parse_link_text_loop_zero_iterations_immediate_close"
+   ]
+  }
+ },
+ {
+  "id": "M0033",
+  "file": "helpers.py",
+  "func": "parse_link_text",
+  "line": 124,
+  "kind": "VALUE",
+  "desc": "0 -> -1",
+  "k": 32,
+  "result": {
+   "g": "killed"
+  },
+  "failed": {
+   "g": [
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_23_parse_link_text_loop_zero_iterations_immediate_close"
+   ]
+  }
+ },
+ {
+  "id": "M0034",
+  "file": "helpers.py",
+  "func": "parse_link_text",
+  "line": 125,
+  "kind": "VALUE",
+  "desc": "True -> False",
+  "k": 33,
+  "result": {
+   "g": "killed"
+  },
+  "failed": {
+   "g": [
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_23_parse_link_text_loop_zero_iterations_immediate_close"
+   ]
+  }
+ },
+ {
+  "id": "M0035",
+  "file": "helpers.py",
+  "func": "parse_link_text",
+  "line": 131,
+  "kind": "VALUE",
+  "desc": "1 -> 2",
+  "k": 34,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0041",
+  "file": "helpers.py",
+  "func": "parse_link_label",
+  "line": 139,
+  "kind": "VALUE",
+  "desc": "0 -> 1",
+  "k": 40,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0043",
+  "file": "helpers.py",
+  "func": "parse_link_label",
+  "line": 139,
+  "kind": "VALUE",
+  "desc": "1 -> 2",
+  "k": 42,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0044",
+  "file": "helpers.py",
+  "func": "parse_link_label",
+  "line": 139,
+  "kind": "VALUE",
+  "desc": "1 -> 0",
+  "k": 43,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0048",
+  "file": "helpers.py",
+  "func": "parse_link_href",
+  "line": 161,
+  "kind": "STATEMENT",
+  "desc": "delete statement",
+  "k": 47,
+  "result": {
+   "g": "killed"
+  },
+  "failed": {
+   "g": [
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_05_parse_link_href_success_cases[http://example.com-0-True-expected3]",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_10_parse_link_failure_cases[[foo](url 't'-5]",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_35_parse_link_href_inline_plain_url_with_trailing_punct"
+   ]
+  }
+ },
+ {
+  "id": "M0049",
+  "file": "helpers.py",
+  "func": "parse_link_href",
+  "line": 162,
+  "kind": "STATEMENT",
+  "desc": "delete statement",
+  "k": 48,
+  "result": {
+   "g": "killed"
+  },
+  "failed": {
+   "g": [
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_05_parse_link_href_success_cases[http://example.com-0-True-expected3]",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_10_parse_link_failure_cases[[foo](url 't'-5]",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_35_parse_link_href_inline_plain_url_with_trailing_punct"
+   ]
+  }
+ },
+ {
+  "id": "M0053",
+  "file": "helpers.py",
+  "func": "parse_link_href",
+  "line": 147,
+  "kind": "STATEMENT",
+  "desc": "delete statement",
+  "k": 52,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0054",
+  "file": "helpers.py",
+  "func": "parse_link_href",
+  "line": 148,
+  "kind": "STATEMENT",
+  "desc": "delete statement",
+  "k": 53,
+  "result": {
+   "g": "killed"
+  },
+  "failed": {
+   "g": [
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_06_parse_link_href_failure_cases[<https://example.com-0-False]",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_34_parse_link_href_angle_bracket_block_mode"
+   ]
+  }
+ },
+ {
+  "id": "M0056",
+  "file": "helpers.py",
+  "func": "parse_link_href",
+  "line": 151,
+  "kind": "STATEMENT",
+  "desc": "return x -> return None",
+  "k": 55,
+  "result": {
+   "g": "killed"
+  },
+  "failed": {
+   "g": [
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_06_parse_link_href_failure_cases[<https://example.com-0-False]"
+   ]
+  }
+ },
+ {
+  "id": "M0058",
+  "file": "helpers.py",
+  "func": "parse_link_href",
+  "line": 156,
+  "kind": "STATEMENT",
+  "desc": "delete statement",
+  "k": 57,
+  "result": {
+   "g": "killed"
+  },
+  "failed": {
+   "g": [
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_35_parse_link_href_inline_plain_url_with_trailing_punct"
+   ]
+  }
+ },
+ {
+  "id": "M0059",
+  "file": "helpers.py",
+  "func": "parse_link_href",
+  "line": 159,
+  "kind": "STATEMENT",
+  "desc": "return x -> return None",
+  "k": 58,
+  "result": {
+   "g": "killed"
+  },
+  "failed": {
+   "g": [
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_10_parse_link_failure_cases[[foo](url-5]"
+   ]
+  }
+ },
+ {
+  "id": "M0062",
+  "file": "helpers.py",
+  "func": "parse_link_href",
+  "line": 150,
+  "kind": "STATEMENT",
+  "desc": "return x -> return None",
+  "k": 61,
+  "result": {
+   "g": "killed"
+  },
+  "failed": {
+   "g": [
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_34_parse_link_href_angle_bracket_block_mode"
+   ]
+  }
+ },
+ {
+  "id": "M0065",
+  "file": "helpers.py",
+  "func": "parse_link_href",
+  "line": 164,
+  "kind": "DECISION",
+  "desc": "Eq -> NotEq",
+  "k": 64,
+  "result": {
+   "g": "killed"
+  },
+  "failed": {
+   "g": [
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_05_parse_link_href_success_cases[http://example.com-0-True-expected3]"
+   ]
+  }
+ },
+ {
+  "id": "M0066",
+  "file": "helpers.py",
+  "func": "parse_link_href",
+  "line": 147,
+  "kind": "VALUE",
+  "desc": "1 -> 2",
+  "k": 65,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0067",
+  "file": "helpers.py",
+  "func": "parse_link_href",
+  "line": 147,
+  "kind": "VALUE",
+  "desc": "1 -> 0",
+  "k": 66,
+  "result": {
+   "g": "killed"
+  },
+  "failed": {
+   "g": [
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_34_parse_link_href_angle_bracket_block_mode"
+   ]
+  }
+ },
+ {
+  "id": "M0068",
+  "file": "helpers.py",
+  "func": "parse_link_href",
+  "line": 166,
+  "kind": "VALUE",
+  "desc": "1 -> 2",
+  "k": 67,
+  "result": {
+   "g": "killed"
+  },
+  "failed": {
+   "g": [
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_35_parse_link_href_inline_plain_url_with_trailing_punct"
+   ]
+  }
+ },
+ {
+  "id": "M0069",
+  "file": "helpers.py",
+  "func": "parse_link_href",
+  "line": 166,
+  "kind": "VALUE",
+  "desc": "1 -> 0",
+  "k": 68,
+  "result": {
+   "g": "killed"
+  },
+  "failed": {
+   "g": [
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_35_parse_link_href_inline_plain_url_with_trailing_punct"
+   ]
+  }
+ },
+ {
+  "id": "M0070",
+  "file": "helpers.py",
+  "func": "parse_link_href",
+  "line": 150,
+  "kind": "VALUE",
+  "desc": "1 -> 2",
+  "k": 69,
+  "result": {
+   "g": "killed"
+  },
+  "failed": {
+   "g": [
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_34_parse_link_href_angle_bracket_block_mode"
+   ]
+  }
+ },
+ {
+  "id": "M0073",
+  "file": "helpers.py",
+  "func": "parse_link_href",
+  "line": 164,
+  "kind": "VALUE",
+  "desc": "1 -> 0",
+  "k": 72,
+  "result": {
+   "g": "killed"
+  },
+  "failed": {
+   "g": [
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_05_parse_link_href_success_cases[http://example.com-0-True-expected3]"
+   ]
+  }
+ },
+ {
+  "id": "M0075",
+  "file": "helpers.py",
+  "func": "parse_link_href",
+  "line": 164,
+  "kind": "VALUE",
+  "desc": "1 -> 0",
+  "k": 74,
+  "result": {
+   "g": "killed"
+  },
+  "failed": {
+   "g": [
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_05_parse_link_href_success_cases[http://example.com-0-True-expected3]"
+   ]
+  }
+ },
+ {
+  "id": "M0077",
+  "file": "helpers.py",
+  "func": "parse_link_title",
+  "line": 175,
+  "kind": "STATEMENT",
+  "desc": "return x -> return None",
+  "k": 76,
+  "result": {
+   "g": "killed"
+  },
+  "failed": {
+   "g": [
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_08_parse_link_title_failure_cases[title-0-5]",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_08_parse_link_title_failure_cases[\"unterminated-0-13]",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_08_parse_link_title_failure_cases['bad-0-4]"
+   ]
+  }
+ },
+ {
+  "id": "M0080",
+  "file": "helpers.py",
+  "func": "parse_link_title",
+  "line": 174,
+  "kind": "STATEMENT",
+  "desc": "return x -> return None",
+  "k": 79,
+  "result": {
+   "g": "killed"
+  },
+  "failed": {
+   "g": [
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_10_parse_link_failure_cases[[foo](url 't'-5]"
+   ]
+  }
+ },
+ {
+  "id": "M0082",
+  "file": "helpers.py",
+  "func": "parse_link_title",
+  "line": 172,
+  "kind": "VALUE",
+  "desc": "1 -> 0",
+  "k": 81,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0084",
+  "file": "helpers.py",
+  "func": "parse_link_title",
+  "line": 172,
+  "kind": "VALUE",
+  "desc": "1 -> 0",
+  "k": 83,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0085",
+  "file": "helpers.py",
+  "func": "parse_link_title",
+  "line": 172,
+  "kind": "VALUE",
+  "desc": "1 -> 2",
+  "k": 84,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0086",
+  "file": "helpers.py",
+  "func": "parse_link_title",
+  "line": 172,
+  "kind": "VALUE",
+  "desc": "1 -> 0",
+  "k": 85,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0091",
+  "file": "helpers.py",
+  "func": "parse_link",
+  "line": 186,
+  "kind": "DECISION",
+  "desc": "If cond -> not cond",
+  "k": 90,
+  "result": {
+   "g": "killed"
+  },
+  "failed": {
+   "g": [
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_10_parse_link_failure_cases[[foo](url 't'-5]"
+   ]
+  }
+ },
+ {
+  "id": "M0096",
+  "file": "helpers.py",
+  "func": "parse_link",
+  "line": 181,
+  "kind": "STATEMENT",
+  "desc": "return x -> return None",
+  "k": 95,
+  "result": {
+   "g": "killed"
+  },
+  "failed": {
+   "g": [
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_10_parse_link_failure_cases[[foo](url-5]"
+   ]
+  }
+ },
+ {
+  "id": "M0098",
+  "file": "helpers.py",
+  "func": "parse_link",
+  "line": 187,
+  "kind": "STATEMENT",
+  "desc": "return x -> return None",
+  "k": 97,
+  "result": {
+   "g": "killed"
+  },
+  "failed": {
+   "g": [
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_10_parse_link_failure_cases[[foo](url 't'-5]"
+   ]
+  }
+ },
+ {
+  "id": "M0099",
+  "file": "helpers.py",
+  "func": "parse_link",
+  "line": 192,
+  "kind": "STATEMENT",
+  "desc": "delete statement",
+  "k": 98,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0342",
+  "file": "inline_parser.py",
+  "func": "parse_escape",
+  "line": 104,
+  "kind": "VALUE",
+  "desc": "0 -> 1",
+  "k": 3,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0343",
+  "file": "inline_parser.py",
+  "func": "parse_escape",
+  "line": 104,
+  "kind": "VALUE",
+  "desc": "0 -> -1",
+  "k": 4,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0344",
+  "file": "inline_parser.py",
+  "func": "parse_link",
+  "line": 117,
+  "kind": "STATEMENT",
+  "desc": "delete statement",
+  "k": 5,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0345",
+  "file": "inline_parser.py",
+  "func": "parse_link",
+  "line": 118,
+  "kind": "STATEMENT",
+  "desc": "delete statement",
+  "k": 6,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0347",
+  "file": "inline_parser.py",
+  "func": "parse_link",
+  "line": 126,
+  "kind": "STATEMENT",
+  "desc": "delete statement",
+  "k": 8,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0349",
+  "file": "inline_parser.py",
+  "func": "parse_link",
+  "line": 128,
+  "kind": "DECISION",
+  "desc": "If cond -> not cond",
+  "k": 10,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0354",
+  "file": "inline_parser.py",
+  "func": "parse_link",
+  "line": 145,
+  "kind": "DECISION",
+  "desc": "If cond -> not cond",
+  "k": 15,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0355",
+  "file": "inline_parser.py",
+  "func": "parse_link",
+  "line": 148,
+  "kind": "DECISION",
+  "desc": "If cond -> not cond",
+  "k": 16,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0356",
+  "file": "inline_parser.py",
+  "func": "parse_link",
+  "line": 166,
+  "kind": "DECISION",
+  "desc": "If cond -> not cond",
+  "k": 17,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0358",
+  "file": "inline_parser.py",
+  "func": "parse_link",
+  "line": 170,
+  "kind": "DECISION",
+  "desc": "If cond -> not cond",
+  "k": 19,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0361",
+  "file": "inline_parser.py",
+  "func": "parse_link",
+  "line": 175,
+  "kind": "DECISION",
+  "desc": "If cond -> not cond",
+  "k": 22,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0367",
+  "file": "inline_parser.py",
+  "func": "parse_link",
+  "line": 129,
+  "kind": "STATEMENT",
+  "desc": "delete statement",
+  "k": 28,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0369",
+  "file": "inline_parser.py",
+  "func": "parse_link",
+  "line": 136,
+  "kind": "STATEMENT",
+  "desc": "delete statement",
+  "k": 30,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0371",
+  "file": "inline_parser.py",
+  "func": "parse_link",
+  "line": 146,
+  "kind": "STATEMENT",
+  "desc": "return x -> return None",
+  "k": 32,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0372",
+  "file": "inline_parser.py",
+  "func": "parse_link",
+  "line": 148,
+  "kind": "DECISION",
+  "desc": "Lt -> LtE",
+  "k": 33,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0376",
+  "file": "inline_parser.py",
+  "func": "parse_link",
+  "line": 177,
+  "kind": "STATEMENT",
+  "desc": "delete statement",
+  "k": 37,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0377",
+  "file": "inline_parser.py",
+  "func": "parse_link",
+  "line": 178,
+  "kind": "STATEMENT",
+  "desc": "delete statement",
+  "k": 38,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0379",
+  "file": "inline_parser.py",
+  "func": "parse_link",
+  "line": 180,
+  "kind": "STATEMENT",
+  "desc": "delete statement",
+  "k": 40,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0381",
+  "file": "inline_parser.py",
+  "func": "parse_link",
+  "line": 117,
+  "kind": "VALUE",
+  "desc": "0 -> 1",
+  "k": 42,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0384",
+  "file": "inline_parser.py",
+  "func": "parse_link",
+  "line": 123,
+  "kind": "STATEMENT",
+  "desc": "delete statement",
+  "k": 45,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0388",
+  "file": "inline_parser.py",
+  "func": "parse_link",
+  "line": 152,
+  "kind": "STATEMENT",
+  "desc": "delete statement",
+  "k": 49,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0390",
+  "file": "inline_parser.py",
+  "func": "parse_link",
+  "line": 158,
+  "kind": "DECISION",
+  "desc": "If cond -> not cond",
+  "k": 51,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0393",
+  "file": "inline_parser.py",
+  "func": "parse_link",
+  "line": 154,
+  "kind": "STATEMENT",
+  "desc": "delete statement",
+  "k": 54,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0398",
+  "file": "inline_parser.py",
+  "func": "parse_link",
+  "line": 161,
+  "kind": "DECISION",
+  "desc": "If cond -> not cond",
+  "k": 59,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0399",
+  "file": "inline_parser.py",
+  "func": "parse_link",
+  "line": 162,
+  "kind": "STATEMENT",
+  "desc": "delete statement",
+  "k": 60,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0401",
+  "file": "inline_parser.py",
+  "func": "parse_link",
+  "line": 152,
+  "kind": "VALUE",
+  "desc": "1 -> 2",
+  "k": 62,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0402",
+  "file": "inline_parser.py",
+  "func": "parse_link",
+  "line": 152,
+  "kind": "VALUE",
+  "desc": "1 -> 0",
+  "k": 63,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0403",
+  "file": "inline_parser.py",
+  "func": "parse_link",
+  "line": 164,
+  "kind": "STATEMENT",
+  "desc": "delete statement",
+  "k": 64,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0405",
+  "file": "inline_parser.py",
+  "func": "parse_link",
+  "line": 160,
+  "kind": "VALUE",
+  "desc": "1 -> 0",
+  "k": 66,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0407",
+  "file": "inline_parser.py",
+  "func": "parse_auto_link",
+  "line": 212,
+  "kind": "DECISION",
+  "desc": "If cond -> not cond",
+  "k": 68,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0410",
+  "file": "inline_parser.py",
+  "func": "parse_auto_link",
+  "line": 218,
+  "kind": "STATEMENT",
+  "desc": "return x -> return None",
+  "k": 71,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0411",
+  "file": "inline_parser.py",
+  "func": "parse_auto_link",
+  "line": 213,
+  "kind": "STATEMENT",
+  "desc": "delete statement",
+  "k": 72,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0412",
+  "file": "inline_parser.py",
+  "func": "parse_auto_link",
+  "line": 214,
+  "kind": "STATEMENT",
+  "desc": "return x -> return None",
+  "k": 73,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0419",
+  "file": "inline_parser.py",
+  "func": "parse_auto_email",
+  "line": 222,
+  "kind": "STATEMENT",
+  "desc": "delete statement",
+  "k": 80,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0423",
+  "file": "inline_parser.py",
+  "func": "parse_auto_email",
+  "line": 229,
+  "kind": "STATEMENT",
+  "desc": "delete statement",
+  "k": 84,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0424",
+  "file": "inline_parser.py",
+  "func": "parse_auto_email",
+  "line": 230,
+  "kind": "STATEMENT",
+  "desc": "return x -> return None",
+  "k": 85,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0425",
+  "file": "inline_parser.py",
+  "func": "parse_auto_email",
+  "line": 224,
+  "kind": "STATEMENT",
+  "desc": "delete statement",
+  "k": 86,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0427",
+  "file": "inline_parser.py",
+  "func": "parse_auto_email",
+  "line": 221,
+  "kind": "VALUE",
+  "desc": "0 -> 1",
+  "k": 88,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0428",
+  "file": "inline_parser.py",
+  "func": "parse_auto_email",
+  "line": 221,
+  "kind": "VALUE",
+  "desc": "0 -> -1",
+  "k": 89,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0429",
+  "file": "inline_parser.py",
+  "func": "parse_auto_email",
+  "line": 227,
+  "kind": "VALUE",
+  "desc": "1 -> 2",
+  "k": 90,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0431",
+  "file": "inline_parser.py",
+  "func": "parse_auto_email",
+  "line": 227,
+  "kind": "VALUE",
+  "desc": "1 -> 2",
+  "k": 92,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0432",
+  "file": "inline_parser.py",
+  "func": "parse_auto_email",
+  "line": 227,
+  "kind": "VALUE",
+  "desc": "1 -> 0",
+  "k": 93,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0435",
+  "file": "inline_parser.py",
+  "func": "parse_emphasis",
+  "line": 246,
+  "kind": "DECISION",
+  "desc": "If cond -> not cond",
+  "k": 96,
+  "result": {
+   "g": "killed"
+  },
+  "failed": {
+   "g": [
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_11_parse_emphasis_single_emphasis",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_13_parse_emphasis_double_strong",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_15_parse_emphasis_triple_nested",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_38_parse_emphasis_text_inside_link_flag"
+   ]
+  }
+ },
+ {
+  "id": "M0436",
+  "file": "inline_parser.py",
+  "func": "parse_emphasis",
+  "line": 253,
+  "kind": "STATEMENT",
+  "desc": "delete statement",
+  "k": 97,
+  "result": {
+   "g": "killed"
+  },
+  "failed": {
+   "g": [
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_11_parse_emphasis_single_emphasis",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_13_parse_emphasis_double_strong",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_15_parse_emphasis_triple_nested",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_38_parse_emphasis_text_inside_link_flag"
+   ]
+  }
+ },
+ {
+  "id": "M0437",
+  "file": "inline_parser.py",
+  "func": "parse_emphasis",
+  "line": 254,
+  "kind": "STATEMENT",
+  "desc": "delete statement",
+  "k": 98,
+  "result": {
+   "g": "killed"
+  },
+  "failed": {
+   "g": [
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_11_parse_emphasis_single_emphasis",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_13_parse_emphasis_double_strong",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_15_parse_emphasis_triple_nested",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_38_parse_emphasis_text_inside_link_flag"
+   ]
+  }
+ },
+ {
+  "id": "M0438",
+  "file": "inline_parser.py",
+  "func": "parse_emphasis",
+  "line": 255,
+  "kind": "DECISION",
+  "desc": "If cond -> not cond",
+  "k": 99,
+  "result": {
+   "g": "killed"
+  },
+  "failed": {
+   "g": [
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_11_parse_emphasis_single_emphasis",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_13_parse_emphasis_double_strong",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_15_parse_emphasis_triple_nested",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_38_parse_emphasis_text_inside_link_flag"
+   ]
+  }
+ },
+ {
+  "id": "M0440",
+  "file": "inline_parser.py",
+  "func": "parse_emphasis",
+  "line": 260,
+  "kind": "STATEMENT",
+  "desc": "delete statement",
+  "k": 101,
+  "result": {
+   "g": "killed"
+  },
+  "failed": {
+   "g": [
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_11_parse_emphasis_single_emphasis",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_13_parse_emphasis_double_strong",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_15_parse_emphasis_triple_nested",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_38_parse_emphasis_text_inside_link_flag"
+   ]
+  }
+ },
+ {
+  "id": "M0444",
+  "file": "inline_parser.py",
+  "func": "parse_emphasis",
+  "line": 267,
+  "kind": "STATEMENT",
+  "desc": "delete statement",
+  "k": 105,
+  "result": {
+   "g": "killed"
+  },
+  "failed": {
+   "g": [
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_11_parse_emphasis_single_emphasis",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_13_parse_emphasis_double_strong",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_15_parse_emphasis_triple_nested",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_38_parse_emphasis_text_inside_link_flag"
+   ]
+  }
+ },
+ {
+  "id": "M0447",
+  "file": "inline_parser.py",
+  "func": "parse_emphasis",
+  "line": 246,
+  "kind": "DECISION",
+  "desc": "And -> Or",
+  "k": 108,
+  "result": {
+   "g": "killed"
+  },
+  "failed": {
+   "g": [
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_11_parse_emphasis_single_emphasis",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_38_parse_emphasis_text_inside_link_flag"
+   ]
+  }
+ },
+ {
+  "id": "M0449",
+  "file": "inline_parser.py",
+  "func": "parse_emphasis",
+  "line": 248,
+  "kind": "STATEMENT",
+  "desc": "return x -> return None",
+  "k": 110,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0453",
+  "file": "inline_parser.py",
+  "func": "parse_emphasis",
+  "line": 264,
+  "kind": "STATEMENT",
+  "desc": "return x -> return None",
+  "k": 114,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0454",
+  "file": "inline_parser.py",
+  "func": "parse_emphasis",
+  "line": 268,
+  "kind": "DECISION",
+  "desc": "Eq -> NotEq",
+  "k": 115,
+  "result": {
+   "g": "killed"
+  },
+  "failed": {
+   "g": [
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_11_parse_emphasis_single_emphasis",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_13_parse_emphasis_double_strong",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_15_parse_emphasis_triple_nested",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_38_parse_emphasis_text_inside_link_flag"
+   ]
+  }
+ },
+ {
+  "id": "M0457",
+  "file": "inline_parser.py",
+  "func": "parse_emphasis",
+  "line": 271,
+  "kind": "STATEMENT",
+  "desc": "delete statement",
+  "k": 118,
+  "result": {
+   "g": "killed"
+  },
+  "failed": {
+   "g": [
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_11_parse_emphasis_single_emphasis",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_38_parse_emphasis_text_inside_link_flag"
+   ]
+  }
+ },
+ {
+  "id": "M0459",
+  "file": "inline_parser.py",
+  "func": "parse_emphasis",
+  "line": 244,
+  "kind": "VALUE",
+  "desc": "0 -> 1",
+  "k": 120,
+  "result": {
+   "g": "killed"
+  },
+  "failed": {
+   "g": [
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_11_parse_emphasis_single_emphasis",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_13_parse_emphasis_double_strong",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_15_parse_emphasis_triple_nested",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_38_parse_emphasis_text_inside_link_flag"
+   ]
+  }
+ },
+ {
+  "id": "M0460",
+  "file": "inline_parser.py",
+  "func": "parse_emphasis",
+  "line": 244,
+  "kind": "VALUE",
+  "desc": "0 -> -1",
+  "k": 121,
+  "result": {
+   "g": "killed"
+  },
+  "failed": {
+   "g": [
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_11_parse_emphasis_single_emphasis",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_13_parse_emphasis_double_strong",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_15_parse_emphasis_triple_nested",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_38_parse_emphasis_text_inside_link_flag"
+   ]
+  }
+ },
+ {
+  "id": "M0463",
+  "file": "inline_parser.py",
+  "func": "parse_emphasis",
+  "line": 250,
+  "kind": "STATEMENT",
+  "desc": "delete statement",
+  "k": 124,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0465",
+  "file": "inline_parser.py",
+  "func": "parse_emphasis",
+  "line": 268,
+  "kind": "VALUE",
+  "desc": "1 -> 2",
+  "k": 126,
+  "result": {
+   "g": "killed"
+  },
+  "failed": {
+   "g": [
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_11_parse_emphasis_single_emphasis",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_13_parse_emphasis_double_strong",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_38_parse_emphasis_text_inside_link_flag"
+   ]
+  }
+ },
+ {
+  "id": "M0467",
+  "file": "inline_parser.py",
+  "func": "parse_emphasis",
+  "line": 269,
+  "kind": "VALUE",
+  "desc": "True -> False",
+  "k": 128,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0468",
+  "file": "inline_parser.py",
+  "func": "parse_emphasis",
+  "line": 272,
+  "kind": "DECISION",
+  "desc": "Eq -> NotEq",
+  "k": 129,
+  "result": {
+   "g": "killed"
+  },
+  "failed": {
+   "g": [
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_13_parse_emphasis_double_strong",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_15_parse_emphasis_triple_nested"
+   ]
+  }
+ },
+ {
+  "id": "M0471",
+  "file": "inline_parser.py",
+  "func": "parse_emphasis",
+  "line": 275,
+  "kind": "STATEMENT",
+  "desc": "delete statement",
+  "k": 132,
+  "result": {
+   "g": "killed"
+  },
+  "failed": {
+   "g": [
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_13_parse_emphasis_double_strong"
+   ]
+  }
+ },
+ {
+  "id": "M0475",
+  "file": "inline_parser.py",
+  "func": "parse_emphasis",
+  "line": 281,
+  "kind": "STATEMENT",
+  "desc": "delete statement",
+  "k": 136,
+  "result": {
+   "g": "killed"
+  },
+  "failed": {
+   "g": [
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_15_parse_emphasis_triple_nested"
+   ]
+  }
+ },
+ {
+  "id": "M0476",
+  "file": "inline_parser.py",
+  "func": "parse_emphasis",
+  "line": 246,
+  "kind": "VALUE",
+  "desc": "1 -> 2",
+  "k": 137,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0478",
+  "file": "inline_parser.py",
+  "func": "parse_emphasis",
+  "line": 249,
+  "kind": "DECISION",
+  "desc": "Eq -> NotEq",
+  "k": 139,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0480",
+  "file": "inline_parser.py",
+  "func": "parse_emphasis",
+  "line": 272,
+  "kind": "VALUE",
+  "desc": "2 -> 1",
+  "k": 141,
+  "result": {
+   "g": "killed"
+  },
+  "failed": {
+   "g": [
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_13_parse_emphasis_double_strong"
+   ]
+  }
+ },
+ {
+  "id": "M0481",
+  "file": "inline_parser.py",
+  "func": "parse_emphasis",
+  "line": 273,
+  "kind": "VALUE",
+  "desc": "True -> False",
+  "k": 142,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0482",
+  "file": "inline_parser.py",
+  "func": "parse_emphasis",
+  "line": 277,
+  "kind": "VALUE",
+  "desc": "True -> False",
+  "k": 143,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0485",
+  "file": "inline_parser.py",
+  "func": "parse_emphasis",
+  "line": 249,
+  "kind": "VALUE",
+  "desc": "2 -> 1",
+  "k": 146,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0487",
+  "file": "inline_parser.py",
+  "func": "parse_codespan",
+  "line": 295,
+  "kind": "STATEMENT",
+  "desc": "delete statement",
+  "k": 148,
+  "result": {
+   "g": "killed"
+  },
+  "failed": {
+   "g": [
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_17_parse_codespan_basic_single_backtick",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_18_parse_codespan_trim_and_space_normalization",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_19_parse_codespan_preserve_all_spaces_when_only_spaces",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_21_parse_codespan_double_backtick",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_39_parse_codespan_text_inside_code_like_contexts"
+   ]
+  }
+ },
+ {
+  "id": "M0491",
+  "file": "inline_parser.py",
+  "func": "parse_codespan",
+  "line": 299,
+  "kind": "STATEMENT",
+  "desc": "delete statement",
+  "k": 152,
+  "result": {
+   "g": "killed"
+  },
+  "failed": {
+   "g": [
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_17_parse_codespan_basic_single_backtick",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_18_parse_codespan_trim_and_space_normalization",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_19_parse_codespan_preserve_all_spaces_when_only_spaces",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_21_parse_codespan_double_backtick",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_39_parse_codespan_text_inside_code_like_contexts"
+   ]
+  }
+ },
+ {
+  "id": "M0493",
+  "file": "inline_parser.py",
+  "func": "parse_codespan",
+  "line": 302,
+  "kind": "DECISION",
+  "desc": "If cond -> not cond",
+  "k": 154,
+  "result": {
+   "g": "killed"
+  },
+  "failed": {
+   "g": [
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_18_parse_codespan_trim_and_space_normalization",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_19_parse_codespan_preserve_all_spaces_when_only_spaces"
+   ]
+  }
+ },
+ {
+  "id": "M0496",
+  "file": "inline_parser.py",
+  "func": "parse_codespan",
+  "line": 308,
+  "kind": "STATEMENT",
+  "desc": "delete statement",
+  "k": 157,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0498",
+  "file": "inline_parser.py",
+  "func": "parse_codespan",
+  "line": 290,
+  "kind": "VALUE",
+  "desc": "0 -> 1",
+  "k": 159,
+  "result": {
+   "g": "killed"
+  },
+  "failed": {
+   "g": [
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_17_parse_codespan_basic_single_backtick",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_18_parse_codespan_trim_and_space_normalization",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_19_parse_codespan_preserve_all_spaces_when_only_spaces",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_21_parse_codespan_double_backtick",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_39_parse_codespan_text_inside_code_like_contexts"
+   ]
+  }
+ },
+ {
+  "id": "M0503",
+  "file": "inline_parser.py",
+  "func": "parse_codespan",
+  "line": 303,
+  "kind": "DECISION",
+  "desc": "And -> Or",
+  "k": 164,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0504",
+  "file": "inline_parser.py",
+  "func": "parse_codespan",
+  "line": 304,
+  "kind": "STATEMENT",
+  "desc": "delete statement",
+  "k": 165,
+  "result": {
+   "g": "killed"
+  },
+  "failed": {
+   "g": [
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_18_parse_codespan_trim_and_space_normalization"
+   ]
+  }
+ },
+ {
+  "id": "M0510",
+  "file": "inline_parser.py",
+  "func": "parse_inline_html",
+  "line": 322,
+  "kind": "STATEMENT",
+  "desc": "delete statement",
+  "k": 171,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0513",
+  "file": "inline_parser.py",
+  "func": "parse_inline_html",
+  "line": 324,
+  "kind": "STATEMENT",
+  "desc": "delete statement",
+  "k": 174,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0514",
+  "file": "inline_parser.py",
+  "func": "parse_inline_html",
+  "line": 325,
+  "kind": "DECISION",
+  "desc": "If cond -> not cond",
+  "k": 175,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0516",
+  "file": "inline_parser.py",
+  "func": "parse_inline_html",
+  "line": 321,
+  "kind": "VALUE",
+  "desc": "0 -> -1",
+  "k": 177,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0517",
+  "file": "inline_parser.py",
+  "func": "parse_inline_html",
+  "line": 324,
+  "kind": "VALUE",
+  "desc": "True -> False",
+  "k": 178,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0519",
+  "file": "inline_parser.py",
+  "func": "parse_inline_html",
+  "line": 326,
+  "kind": "VALUE",
+  "desc": "False -> True",
+  "k": 180,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0520",
+  "file": "inline_parser.py",
+  "func": "parse",
+  "line": 334,
+  "kind": "STATEMENT",
+  "desc": "delete statement",
+  "k": 181,
+  "result": {
+   "g": "killed"
+  },
+  "failed": {
+   "g": [
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_11_parse_emphasis_single_emphasis",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_12_parse_emphasis_single_emphasis_inside_emphasis_flag",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_13_parse_emphasis_double_strong",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_14_parse_emphasis_double_strong_inside_strong_flag",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_15_parse_emphasis_triple_nested",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_17_parse_codespan_basic_single_backtick",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_18_parse_codespan_trim_and_space_normalization",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_19_parse_codespan_preserve_all_spaces_when_only_spaces",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_21_parse_codespan_double_backtick",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_38_parse_emphasis_text_inside_link_flag",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_39_parse_codespan_text_inside_code_like_contexts"
+   ]
+  }
+ },
+ {
+  "id": "M0523",
+  "file": "inline_parser.py",
+  "func": "parse",
+  "line": 359,
+  "kind": "STATEMENT",
+  "desc": "return x -> return None",
+  "k": 184,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0524",
+  "file": "inline_parser.py",
+  "func": "parse",
+  "line": 333,
+  "kind": "VALUE",
+  "desc": "0 -> 1",
+  "k": 185,
+  "result": {
+   "g": "killed"
+  },
+  "failed": {
+   "g": [
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_11_parse_emphasis_single_emphasis",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_12_parse_emphasis_single_emphasis_inside_emphasis_flag",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_13_parse_emphasis_double_strong",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_14_parse_emphasis_double_strong_inside_strong_flag",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_15_parse_emphasis_triple_nested",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_17_parse_codespan_basic_single_backtick",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_18_parse_codespan_trim_and_space_normalization",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_19_parse_codespan_preserve_all_spaces_when_only_spaces",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_21_parse_codespan_double_backtick",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_38_parse_emphasis_text_inside_link_flag",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_39_parse_codespan_text_inside_code_like_contexts"
+   ]
+  }
+ },
+ {
+  "id": "M0530",
+  "file": "inline_parser.py",
+  "func": "parse",
+  "line": 341,
+  "kind": "DECISION",
+  "desc": "If cond -> not cond",
+  "k": 191,
+  "result": {
+   "g": "killed"
+  },
+  "failed": {
+   "g": [
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_11_parse_emphasis_single_emphasis",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_13_parse_emphasis_double_strong",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_15_parse_emphasis_triple_nested",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_17_parse_codespan_basic_single_backtick",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_18_parse_codespan_trim_and_space_normalization",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_19_parse_codespan_preserve_all_spaces_when_only_spaces",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_21_parse_codespan_double_backtick",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_38_parse_emphasis_text_inside_link_flag",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_39_parse_codespan_text_inside_code_like_contexts"
+   ]
+  }
+ },
+ {
+  "id": "M0531",
+  "file": "inline_parser.py",
+  "func": "parse",
+  "line": 345,
+  "kind": "STATEMENT",
+  "desc": "delete statement",
+  "k": 192,
+  "result": {
+   "g": "killed"
+  },
+  "failed": {
+   "g": [
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_11_parse_emphasis_single_emphasis",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_13_parse_emphasis_double_strong",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_15_parse_emphasis_triple_nested",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_17_parse_codespan_basic_single_backtick",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_18_parse_codespan_trim_and_space_normalization",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_19_parse_codespan_preserve_all_spaces_when_only_spaces",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_21_parse_codespan_double_backtick",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_38_parse_emphasis_text_inside_link_flag",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_39_parse_codespan_text_inside_code_like_contexts"
+   ]
+  }
+ },
+ {
+  "id": "M0535",
+  "file": "inline_parser.py",
+  "func": "parse",
+  "line": 357,
+  "kind": "DECISION",
+  "desc": "If cond -> not cond",
+  "k": 196,
+  "result": {
+   "g": "killed"
+  },
+  "failed": {
+   "g": [
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_11_parse_emphasis_single_emphasis",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_13_parse_emphasis_double_strong",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_15_parse_emphasis_triple_nested",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_17_parse_codespan_basic_single_backtick",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_18_parse_codespan_trim_and_space_normalization",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_19_parse_codespan_preserve_all_spaces_when_only_spaces",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_21_parse_codespan_double_backtick",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_38_parse_emphasis_text_inside_link_flag",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_39_parse_codespan_text_inside_code_like_contexts"
+   ]
+  }
+ },
+ {
+  "id": "M0539",
+  "file": "inline_parser.py",
+  "func": "parse",
+  "line": 343,
+  "kind": "STATEMENT",
+  "desc": "delete statement",
+  "k": 200,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0540",
+  "file": "inline_parser.py",
+  "func": "parse",
+  "line": 348,
+  "kind": "STATEMENT",
+  "desc": "delete statement",
+  "k": 201,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0544",
+  "file": "inline_parser.py",
+  "func": "parse",
+  "line": 354,
+  "kind": "VALUE",
+  "desc": "0 -> 1",
+  "k": 205,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0546",
+  "file": "inline_parser.py",
+  "func": "parse",
+  "line": 357,
+  "kind": "DECISION",
+  "desc": "Lt -> LtE",
+  "k": 207,
+  "result": {
+   "g": "killed"
+  },
+  "failed": {
+   "g": [
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_11_parse_emphasis_single_emphasis",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_13_parse_emphasis_double_strong",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_15_parse_emphasis_triple_nested",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_17_parse_codespan_basic_single_backtick",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_18_parse_codespan_trim_and_space_normalization",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_19_parse_codespan_preserve_all_spaces_when_only_spaces",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_21_parse_codespan_double_backtick",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_38_parse_emphasis_text_inside_link_flag",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_39_parse_codespan_text_inside_code_like_contexts"
+   ]
+  }
+ },
+ {
+  "id": "M0547",
+  "file": "inline_parser.py",
+  "func": "parse",
+  "line": 358,
+  "kind": "STATEMENT",
+  "desc": "delete statement",
+  "k": 208,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0550",
+  "file": "inline_parser.py",
+  "func": "precedence_scan",
+  "line": 368,
+  "kind": "DECISION",
+  "desc": "If cond -> not cond",
+  "k": 211,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0552",
+  "file": "inline_parser.py",
+  "func": "precedence_scan",
+  "line": 372,
+  "kind": "STATEMENT",
+  "desc": "delete statement",
+  "k": 213,
+  "result": {
+   "g": "killed"
+  },
+  "failed": {
+   "g": [
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_11_parse_emphasis_single_emphasis",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_13_parse_emphasis_double_strong",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_15_parse_emphasis_triple_nested",
+    "llm/generated/refined_wb/run3/test_llm_wb.py::test_llm_wb_38_parse_emphasis_text_inside_link_flag"
+   ]
+  }
+ },
+ {
+  "id": "M0556",
+  "file": "inline_parser.py",
+  "func": "precedence_scan",
+  "line": 378,
+  "kind": "DECISION",
+  "desc": "If cond -> not cond",
+  "k": 217,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0557",
+  "file": "inline_parser.py",
+  "func": "precedence_scan",
+  "line": 380,
+  "kind": "STATEMENT",
+  "desc": "delete statement",
+  "k": 218,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0558",
+  "file": "inline_parser.py",
+  "func": "precedence_scan",
+  "line": 381,
+  "kind": "STATEMENT",
+  "desc": "delete statement",
+  "k": 219,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0560",
+  "file": "inline_parser.py",
+  "func": "precedence_scan",
+  "line": 383,
+  "kind": "DECISION",
+  "desc": "If cond -> not cond",
+  "k": 221,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0561",
+  "file": "inline_parser.py",
+  "func": "precedence_scan",
+  "line": 386,
+  "kind": "STATEMENT",
+  "desc": "delete statement",
+  "k": 222,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0564",
+  "file": "inline_parser.py",
+  "func": "precedence_scan",
+  "line": 389,
+  "kind": "STATEMENT",
+  "desc": "delete statement",
+  "k": 225,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0565",
+  "file": "inline_parser.py",
+  "func": "precedence_scan",
+  "line": 390,
+  "kind": "DECISION",
+  "desc": "If cond -> not cond",
+  "k": 226,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0566",
+  "file": "inline_parser.py",
+  "func": "precedence_scan",
+  "line": 393,
+  "kind": "STATEMENT",
+  "desc": "delete statement",
+  "k": 227,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0567",
+  "file": "inline_parser.py",
+  "func": "precedence_scan",
+  "line": 394,
+  "kind": "STATEMENT",
+  "desc": "delete statement",
+  "k": 228,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0569",
+  "file": "inline_parser.py",
+  "func": "precedence_scan",
+  "line": 369,
+  "kind": "STATEMENT",
+  "desc": "delete statement",
+  "k": 230,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ },
+ {
+  "id": "M0571",
+  "file": "inline_parser.py",
+  "func": "precedence_scan",
+  "line": 396,
+  "kind": "STATEMENT",
+  "desc": "delete statement",
+  "k": 232,
+  "result": {
+   "g": "survived"
+  },
+  "failed": {
+   "g": []
+  }
+ }
+]

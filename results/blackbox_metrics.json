@@ -1,0 +1,28 @@
+{
+ "group": "blackbox",
+ "test_cases": 151,
+ "verdicts": {
+  "PASS": 140,
+  "FAIL (known defect)": 11
+ },
+ "combined_pct": 90.9,
+ "statement_pct": 93.2,
+ "branch_pct": 84.2,
+ "tests_with_coverage": 150,
+ "minimal_subset_size": 24,
+ "branch_pct_per_test": 0.558,
+ "redundancy_pct": 84.0,
+ "oracle_checked": 135,
+ "oracle_valid": 135,
+ "oracle_invalid_ids": [],
+ "defects_or_failures": [
+  "D1",
+  "D10",
+  "D2",
+  "D3",
+  "D4",
+  "D5",
+  "D6",
+  "D7"
+ ]
+}

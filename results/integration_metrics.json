@@ -1,0 +1,18 @@
+{
+ "group": "integration",
+ "test_cases": 14,
+ "verdicts": {
+  "PASS": 14
+ },
+ "combined_pct": 72.0,
+ "statement_pct": 76.7,
+ "branch_pct": 58.3,
+ "tests_with_coverage": 14,
+ "minimal_subset_size": 11,
+ "branch_pct_per_test": 4.164,
+ "redundancy_pct": 21.4,
+ "oracle_checked": 0,
+ "oracle_valid": 0,
+ "oracle_invalid_ids": [],
+ "defects_or_failures": []
+}

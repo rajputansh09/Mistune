@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+*.pyc
+.coverage
+.coverage.*
+results/.coverage*
+# artifacts of an early mis-split run (directories with spaces in their names)
+results/* tests/
+.DS_Store

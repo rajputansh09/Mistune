@@ -1,0 +1,18 @@
+{
+ "group": "manual_wb_units",
+ "test_cases": 49,
+ "verdicts": {
+  "PASS": 49
+ },
+ "combined_pct": 56.2,
+ "statement_pct": 60.4,
+ "branch_pct": 44.2,
+ "tests_with_coverage": 49,
+ "minimal_subset_size": 32,
+ "branch_pct_per_test": 0.902,
+ "redundancy_pct": 34.7,
+ "oracle_checked": 0,
+ "oracle_valid": 0,
+ "oracle_invalid_ids": [],
+ "defects_or_failures": []
+}

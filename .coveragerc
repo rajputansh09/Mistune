@@ -1,0 +1,12 @@
+[run]
+branch = True
+source = mistune
+omit = */mistune/plugins/*
+       */mistune/directives/*
+       */mistune/__main__.py
+       */mistune/toc.py
+       */mistune/renderers/rst.py
+       */mistune/renderers/markdown.py
+       */mistune/renderers/_list.py
+[report]
+show_missing = True

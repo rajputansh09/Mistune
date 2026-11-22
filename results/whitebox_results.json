@@ -1,0 +1,1334 @@
+[
+ {
+  "nodeid": "tests/whitebox/test_wb_block_list.py::test_wb_b01_fence_info_with_backtick_rejected",
+  "id": "test_wb_b01_fence_info_with_backtick_rejected",
+  "technique": "WB",
+  "description": "WB-B01 info and c=='`' and '`' in info -> return None (not a fence).",
+  "input": null,
+  "expected": null,
+  "actual": "<p>```a`\nx</p><pre><code></code></pre>",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_block_list.py::test_wb_b02_fence_tilde_info_may_contain_backtick",
+  "id": "test_wb_b02_fence_tilde_info_may_contain_backtick",
+  "technique": "WB",
+  "description": "WB-B02 c=='~' -> backtick allowed in info string.",
+  "input": null,
+  "expected": null,
+  "actual": "<pre><code class=\"language-a`b\">x</code></pre>",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_block_list.py::test_wb_b03_fence_indented_content_trimmed",
+  "id": "test_wb_b03_fence_indented_content_trimmed",
+  "technique": "WB",
+  "description": "WB-B03 `spaces and code` true -> up to len(spaces) spaces removed.",
+  "input": null,
+  "expected": null,
+  "actual": "<pre><code> x\ny</code></pre>",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_block_list.py::test_wb_b04_fence_unclosed_empty",
+  "id": "test_wb_b04_fence_unclosed_empty",
+  "technique": "WB",
+  "description": "WB-B04 m2 None and code empty: `spaces and code` false.",
+  "input": null,
+  "expected": null,
+  "actual": "<pre><code></code></pre>",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_block_list.py::test_wb_b05_atx_trailing_hashes_only",
+  "id": "test_wb_b05_atx_trailing_hashes_only",
+  "technique": "WB",
+  "description": "WB-B05 `if text` true and _ATX_HEADING_TRIM removes a hash-only title.",
+  "input": null,
+  "expected": null,
+  "actual": "<h1></h1>",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_block_list.py::test_wb_b06_setext_after_paragraph",
+  "id": "test_wb_b06_setext_after_paragraph",
+  "technique": "WB",
+  "description": "WB-B06 parse_setex_heading: last token is paragraph -> heading.",
+  "input": null,
+  "expected": null,
+  "actual": "<h1>a\nb</h1>",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_block_list.py::test_wb_b07_setext_without_paragraph_is_thematic_break",
+  "id": "test_wb_b07_setext_without_paragraph_is_thematic_break",
+  "technique": "WB",
+  "description": "WB-B07 no paragraph -> fallback compile_sc(thematic_break|list) matches.",
+  "input": null,
+  "expected": null,
+  "actual": "<hr />",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_block_list.py::test_wb_b08_setext_without_paragraph_no_fallback",
+  "id": "test_wb_b08_setext_without_paragraph_no_fallback",
+  "technique": "WB",
+  "description": "WB-B08 no paragraph and fallback does not match -> None -> paragraph.",
+  "input": null,
+  "expected": null,
+  "actual": "<p>===</p>",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_block_list.py::test_wb_b09_ref_link_title_on_next_line",
+  "id": "test_wb_b09_ref_link_title_on_next_line",
+  "technique": "WB",
+  "description": "WB-B09 title found and followed by newline (m2 matched).",
+  "input": null,
+  "expected": null,
+  "actual": "<p><a href=\"/u\" title=\"T\">a</a></p>",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_block_list.py::test_wb_b10_ref_link_garbage_after_title",
+  "id": "test_wb_b10_ref_link_garbage_after_title",
+  "technique": "WB",
+  "description": "WB-B10 title found but m2 fails -> title discarded; href on own line kept.",
+  "input": null,
+  "expected": null,
+  "actual": "<p><a href=\"/u\">a</a></p><p>'T' junk</p>",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_block_list.py::test_wb_b11_ref_link_garbage_after_href",
+  "id": "test_wb_b11_ref_link_garbage_after_href",
+  "technique": "WB",
+  "description": "WB-B11 no title and m3 fails -> not a definition.",
+  "input": null,
+  "expected": null,
+  "actual": "<p>[a]: /u junk</p>",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_block_list.py::test_wb_b12_ref_link_first_definition_wins",
+  "id": "test_wb_b12_ref_link_first_definition_wins",
+  "technique": "WB",
+  "description": "WB-B12 `key not in ref_links` false for the 2nd definition.",
+  "input": null,
+  "expected": null,
+  "actual": "<p><a href=\"/one\">a</a></p>",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_block_list.py::test_wb_b13_ref_link_empty_label",
+  "id": "test_wb_b13_ref_link_empty_label",
+  "technique": "WB",
+  "description": "WB-B13 `if not key` -> return None for a whitespace-only label.",
+  "input": null,
+  "expected": null,
+  "actual": "<p>[ ]: /u</p>",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_block_list.py::test_wb_b14_blockquote_require_marker_path",
+  "id": "test_wb_b14_blockquote_require_marker_path",
+  "technique": "WB",
+  "description": "WB-B14 first line is code -> require_marker=True: lazy line not absorbed.",
+  "input": null,
+  "expected": null,
+  "actual": "<blockquote><pre><code>code</code></pre></blockquote><p>lazy</p>",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_block_list.py::test_wb_b15_blockquote_prev_blank_line_breaks",
+  "id": "test_wb_b15_blockquote_prev_blank_line_breaks",
+  "technique": "WB",
+  "description": "WB-B15 loop: prev_blank_line True -> break (CommonMark ex. 249).",
+  "input": null,
+  "expected": null,
+  "actual": "<blockquote><p>a</p></blockquote><p>b</p>",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_block_list.py::test_wb_b16_blockquote_interrupted_by_break_rule",
+  "id": "test_wb_b16_blockquote_interrupted_by_break_rule",
+  "technique": "WB",
+  "description": "WB-B16 loop: break_sc (thematic_break) matches -> end_pos set, prepend.",
+  "input": null,
+  "expected": null,
+  "actual": "<blockquote><p>a</p></blockquote><hr />",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_block_list.py::test_wb_b17_blockquote_depth_limit_branch",
+  "id": "test_wb_b17_blockquote_depth_limit_branch",
+  "technique": "WB",
+  "description": "WB-B17 depth >= max_nested_level-1 -> 'block_quote' rule removed.",
+  "input": null,
+  "expected": null,
+  "actual": "<blockquote><blockquote><p>&gt; x</p></blockquote></blockquote>",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_block_list.py::test_wb_b18_raw_html_rules[R2]",
+  "id": "test_wb_b18_raw_html_rules[R2]",
+  "technique": "WB",
+  "description": "WB-B18 every branch of parse_raw_html (CommonMark HTML block rules).",
+  "input": null,
+  "expected": null,
+  "actual": "<!-- c --><p>x</p>",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_block_list.py::test_wb_b18_raw_html_rules[R3]",
+  "id": "test_wb_b18_raw_html_rules[R3]",
+  "technique": "WB",
+  "description": "WB-B18 every branch of parse_raw_html (CommonMark HTML block rules).",
+  "input": null,
+  "expected": null,
+  "actual": "<?php x ?>",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_block_list.py::test_wb_b18_raw_html_rules[R5]",
+  "id": "test_wb_b18_raw_html_rules[R5]",
+  "technique": "WB",
+  "description": "WB-B18 every branch of parse_raw_html (CommonMark HTML block rules).",
+  "input": null,
+  "expected": null,
+  "actual": "<![CDATA[x]]>",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_block_list.py::test_wb_b18_raw_html_rules[R4]",
+  "id": "test_wb_b18_raw_html_rules[R4]",
+  "technique": "WB",
+  "description": "WB-B18 every branch of parse_raw_html (CommonMark HTML block rules).",
+  "input": null,
+  "expected": null,
+  "actual": "<!DOCTYPE html>",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_block_list.py::test_wb_b18_raw_html_rules[R1]",
+  "id": "test_wb_b18_raw_html_rules[R1]",
+  "technique": "WB",
+  "description": "WB-B18 every branch of parse_raw_html (CommonMark HTML block rules).",
+  "input": null,
+  "expected": null,
+  "actual": "<pre>x</pre>",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_block_list.py::test_wb_b18_raw_html_rules[R6-open]",
+  "id": "test_wb_b18_raw_html_rules[R6-open]",
+  "technique": "WB",
+  "description": "WB-B18 every branch of parse_raw_html (CommonMark HTML block rules).",
+  "input": null,
+  "expected": null,
+  "actual": "<div>*a*<p><em>b</em></p>",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_block_list.py::test_wb_b18_raw_html_rules[R6-close]",
+  "id": "test_wb_b18_raw_html_rules[R6-close]",
+  "technique": "WB",
+  "description": "WB-B18 every branch of parse_raw_html (CommonMark HTML block rules).",
+  "input": null,
+  "expected": null,
+  "actual": "</div>x",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_block_list.py::test_wb_b18_raw_html_rules[R7]",
+  "id": "test_wb_b18_raw_html_rules[R7]",
+  "technique": "WB",
+  "description": "WB-B18 every branch of parse_raw_html (CommonMark HTML block rules).",
+  "input": null,
+  "expected": null,
+  "actual": "<custom>\nx<p>y</p>",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_block_list.py::test_wb_b18_raw_html_rules[R7-para]",
+  "id": "test_wb_b18_raw_html_rules[R7-para]",
+  "technique": "WB",
+  "description": "WB-B18 every branch of parse_raw_html (CommonMark HTML block rules).",
+  "input": null,
+  "expected": null,
+  "actual": "<p>a\n<custom></p>",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_block_list.py::test_wb_b18_raw_html_rules[R7-none]",
+  "id": "test_wb_b18_raw_html_rules[R7-none]",
+  "technique": "WB",
+  "description": "WB-B18 every branch of parse_raw_html (CommonMark HTML block rules).",
+  "input": null,
+  "expected": null,
+  "actual": "<p>&lt;custom x</p>",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_block_list.py::test_wb_l01_get_list_bullet_all_branches[.-\\\\d{0,9}\\\\.]",
+  "id": "test_wb_l01_get_list_bullet_all_branches[.-\\\\d{0,9}\\\\.]",
+  "technique": "WB",
+  "description": "WB-L01 all 5 branches of _get_list_bullet.",
+  "input": null,
+  "expected": null,
+  "actual": "\\d{0,9}\\.",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_block_list.py::test_wb_l01_get_list_bullet_all_branches[)-\\\\d{0,9}\\\\)]",
+  "id": "test_wb_l01_get_list_bullet_all_branches[)-\\\\d{0,9}\\\\)]",
+  "technique": "WB",
+  "description": "WB-L01 all 5 branches of _get_list_bullet.",
+  "input": null,
+  "expected": null,
+  "actual": "\\d{0,9}\\)",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_block_list.py::test_wb_l01_get_list_bullet_all_branches[*-\\\\*]",
+  "id": "test_wb_l01_get_list_bullet_all_branches[*-\\\\*]",
+  "technique": "WB",
+  "description": "WB-L01 all 5 branches of _get_list_bullet.",
+  "input": null,
+  "expected": null,
+  "actual": "\\*",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_block_list.py::test_wb_l01_get_list_bullet_all_branches[+-\\\\+]",
+  "id": "test_wb_l01_get_list_bullet_all_branches[+-\\\\+]",
+  "technique": "WB",
+  "description": "WB-L01 all 5 branches of _get_list_bullet.",
+  "input": null,
+  "expected": null,
+  "actual": "\\+",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_block_list.py::test_wb_l01_get_list_bullet_all_branches[---]",
+  "id": "test_wb_l01_get_list_bullet_all_branches[---]",
+  "technique": "WB",
+  "description": "WB-L01 all 5 branches of _get_list_bullet.",
+  "input": null,
+  "expected": null,
+  "actual": "-",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_block_list.py::test_wb_l02_continue_width_paths",
+  "id": "test_wb_l02_continue_width_paths",
+  "technique": "WB",
+  "description": "WB-L02 _compile_continue_width: (a) >=5 spaces -> width 1 (indented",
+  "input": null,
+  "expected": null,
+  "actual": [
+   "",
+   3
+  ],
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_block_list.py::test_wb_l03_item_pattern_leading_width_clamped",
+  "id": "test_wb_l03_item_pattern_leading_width_clamped",
+  "technique": "WB",
+  "description": "WB-L03 leading_width > 3 is clamped to 3 in _compile_list_item_pattern.",
+  "input": null,
+  "expected": null,
+  "actual": "^(?P<listitem_1> {0,3})(?P<listitem_2>-)(?P<listitem_3>[ \\t]*|[ \\t][^\\n]+)$",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_block_list.py::test_wb_l04_is_loose_list_three_outcomes",
+  "id": "test_wb_l04_is_loose_list_three_outcomes",
+  "technique": "WB",
+  "description": "WB-L04 _is_loose_list: blank_line -> True; 2 paragraphs -> True;",
+  "input": null,
+  "expected": null,
+  "actual": false,
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_block_list.py::test_wb_l05_transform_tight_list_recurses",
+  "id": "test_wb_l05_transform_tight_list_recurses",
+  "technique": "WB",
+  "description": "WB-L05 _transform_tight_list converts paragraphs to block_text and",
+  "input": null,
+  "expected": null,
+  "actual": "block_text",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_block_list.py::test_wb_l06_list_item_begins_with_two_blank_lines",
+  "id": "test_wb_l06_list_item_begins_with_two_blank_lines",
+  "technique": "WB",
+  "description": "WB-L06 'Example 280' branch: an item may begin with at most one blank line.",
+  "input": null,
+  "expected": null,
+  "actual": "<ul><li></li></ul><p>foo</p>",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_block_list.py::test_wb_l07_list_interrupted_by_heading",
+  "id": "test_wb_l07_list_interrupted_by_heading",
+  "technique": "WB",
+  "description": "WB-L07 list-item loop: break rule (atx_heading) parses -> _end_pos path.",
+  "input": null,
+  "expected": null,
+  "actual": "<ul><li>a</li></ul><h1>h</h1>",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_block_list.py::test_wb_l08_list_depth_limit_branch",
+  "id": "test_wb_l08_list_depth_limit_branch",
+  "technique": "WB",
+  "description": "WB-L08 depth >= max_nested_level-1 -> 'list' removed from rules.",
+  "input": null,
+  "expected": null,
+  "actual": "<ul><li>a<ul><li>b- c</li></ul></li></ul>",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_block_list.py::test_wb_r01_safe_url_branches[True-javascript:x-javascript:x]",
+  "id": "test_wb_r01_safe_url_branches[True-javascript:x-javascript:x]",
+  "technique": "WB",
+  "description": "WB-R01 every decision outcome of HTMLRenderer.safe_url.",
+  "input": null,
+  "expected": null,
+  "actual": "javascript:x",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_block_list.py::test_wb_r01_safe_url_branches[allow1-javascript:x-javascript:x]",
+  "id": "test_wb_r01_safe_url_branches[allow1-javascript:x-javascript:x]",
+  "technique": "WB",
+  "description": "WB-R01 every decision outcome of HTMLRenderer.safe_url.",
+  "input": null,
+  "expected": null,
+  "actual": "javascript:x",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_block_list.py::test_wb_r01_safe_url_branches[allow2-javascript:x-#harmful-link]",
+  "id": "test_wb_r01_safe_url_branches[allow2-javascript:x-#harmful-link]",
+  "technique": "WB",
+  "description": "WB-R01 every decision outcome of HTMLRenderer.safe_url.",
+  "input": null,
+  "expected": null,
+  "actual": "#harmful-link",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_block_list.py::test_wb_r01_safe_url_branches[None-JAVASCRIPT:x-#harmful-link]",
+  "id": "test_wb_r01_safe_url_branches[None-JAVASCRIPT:x-#harmful-link]",
+  "technique": "WB",
+  "description": "WB-R01 every decision outcome of HTMLRenderer.safe_url.",
+  "input": null,
+  "expected": null,
+  "actual": "#harmful-link",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_block_list.py::test_wb_r01_safe_url_branches[None-data:image/png;base64,A-data:image/png;base64,A]",
+  "id": "test_wb_r01_safe_url_branches[None-data:image/png;base64,A-data:image/png;base64,A]",
+  "technique": "WB",
+  "description": "WB-R01 every decision outcome of HTMLRenderer.safe_url.",
+  "input": null,
+  "expected": null,
+  "actual": "data:image/png;base64,A",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_block_list.py::test_wb_r01_safe_url_branches[None-data:text/html,x-#harmful-link]",
+  "id": "test_wb_r01_safe_url_branches[None-data:text/html,x-#harmful-link]",
+  "technique": "WB",
+  "description": "WB-R01 every decision outcome of HTMLRenderer.safe_url.",
+  "input": null,
+  "expected": null,
+  "actual": "#harmful-link",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_block_list.py::test_wb_r01_safe_url_branches[None-/a&b-/a&amp;b]",
+  "id": "test_wb_r01_safe_url_branches[None-/a&b-/a&amp;b]",
+  "technique": "WB",
+  "description": "WB-R01 every decision outcome of HTMLRenderer.safe_url.",
+  "input": null,
+  "expected": null,
+  "actual": "/a&amp;b",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_block_list.py::test_wb_r02_renderer_escape_vs_safe_entity",
+  "id": "test_wb_r02_renderer_escape_vs_safe_entity",
+  "technique": "WB",
+  "description": "WB-R02 HTMLRenderer.text: escape=True escapes, escape=False keeps",
+  "input": null,
+  "expected": null,
+  "actual": "&lt;&amp;",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_block_list.py::test_wb_r03_full_pipeline_smoke",
+  "id": "test_wb_r03_full_pipeline_smoke",
+  "technique": "WB",
+  "description": "WB-R03 smoke: module-level md object used by all groups is configured",
+  "input": null,
+  "expected": null,
+  "actual": "<p><b>x</b></p>",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_block_list.py::test_wb_b19_ref_link_cannot_interrupt_paragraph",
+  "id": "test_wb_b19_ref_link_cannot_interrupt_paragraph",
+  "technique": "WB",
+  "description": "WB-B19 parse_ref_link: state.append_paragraph() returns a position",
+  "input": null,
+  "expected": null,
+  "actual": "<p>a\n[b]: /u</p><p>[b]</p>",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_block_list.py::test_wb_b20_ref_link_missing_destination",
+  "id": "test_wb_b20_ref_link_missing_destination",
+  "technique": "WB",
+  "description": "WB-B20 parse_ref_link: href is None -> not a definition.",
+  "input": null,
+  "expected": null,
+  "actual": "<p>[a]:</p><p>[a]</p>",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_block_list.py::test_wb_b21_blockquote_require_marker_continues_with_markers",
+  "id": "test_wb_b21_blockquote_require_marker_continues_with_markers",
+  "technique": "WB",
+  "description": "WB-B21 extract_block_quote require_marker=True and _STRICT_BLOCK_QUOTE",
+  "input": null,
+  "expected": null,
+  "actual": "<blockquote><pre><code>c1\nc2</code></pre></blockquote><p>lazy</p>",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_helpers.py::test_wb_h01_link_text_single_bracket_found",
+  "id": "test_wb_h01_link_text_single_bracket_found",
+  "technique": "WB",
+  "description": "WB-H01 path n1-n2-n3-n4-n5-n6(found)-n8T : one ']' closes level 1.",
+  "input": null,
+  "expected": null,
+  "actual": [
+   "abc",
+   4
+  ],
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_helpers.py::test_wb_h02_link_text_loop_twice_nested",
+  "id": "test_wb_h02_link_text_loop_twice_nested",
+  "technique": "WB",
+  "description": "WB-H02 loop body executed >= 2 times, n7 branch ('[' increments level)",
+  "input": null,
+  "expected": null,
+  "actual": [
+   "a[b]c",
+   6
+  ],
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_helpers.py::test_wb_h03_link_text_no_bracket_breaks",
+  "id": "test_wb_h03_link_text_no_bracket_breaks",
+  "technique": "WB",
+  "description": "WB-H03 path n3 (not m -> break) then n8F: no closing bracket.",
+  "input": null,
+  "expected": null,
+  "actual": [
+   null,
+   null
+  ],
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_helpers.py::test_wb_h04_link_text_loop_not_entered",
+  "id": "test_wb_h04_link_text_loop_not_entered",
+  "technique": "WB",
+  "description": "WB-H04 loop predicate false on entry (pos == len(src)) -> n8F.",
+  "input": null,
+  "expected": null,
+  "actual": [
+   null,
+   null
+  ],
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_helpers.py::test_wb_h05_link_text_unbalanced_exhausts_loop",
+  "id": "test_wb_h05_link_text_unbalanced_exhausts_loop",
+  "technique": "WB",
+  "description": "WB-H05 loop exits through its predicate with found=False: more '['",
+  "input": null,
+  "expected": null,
+  "actual": [
+   null,
+   null
+  ],
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_helpers.py::test_wb_h06_link_text_escaped_bracket_skipped",
+  "id": "test_wb_h06_link_text_escaped_bracket_skipped",
+  "technique": "WB",
+  "description": "WB-H06 PREVENT_BACKSLASH: an escaped ']' is not a marker.",
+  "input": null,
+  "expected": null,
+  "actual": [
+   "a\\]b",
+   5
+  ],
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_helpers.py::test_wb_h07_link_label_match_and_no_match",
+  "id": "test_wb_h07_link_label_match_and_no_match",
+  "technique": "WB",
+  "description": "WB-H07 both branches of parse_link_label (match / no match).",
+  "input": null,
+  "expected": null,
+  "actual": [
+   null,
+   null
+  ],
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_helpers.py::test_wb_h08_link_label_boundary_500_chars",
+  "id": "test_wb_h08_link_label_boundary_500_chars",
+  "technique": "WB",
+  "description": "WB-H08 BVA on the regex quantifier {0,500}: 500 chars ok, 501 rejected.",
+  "input": null,
+  "expected": null,
+  "actual": [
+   null,
+   null
+  ],
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_helpers.py::test_wb_h09_href_angle_brackets",
+  "id": "test_wb_h09_href_angle_brackets",
+  "technique": "WB",
+  "description": "WB-H09 B1=T,B2=T: <dest> form returns inner text.",
+  "input": null,
+  "expected": null,
+  "actual": [
+   "a b",
+   5
+  ],
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_helpers.py::test_wb_h10_href_angle_unclosed",
+  "id": "test_wb_h10_href_angle_unclosed",
+  "technique": "WB",
+  "description": "WB-H10 B1=T,B2=F: '<' without matching '>' -> (None, None).",
+  "input": null,
+  "expected": null,
+  "actual": [
+   null,
+   null
+  ],
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_helpers.py::test_wb_h11_href_inline_bare",
+  "id": "test_wb_h11_href_inline_bare",
+  "technique": "WB",
+  "description": "WB-H11 B1=F,B3=F,B4=T: inline bare destination ends before ')'.",
+  "input": null,
+  "expected": null,
+  "actual": [
+   "/url",
+   4
+  ],
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_helpers.py::test_wb_h12_href_block_at_end_of_input",
+  "id": "test_wb_h12_href_block_at_end_of_input",
+  "technique": "WB",
+  "description": "WB-H12 B3=T,B5=T: block href at end of string (src[end-1]==href[-1]).",
+  "input": null,
+  "expected": null,
+  "actual": [
+   "/url",
+   5
+  ],
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_helpers.py::test_wb_h13_href_block_followed_by_space",
+  "id": "test_wb_h13_href_block_followed_by_space",
+  "technique": "WB",
+  "description": "WB-H13 B3=T,B5=F: block href followed by whitespace.",
+  "input": null,
+  "expected": null,
+  "actual": [
+   "/url",
+   5
+  ],
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_helpers.py::test_wb_h14_href_block_no_match",
+  "id": "test_wb_h14_href_block_no_match",
+  "technique": "WB",
+  "description": "WB-H14 B3=T,B4=F: nothing but whitespace -> (None, None).",
+  "input": null,
+  "expected": null,
+  "actual": [
+   null,
+   null
+  ],
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_helpers.py::test_wb_h15_title_quoted_with_escape",
+  "id": "test_wb_h15_title_quoted_with_escape",
+  "technique": "WB",
+  "description": "WB-H15 match branch + unescape_char applied to the title.",
+  "input": null,
+  "expected": null,
+  "actual": [
+   "a\"b",
+   7
+  ],
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_helpers.py::test_wb_h16_title_absent",
+  "id": "test_wb_h16_title_absent",
+  "technique": "WB",
+  "description": "WB-H16 no-match branch.",
+  "input": null,
+  "expected": null,
+  "actual": [
+   null,
+   null
+  ],
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_helpers.py::test_wb_h17_parse_link_with_title",
+  "id": "test_wb_h17_parse_link_with_title",
+  "technique": "WB",
+  "description": "WB-H17 parse_link: href found, title found, ')' found.",
+  "input": null,
+  "expected": null,
+  "actual": [
+   {
+    "url": "/u",
+    "title": "t"
+   },
+   7
+  ],
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_helpers.py::test_wb_h18_parse_link_missing_paren",
+  "id": "test_wb_h18_parse_link_missing_paren",
+  "technique": "WB",
+  "description": "WB-H18 parse_link: PAREN_END_RE fails -> (None, None).",
+  "input": null,
+  "expected": null,
+  "actual": [
+   null,
+   null
+  ],
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_helpers.py::test_wb_h19_parse_link_href_none",
+  "id": "test_wb_h19_parse_link_href_none",
+  "technique": "WB",
+  "description": "WB-H19 parse_link: href is None branch (unclosed angle bracket).",
+  "input": null,
+  "expected": null,
+  "actual": [
+   null,
+   null
+  ],
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_helpers.py::test_wb_u01_escape_quote_true_false",
+  "id": "test_wb_u01_escape_quote_true_false",
+  "technique": "WB",
+  "description": "WB-U01 both branches of the `quote` flag in util.escape.",
+  "input": null,
+  "expected": null,
+  "actual": "\"",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_helpers.py::test_wb_u02_unescape_fast_path_and_entities",
+  "id": "test_wb_u02_unescape_fast_path_and_entities",
+  "technique": "WB",
+  "description": "WB-U02 '&' not in s -> early return; numeric/named/invalid entities.",
+  "input": null,
+  "expected": null,
+  "actual": "&copy",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_helpers.py::test_wb_u03_unikey_normalises_case_and_space",
+  "id": "test_wb_u03_unikey_normalises_case_and_space",
+  "technique": "WB",
+  "description": "WB-U03 unikey collapses whitespace and case-folds (incl. Unicode ß).",
+  "input": null,
+  "expected": null,
+  "actual": "SS",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_helpers.py::test_wb_u04_escape_url_keeps_reserved_and_encodes_space",
+  "id": "test_wb_u04_escape_url_keeps_reserved_and_encodes_space",
+  "technique": "WB",
+  "description": "WB-U04 escape_url percent-encodes unsafe chars, keeps RFC3986 delims,",
+  "input": null,
+  "expected": null,
+  "actual": "/a%20b?x=1&y=%20#f",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_helpers.py::test_wb_u05_expand_leading_tab",
+  "id": "test_wb_u05_expand_leading_tab",
+  "technique": "WB",
+  "description": "WB-U05 tab after 0-3 spaces expands to the next tab stop of width 4.",
+  "input": null,
+  "expected": null,
+  "actual": "    x",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_helpers.py::test_wb_u06_striptags",
+  "id": "test_wb_u06_striptags",
+  "technique": "WB",
+  "description": "WB-U06 striptags removes tags and comments.",
+  "input": null,
+  "expected": null,
+  "actual": "acd",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_inline.py::test_wb_i01_emphasis_single",
+  "id": "test_wb_i01_emphasis_single",
+  "technique": "WB",
+  "description": "WB-I01 D1=F,D2=F,D3=F,D4=F,D5=T -> emphasis token.",
+  "input": null,
+  "expected": null,
+  "actual": [
+   {
+    "type": "emphasis",
+    "children": [
+     {
+      "type": "text",
+      "raw": "a"
+     }
+    ]
+   }
+  ],
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_inline.py::test_wb_i02_emphasis_double",
+  "id": "test_wb_i02_emphasis_double",
+  "technique": "WB",
+  "description": "WB-I02 D6=T -> strong token.",
+  "input": null,
+  "expected": null,
+  "actual": [
+   {
+    "type": "strong",
+    "children": [
+     {
+      "type": "text",
+      "raw": "a"
+     }
+    ]
+   }
+  ],
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_inline.py::test_wb_i03_emphasis_triple",
+  "id": "test_wb_i03_emphasis_triple",
+  "technique": "WB",
+  "description": "WB-I03 else-branch (mlen==3) -> emphasis(strong(...)).",
+  "input": null,
+  "expected": null,
+  "actual": [
+   {
+    "type": "emphasis",
+    "children": [
+     {
+      "type": "strong",
+      "children": [
+       {
+        "type": "text",
+        "raw": "a"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_inline.py::test_wb_i04_emphasis_no_closer",
+  "id": "test_wb_i04_emphasis_no_closer",
+  "technique": "WB",
+  "description": "WB-I04 D3=T: no closing delimiter -> marker kept as text.",
+  "input": null,
+  "expected": null,
+  "actual": [
+   {
+    "type": "text",
+    "raw": "*"
+   },
+   {
+    "type": "text",
+    "raw": "a"
+   }
+  ],
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_inline.py::test_wb_i05_emphasis_inside_emphasis_state",
+  "id": "test_wb_i05_emphasis_inside_emphasis_state",
+  "technique": "WB",
+  "description": "WB-I05 D1=T: '*' while state.in_emphasis is already set is literal.",
+  "input": null,
+  "expected": null,
+  "actual": [
+   {
+    "type": "text",
+    "raw": "*"
+   },
+   {
+    "type": "text",
+    "raw": "a*"
+   }
+  ],
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_inline.py::test_wb_i06_strong_inside_strong_state",
+  "id": "test_wb_i06_strong_inside_strong_state",
+  "technique": "WB",
+  "description": "WB-I06 D2=T: '**' while state.in_strong is already set is literal.",
+  "input": null,
+  "expected": null,
+  "actual": [
+   {
+    "type": "text",
+    "raw": "**"
+   },
+   {
+    "type": "text",
+    "raw": "a**"
+   }
+  ],
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_inline.py::test_wb_i07_emphasis_precedence_code_span_wins",
+  "id": "test_wb_i07_emphasis_precedence_code_span_wins",
+  "technique": "WB",
+  "description": "WB-I07 D4=T: a code span that crosses the closer takes precedence.",
+  "input": null,
+  "expected": null,
+  "actual": "<p>*a <code>*</code> b</p>",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_inline.py::test_wb_i08_codespan_strip_one_space",
+  "id": "test_wb_i08_codespan_strip_one_space",
+  "technique": "WB",
+  "description": "WB-I08 D1=T,D2=T,D3=T: one leading+trailing space stripped.",
+  "input": null,
+  "expected": null,
+  "actual": [
+   {
+    "type": "codespan",
+    "raw": "`a`"
+   }
+  ],
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_inline.py::test_wb_i09_codespan_only_spaces_not_stripped",
+  "id": "test_wb_i09_codespan_only_spaces_not_stripped",
+  "technique": "WB",
+  "description": "WB-I09 D2=F: code consisting only of spaces is kept as-is.",
+  "input": null,
+  "expected": null,
+  "actual": [
+   {
+    "type": "codespan",
+    "raw": "  "
+   }
+  ],
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_inline.py::test_wb_i10_codespan_newline_becomes_space",
+  "id": "test_wb_i10_codespan_newline_becomes_space",
+  "technique": "WB",
+  "description": "WB-I10 line endings inside code spans are converted to spaces.",
+  "input": null,
+  "expected": null,
+  "actual": [
+   {
+    "type": "codespan",
+    "raw": "a b"
+   }
+  ],
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_inline.py::test_wb_i11_codespan_unmatched_run_length",
+  "id": "test_wb_i11_codespan_unmatched_run_length",
+  "technique": "WB",
+  "description": "WB-I11 D1=F: opener ``` with only `` closer -> literal backticks.",
+  "input": null,
+  "expected": null,
+  "actual": [
+   {
+    "type": "text",
+    "raw": "```"
+   },
+   {
+    "type": "text",
+    "raw": "a"
+   },
+   {
+    "type": "text",
+    "raw": "``"
+   }
+  ],
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_inline.py::test_wb_i12_image_inside_image_alt_is_text",
+  "id": "test_wb_i12_image_inside_image_alt_is_text",
+  "technique": "WB",
+  "description": "WB-I12 D1=T: '![' while in_image is literal text.",
+  "input": null,
+  "expected": null,
+  "actual": [
+   {
+    "type": "text",
+    "raw": "!["
+   },
+   {
+    "type": "text",
+    "raw": "a](b)"
+   }
+  ],
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_inline.py::test_wb_i13_link_inside_link_is_text",
+  "id": "test_wb_i13_link_inside_link_is_text",
+  "technique": "WB",
+  "description": "WB-I13 D2=T: '[' while in_link is literal text.",
+  "input": null,
+  "expected": null,
+  "actual": [
+   {
+    "type": "text",
+    "raw": "["
+   },
+   {
+    "type": "text",
+    "raw": "a](b)"
+   }
+  ],
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_inline.py::test_wb_i14_label_none_text_none",
+  "id": "test_wb_i14_label_none_text_none",
+  "technique": "WB",
+  "description": "WB-I14 D3=T,D4=T: no closing ']' at all -> parse_link returns None.",
+  "input": null,
+  "expected": null,
+  "actual": "<p>[abc</p>",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_inline.py::test_wb_i15_shortcut_ref_without_env",
+  "id": "test_wb_i15_shortcut_ref_without_env",
+  "technique": "WB",
+  "description": "WB-I15 D9=F,D10=T: shortcut ref but no definitions -> literal.",
+  "input": null,
+  "expected": null,
+  "actual": [
+   {
+    "type": "text",
+    "raw": "["
+   },
+   {
+    "type": "text",
+    "raw": "a] b"
+   }
+  ],
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_inline.py::test_wb_i16_collapsed_reference",
+  "id": "test_wb_i16_collapsed_reference",
+  "technique": "WB",
+  "description": "WB-I16 D7='[' with empty second label (collapsed) and D11=T.",
+  "input": null,
+  "expected": null,
+  "actual": [
+   {
+    "type": "link",
+    "children": [
+     {
+      "type": "text",
+      "raw": "a"
+     }
+    ],
+    "attrs": {
+     "url": "/u",
+     "title": null
+    },
+    "ref": "A",
+    "label": "a"
+   }
+  ],
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_inline.py::test_wb_i17_full_reference_unknown_key",
+  "id": "test_wb_i17_full_reference_unknown_key",
+  "technique": "WB",
+  "description": "WB-I17 D7='[' with label2 set, D11=F (key not defined) -> literal.",
+  "input": null,
+  "expected": null,
+  "actual": [
+   {
+    "type": "text",
+    "raw": "["
+   },
+   {
+    "type": "text",
+    "raw": "a]"
+   },
+   {
+    "type": "text",
+    "raw": "["
+   },
+   {
+    "type": "text",
+    "raw": "b]"
+   }
+  ],
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_inline.py::test_wb_i18_inline_link_parse_fails_falls_to_ref",
+  "id": "test_wb_i18_inline_link_parse_fails_falls_to_ref",
+  "technique": "WB",
+  "description": "WB-I18 D7='(' but D8=F (bad destination) -> falls through to ref lookup",
+  "input": null,
+  "expected": null,
+  "actual": "<p>[a](b c)</p>",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_inline.py::test_wb_i19_link_text_precedence_autolink",
+  "id": "test_wb_i19_link_text_precedence_autolink",
+  "technique": "WB",
+  "description": "WB-I19 D6=T: an autolink spanning ']' takes precedence over the link.",
+  "input": null,
+  "expected": null,
+  "actual": "<p>[a <a href=\"http://x.y/%5D\">http://x.y/]</a>](/u)</p>",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_inline.py::test_wb_i20_inline_html_anchor_toggles_in_link",
+  "id": "test_wb_i20_inline_html_anchor_toggles_in_link",
+  "technique": "WB",
+  "description": "WB-I20 parse_inline_html sets in_link on <a ...> so an autolink inside",
+  "input": null,
+  "expected": null,
+  "actual": "<p><a href=\"/x\">&lt;http://in.x&gt;</a> <a href=\"http://out.x\">http://out.x</a></p>",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_inline.py::test_wb_i21_auto_email_inside_link_state",
+  "id": "test_wb_i21_auto_email_inside_link_state",
+  "technique": "WB",
+  "description": "WB-I21 parse_auto_email in_link branch -> processed as plain text.",
+  "input": null,
+  "expected": null,
+  "actual": [
+   {
+    "type": "text",
+    "raw": "<a@b.co>"
+   }
+  ],
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_inline.py::test_wb_i22_hard_wrap_constructor_branch",
+  "id": "test_wb_i22_hard_wrap_constructor_branch",
+  "technique": "WB",
+  "description": "WB-I22 InlineParser(hard_wrap=True) branch replaces the linebreak rule",
+  "input": null,
+  "expected": null,
+  "actual": [
+   "escape",
+   "codespan",
+   "emphasis",
+   "link",
+   "auto_link",
+   "auto_email",
+   "inline_html",
+   "linebreak"
+  ],
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_inline.py::test_wb_i23_escape_run",
+  "id": "test_wb_i23_escape_run",
+  "technique": "WB",
+  "description": "WB-I23 parse_escape: a run of escapes becomes one text token.",
+  "input": null,
+  "expected": null,
+  "actual": [
+   {
+    "type": "text",
+    "raw": "*_"
+   }
+  ],
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/whitebox/test_wb_inline.py::test_wb_i24_link_text_reaches_end_of_input",
+  "id": "test_wb_i24_link_text_reaches_end_of_input",
+  "technique": "WB",
+  "description": "WB-I24 parse_link D5=T: label regex fails (nested '['), parse_link_text",
+  "input": null,
+  "expected": null,
+  "actual": "<p>[a[b]]</p>",
+  "verdict": "PASS",
+  "defect": null
+ }
+]

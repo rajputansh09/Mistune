@@ -1,0 +1,21 @@
+{
+ "group": "manual_bb_ep",
+ "test_cases": 62,
+ "verdicts": {
+  "PASS": 61,
+  "FAIL (known defect)": 1
+ },
+ "combined_pct": 76.0,
+ "statement_pct": 80.7,
+ "branch_pct": 62.3,
+ "tests_with_coverage": 62,
+ "minimal_subset_size": 31,
+ "branch_pct_per_test": 1.005,
+ "redundancy_pct": 50.0,
+ "oracle_checked": 62,
+ "oracle_valid": 62,
+ "oracle_invalid_ids": [],
+ "defects_or_failures": [
+  "D10"
+ ]
+}

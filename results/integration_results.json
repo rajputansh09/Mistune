@@ -1,0 +1,251 @@
+[
+ {
+  "nodeid": "tests/integration/test_integration.py::test_td01_markdown_drives_block_parser_once_with_normalised_source",
+  "id": "test_td01_markdown_drives_block_parser_once_with_normalised_source",
+  "technique": "INTEGRATION",
+  "description": "TD-01 A + stub B: Markdown.parse normalises CRLF/CR, appends a final",
+  "input": null,
+  "expected": null,
+  "actual": "a\nb\nc\n",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/integration/test_integration.py::test_td02_markdown_sends_only_text_tokens_to_inline_stub",
+  "id": "test_td02_markdown_sends_only_text_tokens_to_inline_stub",
+  "technique": "INTEGRATION",
+  "description": "TD-02 A + real B + stub D: the inline parser is invoked once per token",
+  "input": null,
+  "expected": null,
+  "actual": [
+   [
+    [
+     "Title",
+     {
+      "ref_links": {}
+     }
+    ],
+    {}
+   ],
+   [
+    [
+     "para",
+     {
+      "ref_links": {}
+     }
+    ],
+    {}
+   ]
+  ],
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/integration/test_integration.py::test_td03_inline_receives_shared_env_with_ref_links",
+  "id": "test_td03_inline_receives_shared_env_with_ref_links",
+  "technique": "INTEGRATION",
+  "description": "TD-03 interface check B->D: link definitions collected by the block",
+  "input": null,
+  "expected": null,
+  "actual": {
+   "ref_links": {
+    "X": {
+     "url": "/url",
+     "label": "x",
+     "title": "T"
+    }
+   }
+  },
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/integration/test_integration.py::test_td04_renderer_stub_receives_token_stream",
+  "id": "test_td04_renderer_stub_receives_token_stream",
+  "technique": "INTEGRATION",
+  "description": "TD-04 A + real B + real D + stub E: the renderer is called once with",
+  "input": null,
+  "expected": null,
+  "actual": "RENDERED",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/integration/test_integration.py::test_td05_hooks_called_in_order",
+  "id": "test_td05_hooks_called_in_order",
+  "technique": "INTEGRATION",
+  "description": "TD-05 A's extension interface: before_parse -> before_render ->",
+  "input": null,
+  "expected": null,
+  "actual": [
+   "before_parse",
+   "before_render",
+   "after_render"
+  ],
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/integration/test_integration.py::test_td06_all_real_modules_replace_stubs",
+  "id": "test_td06_all_real_modules_replace_stubs",
+  "technique": "INTEGRATION",
+  "description": "TD-06 final top-down step: all stubs replaced by real modules.",
+  "input": null,
+  "expected": null,
+  "actual": "<blockquote><ul><li><em>a</em></li></ul></blockquote>",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/integration/test_integration.py::test_bu01_driver_inline_parser_on_real_helpers",
+  "id": "test_bu01_driver_inline_parser_on_real_helpers",
+  "technique": "INTEGRATION",
+  "description": "BU-01 driver for D over real H/U: a link with title and entity.",
+  "input": null,
+  "expected": null,
+  "actual": [
+   {
+    "type": "link",
+    "children": [
+     {
+      "type": "text",
+      "raw": "a&amp;b"
+     }
+    ],
+    "attrs": {
+     "url": "/u",
+     "title": "t"
+    }
+   }
+  ],
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/integration/test_integration.py::test_bu02_block_and_list_parser_with_inline_stub",
+  "id": "test_bu02_block_and_list_parser_with_inline_stub",
+  "technique": "INTEGRATION",
+  "description": "BU-02 driver for B+C (inline parsing not involved): nested list token",
+  "input": null,
+  "expected": null,
+  "actual": [
+   {
+    "type": "list",
+    "children": [
+     {
+      "type": "list_item",
+      "children": [
+       {
+        "type": "block_text",
+        "text": "a\n"
+       },
+       {
+        "type": "list",
+        "children": [
+         {
+          "type": "list_item",
+          "children": [
+           {
+            "type": "block_text",
+            "text": "b\n"
+           }
+          ]
+         }
+        ],
+        "tight": true,
+        "bullet": "-",
+        "attrs": {
+         "depth": 1,
+         "ordered": false
+        }
+       }
+      ]
+     },
+     {
+      "type": "list_item",
+      "children": [
+       {
+        "type": "block_text",
+        "text": "c\n"
+       }
+      ]
+     }
+    ],
+    "tight": true,
+    "bullet": "-",
+    "attrs": {
+     "depth": 0,
+     "ordered": false
+    }
+   }
+  ],
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/integration/test_integration.py::test_bu03_renderer_driver_with_handmade_tokens",
+  "id": "test_bu03_renderer_driver_with_handmade_tokens",
+  "technique": "INTEGRATION",
+  "description": "BU-03 driver for E (renderer) with hand-made tokens (stub for B and D).",
+  "input": null,
+  "expected": null,
+  "actual": "<h2>&lt;x&gt;</h2>\n",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/integration/test_integration.py::test_bu04_block_plus_inline_plus_renderer",
+  "id": "test_bu04_block_plus_inline_plus_renderer",
+  "technique": "INTEGRATION",
+  "description": "BU-04 top of the bottom-up order: B+C+D+E integrated via Markdown.",
+  "input": null,
+  "expected": null,
+  "actual": "<ol><li><a href=\"/u\">a</a></li><li><code>c</code></li></ol>",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/integration/test_integration.py::test_bb01_big_bang_readme_document",
+  "id": "test_bb01_big_bang_readme_document",
+  "technique": "INTEGRATION",
+  "description": "BB-01 all modules at once on a realistic README (compared with the",
+  "input": null,
+  "expected": null,
+  "actual": "<h1>Project</h1><p>Install with <code>pip install x</code> and read the <a href=\"https://example.com/docs\" title=\"Docs\">docs</a>.</p><ul><li>fast</li><li><strong>safe</strong>: escapes <code>&lt;script&gt;</code></li></ul><blockquote><p>Note: works on Python 3.</p></blockquote><pre><code class=\"language-python\">print(&quot;hi&quot;)</code></pre>",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/integration/test_integration.py::test_bb02_big_bang_safe_mode_end_to_end",
+  "id": "test_bb02_big_bang_safe_mode_end_to_end",
+  "technique": "INTEGRATION",
+  "description": "BB-02 all modules + escape=True + harmful URL: nothing executable.",
+  "input": null,
+  "expected": null,
+  "actual": "<p>&lt;script&gt;x&lt;/script&gt;</p>\n<p><a href=\"#harmful-link\">a</a></p>\n",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/integration/test_integration.py::test_bb03_module_read_file_interface",
+  "id": "test_bb03_module_read_file_interface",
+  "technique": "INTEGRATION",
+  "description": "BB-03 Markdown.read(): file -> decode -> parse integration, env records",
+  "input": null,
+  "expected": null,
+  "actual": "<h1>é</h1>\n",
+  "verdict": "PASS",
+  "defect": null
+ },
+ {
+  "nodeid": "tests/integration/test_integration.py::test_bb04_plugins_integrate_with_core",
+  "id": "test_bb04_plugins_integrate_with_core",
+  "technique": "INTEGRATION",
+  "description": "BB-04 plugin integration: table + strikethrough + footnotes together.",
+  "input": null,
+  "expected": null,
+  "actual": "<table><thead><tr><th>a</th></tr></thead><tbody><tr><td><del>b</del><sup class=\"footnote-ref\" id=\"fnref-1\"><a href=\"#fn-1\">1</a></sup></td></tr></tbody></table><section class=\"footnotes\"><ol><li id=\"fn-1\"><p>n<a href=\"#fnref-1\" class=\"footnote\">&#8617;</a></p></li></ol></section>",
+  "verdict": "PASS",
+  "defect": null
+ }
+]

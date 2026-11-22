@@ -1,0 +1,18 @@
+{
+ "group": "whitebox",
+ "test_cases": 100,
+ "verdicts": {
+  "PASS": 100
+ },
+ "combined_pct": 89.6,
+ "statement_pct": 91.8,
+ "branch_pct": 83.4,
+ "tests_with_coverage": 100,
+ "minimal_subset_size": 68,
+ "branch_pct_per_test": 0.834,
+ "redundancy_pct": 32.0,
+ "oracle_checked": 0,
+ "oracle_valid": 0,
+ "oracle_invalid_ids": [],
+ "defects_or_failures": []
+}
